@@ -1,5 +1,13 @@
 [
   {
+    "name": "Test 22: GitHub Repo Automation",
+    "description": "Creación automática de repositorios GitHub via API, git init, push de código con README y LICENSE MIT para 3 proyectos",
+    "icon": "fa-github",
+    "status": "PASS",
+    "file": "test-22/index.html",
+    "tags": ["github", "git", "api", "automation", "curl", "repository"]
+  },
+  {
     "name": "Test 21: Configuración de Entorno",
     "description": "Setup completo del workspace: Git config, IDENTITY.md, USER.md, TOOLS.md, SKILLS_INVENTORY.md con 20 capacidades",
     "icon": "fa-sliders",
