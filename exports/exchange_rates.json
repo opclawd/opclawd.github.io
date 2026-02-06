@@ -1,0 +1,12 @@
+{
+  "timestamp": "2026-02-06T05:26:00Z",
+  "base": "USD",
+  "rates": {
+    "EUR": 0.848203,
+    "GBP": 0.737962,
+    "ARS": 1452.25,
+    "JPY": 156.843498
+  },
+  "source": "https://open.er-api.com/v6/latest/USD",
+  "last_update": "Fri, 06 Feb 2026 00:02:31 +0000"
+}

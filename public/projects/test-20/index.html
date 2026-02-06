@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test 20 - Web Scraping & Chart.js Visualization</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #0a0a0f;
+            color: #e0e0e0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #ff6b35;
+        }
+        h1 {
+            color: #ff6b35;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #888;
+            font-size: 1.1rem;
+        }
+        .card {
+            background: #14141f;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        }
+        .card h2 {
+            color: #f7931e;
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .card h2 i {
+            color: #ff6b35;
+        }
+        .card p, .card li {
+            color: #ccc;
+            margin-bottom: 12px;
+        }
+        .card ul {
+            padding-left: 25px;
+        }
+        .card li {
+            margin-bottom: 8px;
+        }
+        .code-block {
+            background: #1a1a2e;
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+            margin: 15px 0;
+            border-left: 4px solid #ff6b35;
+        }
+        .code-block code {
+            color: #a8d5a2;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        .result-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .result-table th, .result-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #2a2a3a;
+        }
+        .result-table th {
+            color: #ff6b35;
+            font-weight: 600;
+        }
+        .result-table td {
+            color: #ccc;
+        }
+        .rank {
+            color: #f7931e;
+            font-weight: bold;
+        }
+        .population {
+            font-family: monospace;
+            color: #fff;
+        }
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 15px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255,107,53,0.4);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #ff6b35;
+            text-decoration: none;
+            margin-top: 30px;
+            font-weight: 500;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        .tag {
+            display: inline-block;
+            background: #1a1a2e;
+            color: #ff6b35;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .tech-item {
+            background: #1a1a2e;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .tech-item i {
+            color: #f7931e;
+            font-size: 1.2rem;
+        }
+        @media (max-width: 768px) {
+            h1 { font-size: 1.8rem; }
+            .card { padding: 20px; }
+            .tech-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-globe"></i> Test 20</h1>
+            <p class="subtitle">Web Scraping & Chart.js Visualization</p>
+        </header>
+
+        <div class="card">
+            <h2><i class="fas fa-clipboard-list"></i> Consigna</h2>
+            <p>Realizar scraping de datos desde <strong>https://www.scrapethissite.com/pages/simple/</strong> para obtener información de países y sus poblaciones.</p>
+            <ul>
+                <li>Parsear países y población (divs <code>class="country-info"</code>, spans <code>class="country-population"</code>)</li>
+                <li>Obtener el <strong>Top 10</strong> países con mayor población</li>
+                <li>Generar visualización con <strong>Chart.js CDN</strong></li>
+                <li>Gráfico de barras horizontal</li>
+                <li>Tema oscuro: fondo <code>#0a0a0f</code>, barras <code>#ff6b35</code></li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-cogs"></i> Tecnologías Utilizadas</h2>
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <i class="fab fa-python"></i>
+                    <span>Python 3</span>
+                </div>
+                <div class="tech-item">
+                    <i class="fas fa-globe"></i>
+                    <span>urllib.request</span>
+                </div>
+                <div class="tech-item">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Chart.js (CDN)</span>
+                </div>
+                <div class="tech-item">
+                    <i class="fab fa-html5"></i>
+                    <span>HTML5 + CSS3</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-code"></i> Pasos Técnicos</h2>
+            
+            <h3 style="color: #888; margin: 20px 0 10px; font-size: 1rem;">1. Extracción de datos</h3>
+            <div class="code-block">
+                <code># Fetch HTML content from scrapethissite.com<br>
+import urllib.request<br><br>
+url = "https://www.scrapethissite.com/pages/simple/"<br>
+req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})<br>
+with urllib.request.urlopen(req) as response:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;html = response.read().decode('utf-8')</code>
+            </div>
+
+            <h3 style="color: #888; margin: 20px 0 10px; font-size: 1rem;">2. Parsing de países y población</h3>
+            <div class="code-block">
+                <code># Parse countries from extracted markdown content<br>
+countries = []<br>
+for line in content.split('\\n'):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;parts = line.rsplit(' - ', 1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if len(parts) == 2:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name, pop_str = parts<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pop = int(pop_str.replace(',', ''))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;countries.append((name.strip(), pop))</code>
+            </div>
+
+            <h3 style="color: #888; margin: 20px 0 10px; font-size: 1rem;">3. Ordenar y obtener Top 10</h3>
+            <div class="code-block">
+                <code># Sort by population descending and get top 10<br>
+top10 = sorted(countries, key=lambda x: x[1], reverse=True)[:10]</code>
+            </div>
+
+            <h3 style="color: #888; margin: 20px 0 10px; font-size: 1rem;">4. Generar visualización con Chart.js</h3>
+            <div class="code-block">
+                <code>new Chart(ctx, {<br>
+&nbsp;&nbsp;type: 'bar',<br>
+&nbsp;&nbsp;data: { labels: [...], datasets: [{...}] },<br>
+&nbsp;&nbsp;options: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;indexAxis: 'y',  // Horizontal bar chart<br>
+&nbsp;&nbsp;&nbsp;&nbsp;plugins: { legend: { display: false } },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;scales: { x: { grid: { color: '#2a2a3a' } } }<br>
+&nbsp;&nbsp;}<br>
+});</code>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-trophy"></i> Resultado - Top 10 Países por Población</h2>
+            <table class="result-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>País</th>
+                        <th>Población</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td class="rank">1</td><td>China</td><td class="population">1,330,044,000</td></tr>
+                    <tr><td class="rank">2</td><td>India</td><td class="population">1,173,108,018</td></tr>
+                    <tr><td class="rank">3</td><td>United States</td><td class="population">310,232,863</td></tr>
+                    <tr><td class="rank">4</td><td>Indonesia</td><td class="population">242,968,342</td></tr>
+                    <tr><td class="rank">5</td><td>Brazil</td><td class="population">201,103,330</td></tr>
+                    <tr><td class="rank">6</td><td>Pakistan</td><td class="population">184,404,791</td></tr>
+                    <tr><td class="rank">7</td><td>Bangladesh</td><td class="population">156,118,464</td></tr>
+                    <tr><td class="rank">8</td><td>Nigeria</td><td class="population">154,000,000</td></tr>
+                    <tr><td class="rank">9</td><td>Russia</td><td class="population">140,702,000</td></tr>
+                    <tr><td class="rank">10</td><td>Japan</td><td class="population">127,288,000</td></tr>
+                </tbody>
+            </table>
+            
+            <p style="margin-top: 20px;"><strong>Total de países procesados:</strong> 250</p>
+            <p><strong>Fuente:</strong> <a href="https://www.scrapethissite.com/pages/simple/" target="_blank" style="color: #ff6b35;">Scrape This Site - Countries of the World</a></p>
+            
+            <a href="../../viz/population_top10.html" class="btn" target="_blank">
+                <i class="fas fa-external-link-alt"></i> Ver Visualización
+            </a>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-folder-open"></i> Archivos Generados</h2>
+            <ul>
+                <li><code>viz/population_top10.html</code> - Visualización interactiva con Chart.js</li>
+                <li><code>viz/top10_data.json</code> - Datos JSON del Top 10</li>
+                <li><code>public/projects/test-20/index.html</code> - Esta página de documentación</li>
+            </ul>
+            
+            <div style="margin-top: 20px;">
+                <span class="tag"><i class="fas fa-check-circle"></i> PASS</span>
+                <span class="tag">web-scraping</span>
+                <span class="tag">chart-js</span>
+                <span class="tag">data-viz</span>
+                <span class="tag">python</span>
+            </div>
+        </div>
+
+        <a href="/clawdbot/" class="back-link">
+            <i class="fas fa-arrow-left"></i> Volver al índice de proyectos
+        </a>
+    </div>
+</body>
+</html>

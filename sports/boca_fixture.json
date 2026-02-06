@@ -1,0 +1,137 @@
+{
+  "team_requested": "Boca Juniors",
+  "idTeam": "135156",
+  "team_found": "Boca Juniors (Club Atlético Boca Juniors)",
+  "fallback_used": false,
+  "note": "TheSportsDB API returned events for Bolton Wanderers instead of the requested team. This appears to be a data/API quirk where eventsnext.php returns generic League One fixtures regardless of team ID.",
+  "team_info": {
+    "idTeam": "135156",
+    "strTeam": "Boca Juniors",
+    "strTeamAlternate": "Boca, Club Atlético Boca Juniors",
+    "intFormedYear": "1905",
+    "strStadium": "Estadio Alberto José Armando",
+    "strLocation": "Buenos Aires",
+    "strCountry": "Argentina",
+    "strLeague": "Argentinian Primera Division",
+    "strBadge": "https://www.thesportsdb.com/images/media/team/badge/2en2k01769678216.png"
+  },
+  "events": [
+    {
+      "idEvent": "2274995",
+      "strEvent": "Bolton Wanderers vs Barnsley",
+      "strLeague": "English League 1",
+      "strSeason": "2025-2026",
+      "dateEvent": "2026-02-07",
+      "strTime": "15:01:00",
+      "strVenue": "Toughsheet Community Stadium",
+      "strCountry": "England",
+      "strStatus": "Not Started"
+    },
+    {
+      "idEvent": "2275013",
+      "strEvent": "Lincoln City vs Bolton Wanderers",
+      "strLeague": "English League 1",
+      "strSeason": "2025-2026",
+      "dateEvent": "2026-02-14",
+      "strTime": "15:00:00",
+      "strVenue": "LNER Stadium",
+      "strCountry": "England",
+      "strStatus": "Not Started"
+    },
+    {
+      "idEvent": "2275029",
+      "strEvent": "Reading vs Bolton Wanderers",
+      "strLeague": "English League 1",
+      "strSeason": "2025-2026",
+      "dateEvent": "2026-02-17",
+      "strTime": "20:00:00",
+      "strVenue": "Select Car Leasing Stadium",
+      "strCountry": "England",
+      "strStatus": "Not Started"
+    },
+    {
+      "idEvent": "2275031",
+      "strEvent": "Bolton Wanderers vs Blackpool",
+      "strLeague": "English League 1",
+      "strSeason": "2025-2026",
+      "dateEvent": "2026-02-21",
+      "strTime": "15:00:00",
+      "strVenue": "Toughsheet Community Stadium",
+      "strCountry": "England",
+      "strStatus": "Not Started"
+    },
+    {
+      "idEvent": "2275042",
+      "strEvent": "Exeter City vs Bolton Wanderers",
+      "strLeague": "English League 1",
+      "strSeason": "2025-2026",
+      "dateEvent": "2026-02-28",
+      "strTime": "15:00:00",
+      "strVenue": "St James Park Exeter",
+      "strCountry": "England",
+      "strStatus": "Not Started"
+    },
+    {
+      "idEvent": "2275057",
+      "strEvent": "Bolton Wanderers vs Wycombe Wanderers",
+      "strLeague": "English League 1",
+      "strSeason": "2025-2026",
+      "dateEvent": "2026-03-07",
+      "strTime": "15:00:00",
+      "strVenue": "Toughsheet Community Stadium",
+      "strCountry": "England",
+      "strStatus": "Not Started"
+    },
+    {
+      "idEvent": "2275073",
+      "strEvent": "Rotherham United vs Bolton Wanderers",
+      "strLeague": "English League 1",
+      "strSeason": "2025-2026",
+      "dateEvent": "2026-03-14",
+      "strTime": "15:00:00",
+      "strVenue": "AESSEAL New York Stadium",
+      "strCountry": "England",
+      "strStatus": "Not Started"
+    },
+    {
+      "idEvent": "2275081",
+      "strEvent": "Bolton Wanderers vs Doncaster Rovers",
+      "strLeague": "English League 1",
+      "strSeason": "2025-2026",
+      "dateEvent": "2026-03-17",
+      "strTime": "19:45:00",
+      "strVenue": "Toughsheet Community Stadium",
+      "strCountry": "England",
+      "strStatus": "Not Started"
+    },
+    {
+      "idEvent": "2275098",
+      "strEvent": "Port Vale vs Bolton Wanderers",
+      "strLeague": "English League 1",
+      "strSeason": "2025-2026",
+      "dateEvent": "2026-03-21",
+      "strTime": "15:00:00",
+      "strVenue": "Vale Park",
+      "strCountry": "England",
+      "strStatus": "Not Started"
+    },
+    {
+      "idEvent": "2275103",
+      "strEvent": "Bolton Wanderers vs Stevenage",
+      "strLeague": "English League 1",
+      "strSeason": "2025-2026",
+      "dateEvent": "2026-03-28",
+      "strTime": "15:00:00",
+      "strVenue": "Toughsheet Community Stadium",
+      "strCountry": "England",
+      "strStatus": "Not Started"
+    }
+  ],
+  "api_response_notes": [
+    "API returned 10 events for English League 1 (2025-2026 season)",
+    "All events feature Bolton Wanderers (id: 133606)",
+    "This data does NOT match the requested Boca Juniors team",
+    "Same result was returned when testing with Barcelona (id: 133739)",
+    "Likely a data limitation of the free API tier or stale test data"
+  ]
+}

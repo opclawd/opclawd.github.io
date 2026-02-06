@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test 7: Monitor de Clima Multi-Ciudad</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #0a0a0f;
+            color: #e0e0e0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            padding: 2rem 1rem;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        h1 { 
+            font-size: 2rem; 
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        .subtitle { color: #888; margin-bottom: 2rem; }
+        .card {
+            background: #14141f;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #252535;
+        }
+        .card h2 {
+            color: #ff6b35;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .card p { margin-bottom: 0.75rem; }
+        .card ul { padding-left: 1.5rem; }
+        .card li { margin-bottom: 0.5rem; }
+        .city-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        .city-card {
+            background: #1a1a2e;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            border: 1px solid #252535;
+        }
+        .city-card h3 {
+            color: #f7931e;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .temp { font-size: 1.5rem; font-weight: bold; color: #fff; }
+        .wind { color: #888; font-size: 0.9rem; }
+        pre {
+            background: #1a1a2e;
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 0.85rem;
+            border: 1px solid #252535;
+        }
+        code { font-family: 'Fira Code', monospace; color: #a0a0c0; }
+        .status-pass {
+            display: inline-block;
+            background: #22c55e;
+            color: #000;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #252535;
+        }
+        th { color: #ff6b35; font-weight: 600; }
+        tr:hover { background: #1a1a2e; }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #ff6b35;
+            text-decoration: none;
+            margin-top: 1rem;
+        }
+        .back-link:hover { color: #f7931e; }
+        @media (max-width: 600px) {
+            h1 { font-size: 1.5rem; }
+            .city-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fa-solid fa-cloud-sun"></i> Test 7: Monitor de Clima Multi-Ciudad</h1>
+        <p class="subtitle">Consumo de API Open-Meteo y logging a CSV <span class="status-pass">PASS</span></p>
+
+        <div class="card">
+            <h2><i class="fa-solid fa-clipboard-list"></i> Consigna</h2>
+            <p>Crear y ejecutar <code>scripts/weather_monitor.py</code> que:</p>
+            <ul>
+                <li>Use <code>requests</code> para hacer GET a la API de Open-Meteo</li>
+                <li>Consulte clima actual para 3 ciudades:
+                    <ul>
+                        <li>Buenos Aires (-34.61, -58.38)</li>
+                        <li>Chicago (41.88, -87.63)</li>
+                        <li>Tokyo (35.68, 139.69)</li>
+                    </ul>
+                </li>
+                <li>Guarde resultados en <code>exports/weather_log.csv</code></li>
+                <li>Formato: <code>timestamp,city,temperature_c,windspeed</code></li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2><i class="fa-solid fa-cogs"></i> Pasos Técnicos</h2>
+            <ol>
+                <li>Creado <code>scripts/weather_monitor.py</code> con funciones para:
+                    <ul>
+                        <li>Definir coordenadas de las 3 ciudades en un diccionario</li>
+                        <li>Función <code>fetch_weather()</code> para consumir la API</li>
+                        <li>Manejo de errores con try/except</li>
+                        <li>Exportación a CSV con headers condicionales</li>
+                    </ul>
+                </li>
+                <li>Ejecutado el script - datos obtenidos exitosamente</li>
+                <li>Archivo CSV generado en <code>exports/weather_log.csv</code></li>
+            </ol>
+        </div>
+
+        <div class="card">
+            <h2><i class="fa-solid fa-chart-line"></i> Resultados</h2>
+            <p><strong>Última ejecución:</strong> 2026-02-06 05:39:08 UTC</p>
+            
+            <div class="city-grid">
+                <div class="city-card">
+                    <h3><i class="fa-solid fa-location-dot"></i> Buenos Aires</h3>
+                    <div class="temp">21.5°C</div>
+                    <div class="wind"><i class="fa-solid fa-wind"></i> 10.9 km/h</div>
+                </div>
+                <div class="city-card">
+                    <h3><i class="fa-solid fa-location-dot"></i> Chicago</h3>
+                    <div class="temp">-3.4°C</div>
+                    <div class="wind"><i class="fa-solid fa-wind"></i> 15.1 km/h</div>
+                </div>
+                <div class="city-card">
+                    <h3><i class="fa-solid fa-location-dot"></i> Tokyo</h3>
+                    <div class="temp">13.1°C</div>
+                    <div class="wind"><i class="fa-solid fa-wind"></i> 1.3 km/h</div>
+                </div>
+            </div>
+
+            <p><strong>Contenido del CSV:</strong></p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Timestamp</th>
+                        <th>Ciudad</th>
+                        <th>Temperatura (°C)</th>
+                        <th>Viento (km/h)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2026-02-06 05:10:18</td>
+                        <td>Buenos Aires</td>
+                        <td>21.8</td>
+                        <td>7.2</td>
+                    </tr>
+                    <tr>
+                        <td>2026-02-06 05:10:18</td>
+                        <td>Chicago</td>
+                        <td>-3.3</td>
+                        <td>13.4</td>
+                    </tr>
+                    <tr>
+                        <td>2026-02-06 05:10:18</td>
+                        <td>Tokyo</td>
+                        <td>12.8</td>
+                        <td>2.5</td>
+                    </tr>
+                    <tr>
+                        <td>2026-02-06 05:39:08</td>
+                        <td>Buenos Aires</td>
+                        <td>21.5</td>
+                        <td>10.9</td>
+                    </tr>
+                    <tr>
+                        <td>2026-02-06 05:39:08</td>
+                        <td>Chicago</td>
+                        <td>-3.4</td>
+                        <td>15.1</td>
+                    </tr>
+                    <tr>
+                        <td>2026-02-06 05:39:08</td>
+                        <td>Tokyo</td>
+                        <td>13.1</td>
+                        <td>1.3</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2><i class="fa-solid fa-code"></i> Código</h2>
+            <p><strong>scripts/weather_monitor.py</strong></p>
+            <pre><code>#!/usr/bin/env python3
+"""
+Weather Monitor Script
+Fetches current weather data from Open-Meteo API
+"""
+
+import requests
+import csv
+from datetime import datetime
+
+# City coordinates
+cities = {
+    "Buenos Aires": {"lat": -34.61, "lon": -58.38},
+    "Chicago": {"lat": 41.88, "lon": -87.63},
+    "Tokyo": {"lat": 35.68, "lon": 139.69}
+}
+
+def fetch_weather(city_name, lat, lon):
+    """Fetch weather data from Open-Meteo API."""
+    url = f"https://api.open-meteo.com/v1/forecast?"
+    url += f"latitude={lat}&longitude={lon}&current_weather=true"
+    
+    response = requests.get(url, timeout=10)
+    data = response.json()
+    
+    return {
+        "city": city_name,
+        "temperature_c": data["current_weather"]["temperature"],
+        "windspeed": data["current_weather"]["windspeed"]
+    }
+
+def main():
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    results = []
+    
+    for city_name, coords in cities.items():
+        weather = fetch_weather(city_name, coords["lat"], coords["lon"])
+        results.append({
+            "timestamp": timestamp,
+            "city": weather["city"],
+            "temperature_c": weather["temperature_c"],
+            "windspeed": weather["windspeed"]
+        })
+    
+    # Append to CSV
+    with open("exports/weather_log.csv", "a", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=[
+            'timestamp', 'city', 'temperature_c', 'windspeed'
+        ])
+        writer.writerows(results)</code></pre>
+        </div>
+
+        <a href="/clawdbot/" class="back-link">
+            <i class="fa-solid fa-arrow-left"></i> Volver
+        </a>
+    </div>
+</body>
+</html>

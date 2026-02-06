@@ -1,0 +1,65 @@
+{
+  "metadata": {
+    "source": "https://hnrss.org/frontpage",
+    "fetched_at": "2026-02-06T05:55:08.084789",
+    "total_items": 20,
+    "filtered_items": 8,
+    "keywords": [
+      "AI",
+      "OpenAI",
+      "GPT",
+      "LLM",
+      "Claude"
+    ]
+  },
+  "items": [
+    {
+      "title": "Generative Pen-Trained Transformer",
+      "link": "https://theodore.net/projects/Polargraph/",
+      "pubDate": "Fri, 06 Feb 2026 04:28:08 +0000",
+      "description": "\n<p>Article URL: <a href=\"https://theodore.net/projects/Polargraph/\">https://theodore.net/projects/Polargraph/</a></p>\n<p>Comments URL: <a href=\"https://news.ycombinator.com/item?id=46909122\">https://..."
+    },
+    {
+      "title": "Waiting for Postgres 19: Better planner hints with path generation strategies [video]",
+      "link": "https://www.youtube.com/watch?v=QLb3nhIy2Lc",
+      "pubDate": "Fri, 06 Feb 2026 03:25:51 +0000",
+      "description": "\n<p>Article URL: <a href=\"https://www.youtube.com/watch?v=QLb3nhIy2Lc\">https://www.youtube.com/watch?v=QLb3nhIy2Lc</a></p>\n<p>Comments URL: <a href=\"https://news.ycombinator.com/item?id=46908700\">http..."
+    },
+    {
+      "title": "Show HN: Calfkit – an SDK to build distributed, event-driven AI agents on Kafka",
+      "link": "https://github.com/calf-ai/calfkit-sdk",
+      "pubDate": "Thu, 05 Feb 2026 23:10:12 +0000",
+      "description": "\n<p>I think agents should work like real teams, with independent, distinct roles, async communication, and the ability to onboard new teammates or tools without restructuring the whole org. I built ba..."
+    },
+    {
+      "title": "Claude Opus 4.6 extra usage promo",
+      "link": "https://support.claude.com/en/articles/13613973-claude-opus-4-6-extra-usage-promo",
+      "pubDate": "Thu, 05 Feb 2026 20:15:48 +0000",
+      "description": "\n<p>Article URL: <a href=\"https://support.claude.com/en/articles/13613973-claude-opus-4-6-extra-usage-promo\">https://support.claude.com/en/articles/13613973-claude-opus-4-6-extra-usage-promo</a></p>\n<..."
+    },
+    {
+      "title": "My AI Adoption Journey",
+      "link": "https://mitchellh.com/writing/my-ai-adoption-journey",
+      "pubDate": "Thu, 05 Feb 2026 19:04:40 +0000",
+      "description": "\n<p>Article URL: <a href=\"https://mitchellh.com/writing/my-ai-adoption-journey\">https://mitchellh.com/writing/my-ai-adoption-journey</a></p>\n<p>Comments URL: <a href=\"https://news.ycombinator.com/item..."
+    },
+    {
+      "title": "GPT-5.3-Codex",
+      "link": "https://openai.com/index/introducing-gpt-5-3-codex/",
+      "pubDate": "Thu, 05 Feb 2026 18:08:08 +0000",
+      "description": "\n<p>Article URL: <a href=\"https://openai.com/index/introducing-gpt-5-3-codex/\">https://openai.com/index/introducing-gpt-5-3-codex/</a></p>\n<p>Comments URL: <a href=\"https://news.ycombinator.com/item?i..."
+    },
+    {
+      "title": "Orchestrate teams of Claude Code sessions",
+      "link": "https://code.claude.com/docs/en/agent-teams",
+      "pubDate": "Thu, 05 Feb 2026 17:49:54 +0000",
+      "description": "\n<p>Article URL: <a href=\"https://code.claude.com/docs/en/agent-teams\">https://code.claude.com/docs/en/agent-teams</a></p>\n<p>Comments URL: <a href=\"https://news.ycombinator.com/item?id=46902368\">http..."
+    },
+    {
+      "title": "Claude Opus 4.6",
+      "link": "https://www.anthropic.com/news/claude-opus-4-6",
+      "pubDate": "Thu, 05 Feb 2026 17:38:53 +0000",
+      "description": "\n<p>Article URL: <a href=\"https://www.anthropic.com/news/claude-opus-4-6\">https://www.anthropic.com/news/claude-opus-4-6</a></p>\n<p>Comments URL: <a href=\"https://news.ycombinator.com/item?id=46902223..."
+    }
+  ]
+}

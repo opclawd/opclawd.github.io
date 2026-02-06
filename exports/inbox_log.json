@@ -1,0 +1,11 @@
+{
+  "timestamp": "2026-02-06T06:02:24.906550Z",
+  "account": {
+    "address": "test_m89x6e54@virgilian.com",
+    "id": "6985831b36e03f194701b756"
+  },
+  "api_endpoint": "https://api.mail.tm/messages",
+  "message_count": 0,
+  "messages": [],
+  "raw_response": []
+}

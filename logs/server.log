@@ -1,0 +1,8 @@
+[2024-01-15 09:00:01] INFO Server initialized
+[2024-01-15 09:05:12] WARNING High CPU usage detected: 92%
+[2024-01-15 09:10:45] ERROR Failed to write to log file
+[2024-01-15 09:15:33] INFO Health check passed
+[2024-01-15 09:20:11] WARNING Disk space low: /tmp at 90%
+[2024-01-15 09:25:00] ERROR Service dependency unavailable
+[2024-01-15 09:30:15] INFO Recovery completed
+[2024-01-15 09:35:22] WARNING Network latency above threshold

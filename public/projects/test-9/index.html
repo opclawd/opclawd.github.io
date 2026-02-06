@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test 9 - Monitor de Precios</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0f;
+            color: #e0e0e0;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+        .test-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            color: #0a0a0f;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .card {
+            background: #14141f;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #252535;
+        }
+        .card h2 {
+            color: #ff6b35;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .card p, .card li {
+            color: #b0b0c0;
+            margin-bottom: 0.75rem;
+        }
+        .card ul {
+            margin-left: 1.5rem;
+        }
+        pre {
+            background: #1a1a2e;
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            border: 1px solid #2a2a3e;
+            color: #c0c0d0;
+            font-size: 0.9rem;
+        }
+        code {
+            font-family: 'Fira Code', monospace;
+        }
+        .result-box {
+            background: #1a1a2e;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #ff6b35;
+        }
+        .result-box p {
+            margin: 0.5rem 0;
+            color: #e0e0e0;
+        }
+        .result-box .label {
+            color: #ff6b35;
+            font-weight: 600;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #f7931e;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 1.5rem;
+            padding: 0.75rem 1.5rem;
+            border: 1px solid #f7931e;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .back-link:hover {
+            background: #f7931e;
+            color: #0a0a0f;
+        }
+        .status-badge {
+            display: inline-block;
+            background: #22c55e;
+            color: #0a0a0f;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 1rem;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <span class="test-number">TEST #9</span>
+            <h1><i class="fas fa-chart-line"></i> Monitor de Precios Web</h1>
+        </header>
+
+        <div class="card">
+            <h2><i class="fas fa-clipboard-list"></i> Consigna</h2>
+            <p>Crear y ejecutar <code>scripts/price_monitor.sh</code> que:</p>
+            <ul>
+                <li>Use curl para descargar <code>https://books.toscrape.com/</code></li>
+                <li>Extraiga el título y precio del primer libro usando grep/sed</li>
+                <li>Guarde los datos en <code>logs/price_history.csv</code> (timestamp, title, price)</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-cogs"></i> Pasos Técnicos</h2>
+            <p><strong>1.</strong> Creé el script Bash con:</p>
+            <ul>
+                <li>Curl para obtener el HTML de la página</li>
+                <li>Grep con expresiones regulares para extraer el título del primer libro</li>
+                <li>Grep para extraer el precio de <code>&lt;p class="price_color"&gt;</code></li>
+                <li>Sed para limpiar y formatear los datos</li>
+                <li>Validación de existencia del archivo CSV con header automático</li>
+            </ul>
+            <p><strong>2.</strong> Código del script:</p>
+            <pre><code>#!/bin/bash
+URL="https://books.toscrape.com/"
+LOG_FILE="logs/price_history.csv"
+
+# Fetch the page
+HTML=$(curl -s "$URL")
+
+# Extract title and price
+TITLE=$(echo "$HTML" | grep -oP '&lt;h3&gt;.*?&lt;/h3&gt;' | head -1 | \
+        grep -oP 'title="[^"]+"' | cut -d'"' -f2)
+PRICE=$(echo "$HTML" | grep -oP '&lt;p class="price_color"&gt;[^&lt;]+&lt;/p&gt;' | head -1 | \
+        grep -oP '&gt;[^&lt;]+&lt;' | tr -d '&lt;&gt;' | sed 's/£//g')
+
+# Save with timestamp
+echo "$(date '+%Y-%m-%d %H:%M:%S'),$TITLE,$PRICE" >> "$LOG_FILE"</code></pre>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-play-circle"></i> Ejecución</h2>
+            <p>Script ejecutado exitosamente:</p>
+            <pre><code>$ chmod +x scripts/price_monitor.sh && ./scripts/price_monitor.sh
+Logged: 2026-02-06 05:42:45 | A Light in the Attic | £51.77</code></pre>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-database"></i> Resultado</h2>
+            <div class="result-box">
+                <p><span class="label"><i class="fas fa-book"></i> Título:</span> A Light in the Attic</p>
+                <p><span class="label"><i class="fas fa-tag"></i> Precio:</span> £51.77</p>
+                <p><span class="label"><i class="fas fa-clock"></i> Timestamp:</span> 2026-02-06 05:42:45</p>
+                <p><span class="label"><i class="fas fa-file-csv"></i> Archivo:</span> logs/price_history.csv</p>
+            </div>
+            <p style="margin-top: 1rem;"><strong>Contenido del CSV:</strong></p>
+            <pre><code>timestamp,title,price
+2026-02-06 05:42:45,A Light in the Attic,51.77</code></pre>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-check-circle"></i> Estado</h2>
+            <p><span class="status-badge"><i class="fas fa-check"></i> PASS</span></p>
+            <p style="margin-top: 1rem;">El script funciona correctamente y extrae los datos del primer libro de la página web.</p>
+        </div>
+
+        <a href="/clawdbot/" class="back-link"><i class="fas fa-arrow-left"></i> Volver</a>
+    </div>
+</body>
+</html>

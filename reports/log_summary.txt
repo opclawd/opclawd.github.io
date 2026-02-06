@@ -1,0 +1,28 @@
+========================================
+     LOG ANALYZER REPORT
+     Generated: 2026-02-06 05:44:36
+========================================
+
+📄 File: app.log
+   Total Lines: 10
+   ERROR:   3
+   WARNING: 3
+
+📄 File: server.log
+   Total Lines: 8
+   ERROR:   2
+   WARNING: 3
+
+📄 File: worker.log
+   Total Lines: 10
+   ERROR:   3
+   WARNING: 3
+
+========================================
+           SUMMARY
+========================================
+Total Files Analyzed: 3
+Total Lines Processed: 28
+Total ERROR entries:   8
+Total WARNING entries: 9
+========================================

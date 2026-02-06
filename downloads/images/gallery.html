@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery - Test 12</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0f;
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+        
+        header p {
+            color: #888;
+            font-size: 1.1rem;
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .gallery-item {
+            background: #14141f;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #1f1f2e;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.2);
+            border-color: #ff6b35;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 225px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .gallery-item .info {
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .gallery-item .info h3 {
+            font-size: 0.95rem;
+            color: #ccc;
+            font-weight: 500;
+        }
+        
+        .gallery-item .info i {
+            color: #ff6b35;
+            font-size: 1.2rem;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: #14141f;
+            border-radius: 12px;
+            border: 1px solid #1f1f2e;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ff6b35;
+        }
+        
+        .stat-label {
+            color: #888;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-images"></i> Image Gallery</h1>
+            <p>10 random images from picsum.photos</p>
+        </header>
+        
+        <div class="gallery">
+            <div class="gallery-item">
+                <img src="img_001.jpg" alt="Image 001">
+                <div class="info">
+                    <h3>img_001.jpg</h3>
+                    <i class="fas fa-image"></i>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="img_002.jpg" alt="Image 002">
+                <div class="info">
+                    <h3>img_002.jpg</h3>
+                    <i class="fas fa-image"></i>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="img_003.jpg" alt="Image 003">
+                <div class="info">
+                    <h3>img_003.jpg</h3>
+                    <i class="fas fa-image"></i>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="img_004.jpg" alt="Image 004">
+                <div class="info">
+                    <h3>img_004.jpg</h3>
+                    <i class="fas fa-image"></i>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="img_005.jpg" alt="Image 005">
+                <div class="info">
+                    <h3>img_005.jpg</h3>
+                    <i class="fas fa-image"></i>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="img_006.jpg" alt="Image 006">
+                <div class="info">
+                    <h3>img_006.jpg</h3>
+                    <i class="fas fa-image"></i>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="img_007.jpg" alt="Image 007">
+                <div class="info">
+                    <h3>img_007.jpg</h3>
+                    <i class="fas fa-image"></i>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="img_008.jpg" alt="Image 008">
+                <div class="info">
+                    <h3>img_008.jpg</h3>
+                    <i class="fas fa-image"></i>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="img_009.jpg" alt="Image 009">
+                <div class="info">
+                    <h3>img_009.jpg</h3>
+                    <i class="fas fa-image"></i>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="img_010.jpg" alt="Image 010">
+                <div class="info">
+                    <h3>img_010.jpg</h3>
+                    <i class="fas fa-image"></i>
+                </div>
+            </div>
+        </div>
+        
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-value">10</div>
+                <div class="stat-label">Images</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">400x300</div>
+                <div class="stat-label">Resolution</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">~18s</div>
+                <div class="stat-label">Download Time</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

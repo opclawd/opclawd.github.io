@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test 18: Mail.tm Inbox Monitor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0a0a0f;
+            color: #e4e4e7;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        header {
+            text-align: center;
+            padding: 3rem 0;
+            border-bottom: 1px solid #1f1f2e;
+            margin-bottom: 2rem;
+        }
+        .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            color: #fff;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+        .subtitle {
+            color: #71717a;
+            font-size: 1.1rem;
+        }
+        .card {
+            background: #14141f;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #1f1f2e;
+        }
+        .card h2 {
+            color: #ff6b35;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .card p, .card li {
+            color: #a1a1aa;
+            margin-bottom: 0.75rem;
+        }
+        .card ul {
+            margin-left: 1.5rem;
+        }
+        pre {
+            background: #1a1a2e;
+            border-radius: 8px;
+            padding: 1.5rem;
+            overflow-x: auto;
+            font-size: 0.9rem;
+            border: 1px solid #2a2a3e;
+        }
+        code {
+            font-family: 'Fira Code', 'Consolas', monospace;
+            color: #e4e4e7;
+        }
+        .highlight {
+            color: #f7931e;
+        }
+        .string { color: #a5d6ff; }
+        .number { color: #79c0ff; }
+        .key { color: #ff7b72; }
+        .boolean { color: #79c0ff; }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            color: #fff;
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            margin-top: 2rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .back-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
+        }
+        .status-pass {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(34, 197, 94, 0.15);
+            color: #22c55e;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .info-item {
+            background: #1a1a2e;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #2a2a3e;
+        }
+        .info-item strong {
+            color: #ff6b35;
+            display: block;
+            margin-bottom: 0.3rem;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+        .info-item span {
+            color: #e4e4e7;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+        @media (max-width: 600px) {
+            h1 { font-size: 1.8rem; }
+            .card { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <span class="badge">Test #18</span>
+            <h1><i class="fas fa-envelope-open-text"></i> Mail.tm Inbox Monitor</h1>
+            <p class="subtitle">Monitor de correo temporal con API REST</p>
+        </header>
+
+        <div class="card">
+            <span class="status-pass"><i class="fas fa-check-circle"></i> PASS</span>
+            <h2><i class="fas fa-clipboard-list"></i> Consigna</h2>
+            <p>Crear <code>scripts/inbox_monitor.py</code> que:</p>
+            <ul>
+                <li>Lea credenciales desde <code>accounts/temp_email.json</code></li>
+                <li>Si tiene token JWT, haga GET a <code>https://api.mail.tm/messages</code> con Auth Bearer</li>
+                <li>Guarde resultados en <code>exports/inbox_log.json</code></li>
+                <li>Si no hay credenciales, maneje el error con mensaje claro</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-cogs"></i> Pasos Técnicos</h2>
+            <ol>
+                <li><strong>Lectura de credenciales:</strong> Cargue <code>accounts/temp_email.json</code> y extraje el JWT token del campo <code>token.jwt</code></li>
+                <li><strong>Autenticación:</strong> Configuré headers con <code>Authorization: Bearer {token}</code></li>
+                <li><strong>Request HTTPS:</strong> Usé <code>urllib.request</code> con SSL context (necessario para evitar errores de certificado en el entorno)</li>
+                <li><strong>Parseo de respuesta:</strong> La API devuelve una lista directa (no dict con <code>hydra:member</code>), así que manejé ambos casos</li>
+                <li><strong>Logging:</strong> Guardé resultado con metadata: timestamp, cuenta, cantidad de mensajes, y respuesta cruda</li>
+            </ol>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-file-code"></i> Código del Script</h2>
+            <pre><code><span class="highlight">scripts/inbox_monitor.py</span>
+
+<span class="key">def</span> <span class="highlight">fetch_inbox</span>(token):
+    <span class="string">"""Fetch messages from mail.tm API"""</span>
+    ssl_context = ssl.create_default_context()
+    ssl_context.check_hostname = <span class="boolean">False</span>
+    ssl_context.verify_mode = ssl.CERT_NONE
+    
+    headers = {
+        <span class="string">'Authorization'</span>: <span class="string">f'Bearer {token}'</span>,
+        <span class="string">'Accept'</span>: <span class="string">'application/json'</span>
+    }
+    
+    req = urllib.request.Request(
+        <span class="string">"https://api.mail.tm/messages"</span>, 
+        headers=headers, 
+        method=<span class="string">'GET'</span>
+    )
+    
+    <span class="key">with</span> urllib.request.urlopen(req, context=ssl_context) <span class="key">as</span> response:
+        <span class="key">return</span> json.loads(response.read().decode(<span class="string">'utf-8'</span>))</code></pre>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-database"></i> Resultado</h2>
+            <p>Ejecución exitosa. El inbox fue consultado y logueado:</p>
+            
+            <div class="info-grid">
+                <div class="info-item">
+                    <strong>Cuenta</strong>
+                    <span>test_m89x6e54@virgilian.com</span>
+                </div>
+                <div class="info-item">
+                    <strong>Account ID</strong>
+                    <span>6985831b36e03f194701b756</span>
+                </div>
+                <div class="info-item">
+                    <strong>Mensajes</strong>
+                    <span>0</span>
+                </div>
+                <div class="info-item">
+                    <strong>Timestamp</strong>
+                    <span>2026-02-06T06:02:24Z</span>
+                </div>
+            </div>
+
+            <p style="margin-top: 1.5rem;"><strong>Archivo exportado:</strong></p>
+            <pre><code>exports/inbox_log.json
+
+{
+  <span class="key">"timestamp"</span>: <span class="string">"2026-02-06T06:02:24.906550Z"</span>,
+  <span class="key">"account"</span>: {
+    <span class="key">"address"</span>: <span class="string">"test_m89x6e54@virgilian.com"</span>,
+    <span class="key">"id"</span>: <span class="string">"6985831b36e03f194701b756"</span>
+  },
+  <span class="key">"api_endpoint"</span>: <span class="string">"https://api.mail.tm/messages"</span>,
+  <span class="key">"message_count"</span>: <span class="number">0</span>,
+  <span class="key">"messages"</span>: [],
+  <span class="key">"raw_response"</span>: []
+}</code></pre>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-lightbulb"></i> Notas</h2>
+            <ul>
+                <li><strong>API REST:</strong> Mail.tm ofrece una API completa para correo temporal/disposable</li>
+                <li><strong>Autenticación JWT:</strong> Usa tokens Bearer con duración limitada</li>
+                <li><strong>Respuesta:</strong> El endpoint <code>/messages</code> devuelve un array de mensajes directamente</li>
+                <li><strong>SSL:</strong> En este entorno fue necesario deshabilitar verificación de certificados</li>
+                <li><strong>Casos edge:</strong> El script maneja archivos faltantes, JSON inválido, y respuestas HTTP error</li>
+            </ul>
+        </div>
+
+        <a href="/clawdbot/" class="back-link">
+            <i class="fas fa-arrow-left"></i> Volver
+        </a>
+    </div>
+</body>
+</html>

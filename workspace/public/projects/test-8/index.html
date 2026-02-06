@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test 8 - Docker Nginx Static App | OpenClaw</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0f;
+            color: #e0e0e0;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #ff6b35;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 30px;
+            transition: color 0.3s;
+        }
+        .back-link:hover { color: #f7931e; }
+        .header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #14141f 100%);
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255,107,53,0.1);
+        }
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,107,53,0.1);
+            color: #ff6b35;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #888;
+            font-size: 1.1rem;
+        }
+        .card {
+            background: #14141f;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .card h2 {
+            color: #f7931e;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .card p { color: #b0b0b0; margin-bottom: 15px; }
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(39,174,96,0.2);
+            color: #27ae60;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+        .status-badge i { font-size: 18px; }
+        .code-block {
+            background: #0d0d14;
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+            border-left: 3px solid #ff6b35;
+            margin: 15px 0;
+        }
+        .code-block code {
+            font-family: 'Fira Code', 'Consolas', monospace;
+            font-size: 14px;
+            color: #e0e0e0;
+            white-space: pre;
+        }
+        .file-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .file-item {
+            background: #1a1a2e;
+            border-radius: 8px;
+            padding: 20px;
+            border-left: 3px solid #f7931e;
+        }
+        .file-item h4 {
+            color: #ffd23f;
+            font-family: 'Fira Code', monospace;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        .file-item pre {
+            background: #0d0d14;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-size: 13px;
+            color: #aaa;
+        }
+        .steps-list {
+            list-style: none;
+            counter-reset: step;
+        }
+        .steps-list li {
+            position: relative;
+            padding-left: 50px;
+            margin-bottom: 20px;
+            color: #b0b0b0;
+        }
+        .steps-list li::before {
+            counter-increment: step;
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .info-item {
+            background: #1a1a2e;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .info-item label {
+            display: block;
+            color: #888;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+        .info-item span {
+            color: #fff;
+            font-weight: 600;
+        }
+        @media (max-width: 768px) {
+            h1 { font-size: 1.8rem; }
+            .header { padding: 25px; }
+            .card { padding: 20px; }
+            .steps-list li { padding-left: 45px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/clawdbot/" class="back-link">
+            <i class="fas fa-arrow-left"></i> Volver al inicio
+        </a>
+
+        <div class="header">
+            <div class="badge">
+                <i class="fas fa-flask"></i> Test #8
+            </div>
+            <h1><i class="fas fa-docker" style="color: #2496ed;"></i> Docker + Nginx: App Estática</h1>
+            <p class="subtitle">Containerización de una aplicación HTML estática con servidor Nginx</p>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-clipboard-list"></i> Descripción de la Consigna</h2>
+            <p>Generar un Dockerfile para servir una aplicación HTML estática usando Nginx como servidor web. Incluir archivo docker-compose.yml para facilitar el despliegue. La configuración debe:</p>
+            <ul style="margin-left: 20px; color: #b0b0b0;">
+                <li>Copiar archivos de la app al directorio de Nginx</li>
+                <li>Usar imagen base ligera (Alpine)</li>
+                <li>Configurar health checks</li>
+                <li>Soportar compresión gzip</li>
+                <li>Crear la app si no existe</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-tasks"></i> Pasos Ejecutados</h2>
+            <ol class="steps-list">
+                <li>Creé la estructura de directorios: <code>workspace/apps/todo-app/docker/</code></li>
+                <li>Creé una Todo App HTML mínima con diseño moderno, almacenamiento local y diseño responsive</li>
+                <li>Escribí el Dockerfile usando <code>nginx:alpine</code> como base</li>
+                <li>Configuré nginx.conf con compresión gzip, cache de estáticos y endpoint de health</li>
+                <li>Creé docker-compose.yml con healthcheck y mapeo de puertos</li>
+                <li>Generé esta página de documentación</li>
+            </ol>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-check-circle"></i> Resultado Obtenido</h2>
+            <div class="status-badge">
+                <i class="fas fa-check-circle"></i> ÉXITO
+            </div>
+            <div class="info-grid">
+                <div class="info-item">
+                    <label>Archivos Generados</label>
+                    <span>5 archivos</span>
+                </div>
+                <div class="info-item">
+                    <label>Imagen Base</label>
+                    <span>nginx:alpine</span>
+                </div>
+                <div class="info-item">
+                    <label>Puerto Expuesto</label>
+                    <span>8080 → 80</span>
+                </div>
+                <div class="info-item">
+                    <label>Tamaño Estimado</label>
+                    <span>~25 MB</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-folder-open"></i> Archivos Generados</h2>
+            <div class="file-list">
+                <div class="file-item">
+                    <h4><i class="fab fa-html5"></i> /workspace/apps/todo-app/index.html</h4>
+                    <pre>Aplicación Todo List con diseño moderno, almacenamiento localStorage,
+transiciones CSS y diseño responsive. Incluye funcionalidad CRUD completa.</pre>
+                </div>
+                <div class="file-item">
+                    <h4><i class="fab fa-docker"></i> /workspace/apps/todo-app/docker/Dockerfile</h4>
+                    <div class="code-block"><code>FROM nginx:alpine
+RUN rm -rf /usr/share/nginx/html/* /etc/nginx/conf.d/*
+COPY . /usr/share/nginx/html
+COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]</code></div>
+                </div>
+                <div class="file-item">
+                    <h4><i class="fas fa-cog"></i> /workspace/apps/todo-app/docker/nginx.conf</h4>
+                    <div class="code-block"><code>server {
+    listen 80;
+    server_name localhost;
+    root /usr/share/nginx/html;
+    index index.html;
+    gzip on;
+    location / { try_files $uri $uri/ /index.html; }
+    location /health { return 200 "healthy\n"; }
+}</code></div>
+                </div>
+                <div class="file-item">
+                    <h4><i class="fas fa-file-alt"></i> /workspace/apps/todo-app/docker/docker-compose.yml</h4>
+                    <div class="code-block"><code>version: '3.8'
+services:
+  todo-app:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    ports:
+      - "8080:80"
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost/health"]
+      interval: 30s</code></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-terminal"></i> Comandos de Uso</h2>
+            <div class="code-block"><code># Construir y ejecutar con docker-compose
+cd /workspace/apps/todo-app/docker
+docker-compose up --build
+
+# O con Docker directamente
+docker build -f docker/Dockerfile -t todo-app .
+docker run -p 8080:80 todo-app
+
+# Verificar health
+curl http://localhost:8080/health</code></div>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-clock"></i> Información de Ejecución</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <label>Fecha</label>
+                    <span>2026-02-06</span>
+                </div>
+                <div class="info-item">
+                    <label>Hora</label>
+                    <span>05:07 AM UTC</span>
+                </div>
+                <div class="info-item">
+                    <label>Duración</label>
+                    <span>~2 minutos</span>
+                </div>
+                <div class="info-item">
+                    <label>ID Job</label>
+                    <span>55ca9f97</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

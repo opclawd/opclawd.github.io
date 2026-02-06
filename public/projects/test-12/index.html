@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test 12: Image Downloader Gallery</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0f;
+            color: #e0e0e0;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #888;
+            text-decoration: none;
+            margin-bottom: 2rem;
+            transition: color 0.3s;
+        }
+        
+        .back-link:hover {
+            color: #ff6b35;
+        }
+        
+        header {
+            margin-bottom: 3rem;
+        }
+        
+        .test-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            color: #0a0a0f;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #fff, #ccc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            color: #888;
+            font-size: 1.1rem;
+        }
+        
+        .card {
+            background: #14141f;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid #1f1f2e;
+        }
+        
+        .card h2 {
+            color: #ff6b35;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .card h2 i {
+            font-size: 1.1rem;
+        }
+        
+        .card p, .card ul {
+            color: #b0b0b0;
+        }
+        
+        .card ul {
+            margin-left: 1.5rem;
+            margin-top: 0.75rem;
+        }
+        
+        .card li {
+            margin-bottom: 0.5rem;
+        }
+        
+        pre {
+            background: #1a1a2e;
+            padding: 1.5rem;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin-top: 1rem;
+            border: 1px solid #2a2a3e;
+        }
+        
+        code {
+            font-family: 'Fira Code', 'Monaco', 'Consolas', monospace;
+            font-size: 0.9rem;
+            color: #e0e0e0;
+        }
+        
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .result-item {
+            background: #1a1a2e;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            border: 1px solid #2a2a3e;
+        }
+        
+        .result-item img {
+            width: 100%;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .result-item span {
+            font-size: 0.8rem;
+            color: #888;
+        }
+        
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            color: #0a0a0f;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 1.8rem; }
+            .card { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/clawdbot/" class="back-link">
+            <i class="fas fa-arrow-left"></i> Volver
+        </a>
+        
+        <header>
+            <span class="test-badge">Test 12</span>
+            <h1>Image Downloader Gallery</h1>
+            <p class="subtitle">Python requests + HTML gallery with dark theme</p>
+        </header>
+        
+        <div class="card">
+            <h2><i class="fas fa-clipboard-list"></i> Consigna</h2>
+            <ul>
+                <li>Descargar 10 imágenes desde <code>https://picsum.photos/400/300</code> usando Python requests</li>
+                <li>Agregar un delay de 2 segundos entre cada descarga</li>
+                <li>Guardar las imágenes como <code>downloads/images/img_001.jpg</code> a <code>img_010.jpg</code></li>
+                <li>Generar <code>downloads/images/gallery.html</code> con grid layout y dark theme</li>
+            </ul>
+        </div>
+        
+        <div class="card">
+            <h2><i class="fas fa-cogs"></i> Pasos Técnicos</h2>
+            <p>Script Python utilizado:</p>
+            <pre><code>import requests
+import time
+import os
+
+os.makedirs('downloads/images', exist_ok=True)
+
+for i in range(1, 11):
+    url = 'https://picsum.photos/400/300'
+    filename = f'downloads/images/img_{i:03d}.jpg'
+    
+    response = requests.get(url, timeout=30)
+    with open(filename, 'wb') as f:
+        f.write(response.content)
+    
+    if i < 10:
+        time.sleep(2)</code></pre>
+            <p style="margin-top: 1rem;">Características de la galería HTML:</p>
+            <ul>
+                <li>CSS Grid responsive con <code>auto-fill</code> y <code>minmax(300px, 1fr)</code></li>
+                <li>Dark theme: background #0a0a0f, cards #14141f</li>
+                <li>Accent colors: gradiente #ff6b35 a #f7931e</li>
+                <li>Hover effects con transform y box-shadow</li>
+                <li>Font Awesome icons</li>
+            </ul>
+        </div>
+        
+        <div class="card">
+            <h2><i class="fas fa-check-circle"></i> Resultado</h2>
+            <p><span class="status-badge"><i class="fas fa-check"></i> PASS</span></p>
+            <p style="margin-top: 1rem;">Se descargaron exitosamente 10 imágenes aleatorias de picsum.photos con resolución 400x300:</p>
+            <ul>
+                <li>Total descargado: ~155 KB</li>
+                <li>Tiempo total: ~18 segundos (incluyendo delays)</li>
+                <li>Formato: JPEG</li>
+                <li>Ubicación: <code>downloads/images/</code></li>
+            </ul>
+            <a href="../../../downloads/images/gallery.html" class="btn" target="_blank">
+                <i class="fas fa-images"></i> Ver Galería
+            </a>
+        </div>
+    </div>
+</body>
+</html>

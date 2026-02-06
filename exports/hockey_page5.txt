@@ -1,0 +1,132 @@
+Datos de hockey - Page 5
+URL: https://www.scrapethissite.com/pages/forms/?page_num=5
+Total de equipos: 26
+============================================================
+
+Headers: Team Name, Year, Wins, Losses, OT Losses, Win %, Goals For (GF), Goals Against (GA), + / -
+
+[1] Edmonton Oilers
+    Año: 1994
+    Victorias: 17 | Derrotas: 27 | OT Losses: 
+    Win %: 0.354 | GF: 136 | GA: 183
+----------------------------------------
+[2] Florida Panthers
+    Año: 1994
+    Victorias: 20 | Derrotas: 22 | OT Losses: 
+    Win %: 0.417 | GF: 115 | GA: 127
+----------------------------------------
+[3] Hartford Whalers
+    Año: 1994
+    Victorias: 19 | Derrotas: 24 | OT Losses: 
+    Win %: 0.396 | GF: 127 | GA: 141
+----------------------------------------
+[4] Los Angeles Kings
+    Año: 1994
+    Victorias: 16 | Derrotas: 23 | OT Losses: 
+    Win %: 0.333 | GF: 142 | GA: 174
+----------------------------------------
+[5] Montreal Canadiens
+    Año: 1994
+    Victorias: 18 | Derrotas: 23 | OT Losses: 
+    Win %: 0.375 | GF: 125 | GA: 148
+----------------------------------------
+[6] New Jersey Devils
+    Año: 1994
+    Victorias: 22 | Derrotas: 18 | OT Losses: 
+    Win %: 0.458 | GF: 136 | GA: 121
+----------------------------------------
+[7] New York Islanders
+    Año: 1994
+    Victorias: 15 | Derrotas: 28 | OT Losses: 
+    Win %: 0.312 | GF: 126 | GA: 158
+----------------------------------------
+[8] New York Rangers
+    Año: 1994
+    Victorias: 22 | Derrotas: 23 | OT Losses: 
+    Win %: 0.458 | GF: 139 | GA: 134
+----------------------------------------
+[9] Ottawa Senators
+    Año: 1994
+    Victorias: 9 | Derrotas: 34 | OT Losses: 
+    Win %: 0.188 | GF: 117 | GA: 174
+----------------------------------------
+[10] Philadelphia Flyers
+    Año: 1994
+    Victorias: 28 | Derrotas: 16 | OT Losses: 
+    Win %: 0.583 | GF: 150 | GA: 132
+----------------------------------------
+[11] Pittsburgh Penguins
+    Año: 1994
+    Victorias: 29 | Derrotas: 16 | OT Losses: 
+    Win %: 0.604 | GF: 181 | GA: 158
+----------------------------------------
+[12] Quebec Nordiques
+    Año: 1994
+    Victorias: 30 | Derrotas: 13 | OT Losses: 
+    Win %: 0.625 | GF: 185 | GA: 134
+----------------------------------------
+[13] San Jose Sharks
+    Año: 1994
+    Victorias: 19 | Derrotas: 25 | OT Losses: 
+    Win %: 0.396 | GF: 129 | GA: 161
+----------------------------------------
+[14] St. Louis Blues
+    Año: 1994
+    Victorias: 28 | Derrotas: 15 | OT Losses: 
+    Win %: 0.583 | GF: 178 | GA: 135
+----------------------------------------
+[15] Tampa Bay Lightning
+    Año: 1994
+    Victorias: 17 | Derrotas: 28 | OT Losses: 
+    Win %: 0.354 | GF: 120 | GA: 144
+----------------------------------------
+[16] Toronto Maple Leafs
+    Año: 1994
+    Victorias: 21 | Derrotas: 19 | OT Losses: 
+    Win %: 0.438 | GF: 135 | GA: 146
+----------------------------------------
+[17] Vancouver Canucks
+    Año: 1994
+    Victorias: 18 | Derrotas: 18 | OT Losses: 
+    Win %: 0.375 | GF: 153 | GA: 148
+----------------------------------------
+[18] Washington Capitals
+    Año: 1994
+    Victorias: 22 | Derrotas: 18 | OT Losses: 
+    Win %: 0.458 | GF: 136 | GA: 120
+----------------------------------------
+[19] Winnipeg Jets
+    Año: 1994
+    Victorias: 16 | Derrotas: 25 | OT Losses: 
+    Win %: 0.333 | GF: 157 | GA: 177
+----------------------------------------
+[20] Mighty Ducks of Anaheim
+    Año: 1995
+    Victorias: 35 | Derrotas: 39 | OT Losses: 
+    Win %: 0.427 | GF: 234 | GA: 247
+----------------------------------------
+[21] Boston Bruins
+    Año: 1995
+    Victorias: 40 | Derrotas: 31 | OT Losses: 
+    Win %: 0.488 | GF: 282 | GA: 269
+----------------------------------------
+[22] Buffalo Sabres
+    Año: 1995
+    Victorias: 33 | Derrotas: 42 | OT Losses: 
+    Win %: 0.402 | GF: 247 | GA: 262
+----------------------------------------
+[23] Calgary Flames
+    Año: 1995
+    Victorias: 34 | Derrotas: 37 | OT Losses: 
+    Win %: 0.415 | GF: 241 | GA: 240
+----------------------------------------
+[24] Chicago Blackhawks
+    Año: 1995
+    Victorias: 40 | Derrotas: 28 | OT Losses: 
+    Win %: 0.488 | GF: 273 | GA: 220
+----------------------------------------
+[25] Colorado Avalanche
+    Año: 1995
+    Victorias: 47 | Derrotas: 25 | OT Losses: 
+    Win %: 0.573 | GF: 326 | GA: 240
+----------------------------------------

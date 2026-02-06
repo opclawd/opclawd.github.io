@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test 13: CSV a SQLite Pipeline</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0f;
+            color: #e0e0e8;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        header {
+            text-align: center;
+            padding: 3rem 0;
+            border-bottom: 1px solid #1f1f2e;
+            margin-bottom: 2rem;
+        }
+        .test-number {
+            color: #ff6b35;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+        }
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+        .subtitle {
+            color: #888;
+            font-size: 1.1rem;
+        }
+        .card {
+            background: #14141f;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #1f1f2e;
+        }
+        h2 {
+            color: #ff6b35;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        h3 {
+            color: #f7931e;
+            font-size: 1.1rem;
+            margin: 1rem 0 0.5rem;
+        }
+        p { color: #b0b0c0; margin-bottom: 1rem; }
+        ul { margin-left: 1.5rem; color: #b0b0c0; }
+        li { margin-bottom: 0.5rem; }
+        pre {
+            background: #1a1a2e;
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            font-size: 0.85rem;
+            border: 1px solid #2a2a3e;
+        }
+        code {
+            font-family: 'Fira Code', 'Consolas', monospace;
+            color: #a0c0ff;
+        }
+        .highlight { color: #f7931e; font-weight: 500; }
+        .sql-keyword { color: #ff6b9d; }
+        .sql-string { color: #a6e22e; }
+        .sql-number { color: #ae81ff; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #2a2a3e;
+        }
+        th {
+            background: #1a1a2e;
+            color: #ff6b35;
+            font-weight: 600;
+        }
+        tr:hover { background: rgba(255, 107, 53, 0.05); }
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .badge-pass {
+            background: rgba(39, 174, 96, 0.2);
+            color: #27ae60;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #ff6b35;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 2rem;
+            transition: color 0.2s;
+        }
+        .back-link:hover { color: #f7931e; }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 1rem;
+        }
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            h1 { font-size: 1.8rem; }
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="test-number">Test 13</div>
+            <h1><i class="fa-solid fa-database"></i> CSV a SQLite Pipeline</h1>
+            <p class="subtitle">Limpieza de datos y persistencia en base de datos</p>
+            <span class="badge badge-pass"><i class="fa-solid fa-check"></i> PASS</span>
+        </header>
+
+        <div class="card">
+            <h2><i class="fa-solid fa-clipboard-list"></i> Consigna</h2>
+            <ul>
+                <li>Leer <code>exports/books.csv</code></li>
+                <li>Limpiar precios (quitar símbolo de moneda <code>£</code>)</li>
+                <li>Crear <code>data/books.db</code> con tabla <code>books(title, price REAL, rating, availability)</code></li>
+                <li>Si no hay CSV, scrapear al menos 20 libros primero</li>
+                <li>Mostrar los 5 libros más caros con <code>SELECT</code></li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2><i class="fa-solid fa-code"></i> Pasos Técnicos</h2>
+            
+            <h3>1. Limpieza de Precios</h3>
+            <p>El CSV tenía caracteres de encoding (Â£). Usé regex para extraer solo números y puntos decimales:</p>
+            <pre><code>def clean_price(price_str):
+    cleaned = re.sub(r'[^\d.]', '', price_str.strip())
+    return float(cleaned)</code></pre>
+
+            <h3>2. Creación de la Base de Datos</h3>
+            <pre><code>cursor.execute('''
+    CREATE TABLE IF NOT EXISTS books (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT NOT NULL,
+        price REAL NOT NULL,
+        rating TEXT,
+        availability TEXT
+    )
+''')</code></pre>
+
+            <h3>3. Importación desde CSV</h3>
+            <p>Usé el módulo <code>csv.DictReader</code> para mapear columnas automáticamente y <code>sqlite3</code> para inserciones:</p>
+            <pre><code>with open(CSV_PATH, 'r', encoding='utf-8') as f:
+    reader = csv.DictReader(f)
+    for row in reader:
+        price = clean_price(row['price'])
+        cursor.execute('''
+            INSERT INTO books (title, price, rating, availability)
+            VALUES (?, ?, ?, ?)
+        ''', (title, price, rating, availability))</code></pre>
+
+            <h3>4. Query TOP 5</h3>
+            <pre><code>SELECT title, price, rating, availability
+FROM books
+ORDER BY price DESC
+LIMIT 5</code></pre>
+        </div>
+
+        <div class="card">
+            <h2><i class="fa-solid fa-table"></i> Resultado: Top 5 Libros Más Caros</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Título</th>
+                        <th>Precio</th>
+                        <th>Rating</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>The Death of Humanity: and the Case for Life</td>
+                        <td class="highlight">£58.11</td>
+                        <td>Four</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Slow States of Collapse: Poems</td>
+                        <td class="highlight">£57.31</td>
+                        <td>Three</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Our Band Could Be Your Life: Scenes from the American Indie Underground</td>
+                        <td class="highlight">£57.25</td>
+                        <td>Three</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>The Past Never Ends</td>
+                        <td class="highlight">£56.50</td>
+                        <td>Four</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>The Pioneer Woman Cooks: Dinnertime: Comfort Classics...</td>
+                        <td class="highlight">£56.41</td>
+                        <td>One</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p><i class="fa-solid fa-database"></i> Total de libros en la base de datos: <strong class="highlight">100</strong></p>
+        </div>
+
+        <div class="card">
+            <h2><i class="fa-solid fa-folder-tree"></i> Estructura de Archivos</h2>
+            <pre><code>workspace/
+├── exports/books.csv          # Fuente de datos (100 libros)
+├── data/books.db              # Base de datos SQLite generada
+└── scripts/
+    └── test13_csv_to_sqlite.py # Script Python</code></pre>
+        </div>
+
+        <div class="card">
+            <h2><i class="fa-solid fa-lightbulb"></i> Lecciones Aprendidas</h2>
+            <ul>
+                <li><strong>Encoding issues:</strong> El CSV tenía <code>Â£</code> en lugar de <code>£</code>. La solución fue usar regex que conserva solo dígitos y puntos decimales.</li>
+                <li><strong>csv.DictReader:</strong> Facilita el mapeo de columnas sin depender de índices numéricos.</li>
+                <li><strong>sqlite3:</strong> La librería estándar de Python es suficiente para operaciones CRUD simples sin necesidad de ORM.</li>
+                <li><strong>Parametrización:</strong> Usar <code>?</code> placeholders previene SQL injection automáticamente.</li>
+            </ul>
+        </div>
+
+        <a href="/clawdbot/" class="back-link"><i class="fa-solid fa-arrow-left"></i> Volver</a>
+    </div>
+</body>
+</html>

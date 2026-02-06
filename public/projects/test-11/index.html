@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test 11: Site Watchdog</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0f;
+            color: #e4e4e7;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        header {
+            text-align: center;
+            padding: 3rem 0;
+            border-bottom: 1px solid #27272a;
+            margin-bottom: 2rem;
+        }
+        .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #fff 0%, #a1a1aa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .subtitle {
+            color: #71717a;
+            font-size: 1.1rem;
+        }
+        .card {
+            background: #14141f;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #27272a;
+        }
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid #27272a;
+        }
+        .card-header i {
+            color: #ff6b35;
+            font-size: 1.2rem;
+        }
+        .card-header h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #fff;
+        }
+        .card-body {
+            color: #a1a1aa;
+        }
+        .card-body ul {
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+        .card-body li {
+            margin-bottom: 0.5rem;
+        }
+        .card-body strong {
+            color: #e4e4e7;
+        }
+        pre {
+            background: #1a1a2e;
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Fira Code', 'Monaco', monospace;
+            font-size: 0.85rem;
+            border: 1px solid #27272a;
+            color: #c7c7d1;
+        }
+        code {
+            background: #1a1a2e;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+            color: #f7931e;
+        }
+        .result-box {
+            background: #0f2215;
+            border: 1px solid #166534;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        .result-box.success {
+            background: #0f2215;
+            border-color: #166534;
+        }
+        .result-box.success i {
+            color: #22c55e;
+        }
+        .result-box h3 {
+            color: #22c55e;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .result-box pre {
+            background: #052e16;
+            color: #86efac;
+        }
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            color: #fff;
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn-back:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(247, 147, 30, 0.3);
+        }
+        .btn-container {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        @media (max-width: 768px) {
+            h1 { font-size: 1.75rem; }
+            .container { padding: 1rem; }
+            .card { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <span class="badge">Test #11</span>
+            <h1>Site Watchdog</h1>
+            <p class="subtitle">Script de monitoreo de disponibilidad web</p>
+        </header>
+
+        <div class="card">
+            <div class="card-header">
+                <i class="fa-solid fa-clipboard-list"></i>
+                <h2>Consigna</h2>
+            </div>
+            <div class="card-body">
+                <p>Crear y ejecutar un script Bash (<code>scripts/site_watchdog.sh</code>) que:</p>
+                <ul>
+                    <li>Use <code>curl</code> para obtener el HTTP status code de <code>https://example.com</code></li>
+                    <li>Si el código no es 200, incremente el contador de fallos en <code>alerts/fail_count.txt</code></li>
+                    <li>Si hay 3 o más fallos consecutivos, cree el archivo <code>alerts/site_down.txt</code> con la alerta</li>
+                    <li>Test: El sitio debería responder con código 200</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <i class="fa-solid fa-code"></i>
+                <h2>Pasos Técnicos</h2>
+            </div>
+            <div class="card-body">
+                <p><strong>1.</strong> Crear el script <code>scripts/site_watchdog.sh</code>:</p>
+                <pre>#!/bin/bash
+
+URL="https://example.com"
+STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" "$URL")
+
+mkdir -p alerts
+
+if [ "$STATUS_CODE" -eq 200 ]; then
+    echo "✓ Site is UP (HTTP $STATUS_CODE)"
+    if [ -f alerts/fail_count.txt ]; then
+        rm alerts/fail_count.txt
+        echo "Fail count reset."
+    fi
+else
+    echo "✗ Site is DOWN (HTTP $STATUS_CODE)"
+    
+    if [ -f alerts/fail_count.txt ]; then
+        FAIL_COUNT=$(cat alerts/fail_count.txt)
+        FAIL_COUNT=$((FAIL_COUNT + 1))
+    else
+        FAIL_COUNT=1
+    fi
+    
+    echo "$FAIL_COUNT" > alerts/fail_count.txt
+    
+    if [ "$FAIL_COUNT" -ge 3 ]; then
+        echo "ALERT: Site has been down for $FAIL_COUNT consecutive checks." > alerts/site_down.txt
+        echo "$(date): Site DOWN - HTTP $STATUS_CODE" >> alerts/site_down.txt
+    fi
+fi</pre>
+                <p><strong>2.</strong> Dar permisos de ejecución:</p>
+                <pre>chmod +x scripts/site_watchdog.sh</pre>
+                <p><strong>3.</strong> Ejecutar el script:</p>
+                <pre>./scripts/site_watchdog.sh</pre>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <i class="fa-solid fa-terminal"></i>
+                <h2>Resultado</h2>
+            </div>
+            <div class="card-body">
+                <div class="result-box success">
+                    <h3><i class="fa-solid fa-check-circle"></i> Test EXITOSO</h3>
+                    <p>El script se ejecutó correctamente y el sitio respondió con código HTTP 200.</p>
+                </div>
+                <p style="margin-top: 1rem;"><strong>Salida del script:</strong></p>
+                <pre>✓ Site is UP (HTTP 200)</pre>
+                <p style="margin-top: 1rem;"><strong>Detalles:</strong></p>
+                <ul>
+                    <li><strong>URL monitoreada:</strong> https://example.com</li>
+                    <li><strong>Estado:</strong> HTTP 200 OK</li>
+                    <li><strong>Archivo de alertas:</strong> No creado (sitio funcionando)</li>
+                    <li><strong>Contador de fallos:</strong> No incrementado (sitio UP)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <i class="fa-solid fa-lightbulb"></i>
+                <h2>Notas</h2>
+            </div>
+            <div class="card-body">
+                <ul>
+                    <li>El script usa <code>curl -s -o /dev/null -w "%{http_code}"</code> para obtener solo el código de estado HTTP</li>
+                    <li>Si el sitio está caído, el contador se incrementa en <code>alerts/fail_count.txt</code></li>
+                    <li>Después de 3 fallos consecutivos, se genera la alerta <code>alerts/site_down.txt</code></li>
+                    <li>Si el sitio vuelve a estar disponible (HTTP 200), el contador se resetea automáticamente</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="btn-container">
+            <a href="/clawdbot/" class="btn-back">
+                <i class="fa-solid fa-arrow-left"></i> Volver
+            </a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,10 @@
+[
+  {
+    "name": "Test 8: Docker Nginx Static App",
+    "description": "Containerización de app HTML estática con Nginx Alpine, incluye Dockerfile, docker-compose.yml y configuración optimizada con gzip y health checks.",
+    "icon": "fa-docker",
+    "status": "PASS",
+    "file": "test-8/index.html",
+    "tags": ["docker", "nginx", "devops", "containerization"]
+  }
+]

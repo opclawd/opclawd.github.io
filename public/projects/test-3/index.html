@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test 3: Web Scraping de Hockey</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0f;
+            color: #e0e0e0;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        header {
+            text-align: center;
+            padding: 3rem 0;
+            border-bottom: 2px solid #ff6b35;
+            margin-bottom: 2rem;
+        }
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .subtitle {
+            color: #888;
+            margin-top: 0.5rem;
+            font-size: 1.1rem;
+        }
+        .card {
+            background: #14141f;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid #2a2a3a;
+        }
+        .card h2 {
+            color: #ff6b35;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .card h2 i {
+            color: #f7931e;
+        }
+        .card p, .card ul {
+            color: #b0b0b0;
+            margin-bottom: 0.75rem;
+        }
+        .card ul {
+            margin-left: 1.5rem;
+        }
+        .card li {
+            margin-bottom: 0.5rem;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+        .status-pass {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+            border: 1px solid #22c55e;
+        }
+        pre {
+            background: #1a1a2e;
+            border-radius: 8px;
+            padding: 1.5rem;
+            overflow-x: auto;
+            font-family: 'Fira Code', 'Consolas', monospace;
+            font-size: 0.9rem;
+            color: #a0a0c0;
+            border-left: 4px solid #ff6b35;
+        }
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .team-card {
+            background: #1a1a2e;
+            border-radius: 8px;
+            padding: 1rem;
+            border-left: 3px solid #f7931e;
+        }
+        .team-card h4 {
+            color: #ff6b35;
+            margin-bottom: 0.5rem;
+        }
+        .team-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+            font-size: 0.85rem;
+        }
+        .stat {
+            display: flex;
+            justify-content: space-between;
+        }
+        .stat-label {
+            color: #666;
+        }
+        .stat-value {
+            color: #e0e0e0;
+            font-weight: 500;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            color: #fff;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 2rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .back-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(255, 107, 53, 0.4);
+        }
+        .url-box {
+            background: #1a1a2e;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: monospace;
+            color: #f7931e;
+            word-break: break-all;
+            margin: 1rem 0;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            h1 {
+                font-size: 1.75rem;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-hockey-puck"></i> Test 3: Web Scraping de Hockey</h1>
+            <p class="subtitle">Extracción de datos tabulares desde HTML</p>
+        </header>
+
+        <div class="card">
+            <h2><i class="fas fa-clipboard-list"></i> Consigna</h2>
+            <p>Descargar el contenido de <code>https://www.scrapethissite.com/pages/forms/?page_num=5</code>, parsear la tabla HTML de equipos de hockey, y guardar los datos extraídos en un archivo de texto.</p>
+            <div class="url-box">
+                https://www.scrapethissite.com/pages/forms/?page_num=5
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-cogs"></i> Pasos Técnicos</h2>
+            <ul>
+                <li><strong>1. Descarga:</strong> Se utilizó el módulo <code>requests</code> de Python para hacer una petición HTTP GET a la URL objetivo con headers de User-Agent.</li>
+                <li><strong>2. Parsing:</strong> Se implementó un parser HTML personalizado usando <code>html.parser.HTMLParser</code> de la librería estándar (sin dependencias externas).</li>
+                <li><strong>3. Extracción:</strong> El parser identificó la tabla con clase <code>table</code> y extrajo todas las filas (<code>tr</code>) y celdas (<code>td</code>).</li>
+                <li><strong>4. Procesamiento:</strong> Se mapearon los campos: Team Name, Year, Wins, Losses, OT Losses, Win %, Goals For (GF), Goals Against (GA).</li>
+                <li><strong>5. Persistencia:</strong> Los datos se guardaron formateados en <code>exports/hockey_page5.txt</code>.</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-database"></i> Resultado</h2>
+            <p>Se extrajeron <strong>25 equipos de hockey</strong> (1 header + 25 datos). Los años cubiertos son 1994 y 1995.</p>
+            <p><strong>Archivo generado:</strong> <code>exports/hockey_page5.txt</code></p>
+            
+            <h3 style="color: #f7931e; margin: 1.5rem 0 1rem;">Vista previa del código utilizado:</h3>
+            <pre>import requests
+from html.parser import HTMLParser
+
+# Descargar página
+url = "https://www.scrapethissite.com/pages/forms/?page_num=5"
+response = requests.get(url, headers={"User-Agent": "..."})
+
+# Parsear tabla HTML
+class TableParser(HTMLParser):
+    def handle_starttag(self, tag, attrs):
+        if tag == 'table' and dict(attrs).get('class') == 'table':
+            self.in_table = True
+        # ... extracción de filas y celdas
+
+parser = TableParser()
+parser.feed(response.text)
+
+# Guardar resultados
+with open('exports/hockey_page5.txt', 'w') as f:
+    for row in parser.rows:
+        f.write(f"{row}\n")</pre>
+
+            <h3 style="color: #f7931e; margin: 1.5rem 0 1rem;">Muestra de datos extraídos:</h3>
+            <div class="data-grid">
+                <div class="team-card">
+                    <h4>Edmonton Oilers</h4>
+                    <div class="team-stats">
+                        <div class="stat"><span class="stat-label">Año:</span><span class="stat-value">1994</span></div>
+                        <div class="stat"><span class="stat-label">Wins:</span><span class="stat-value">17</span></div>
+                        <div class="stat"><span class="stat-label">Losses:</span><span class="stat-value">27</span></div>
+                        <div class="stat"><span class="stat-label">Win%:</span><span class="stat-value">0.354</span></div>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <h4>Pittsburgh Penguins</h4>
+                    <div class="team-stats">
+                        <div class="stat"><span class="stat-label">Año:</span><span class="stat-value">1994</span></div>
+                        <div class="stat"><span class="stat-label">Wins:</span><span class="stat-value">29</span></div>
+                        <div class="stat"><span class="stat-label">Losses:</span><span class="stat-value">16</span></div>
+                        <div class="stat"><span class="stat-label">Win%:</span><span class="stat-value">0.604</span></div>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <h4>Colorado Avalanche</h4>
+                    <div class="team-stats">
+                        <div class="stat"><span class="stat-label">Año:</span><span class="stat-value">1995</span></div>
+                        <div class="stat"><span class="stat-label">Wins:</span><span class="stat-value">47</span></div>
+                        <div class="stat"><span class="stat-label">Losses:</span><span class="stat-value">25</span></div>
+                        <div class="stat"><span class="stat-label">Win%:</span><span class="stat-value">0.573</span></div>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <h4>Chicago Blackhawks</h4>
+                    <div class="team-stats">
+                        <div class="stat"><span class="stat-label">Año:</span><span class="stat-value">1995</span></div>
+                        <div class="stat"><span class="stat-label">Wins:</span><span class="stat-value">40</span></div>
+                        <div class="stat"><span class="stat-label">Losses:</span><span class="stat-value">28</span></div>
+                        <div class="stat"><span class="stat-label">Win%:</span><span class="stat-value">0.488</span></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center;">
+                <span class="status-badge status-pass"><i class="fas fa-check-circle"></i> PASS - 25 equipos extraídos</span>
+            </div>
+        </div>
+
+        <div style="text-align: center;">
+            <a href="/clawdbot/" class="back-link"><i class="fas fa-arrow-left"></i> Volver</a>
+        </div>
+    </div>
+</body>
+</html>

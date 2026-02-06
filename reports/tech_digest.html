@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Digest - RSS Aggregator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0a0a0f;
+            color: #e0e0e0;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        header {
+            text-align: center;
+            padding: 3rem 0;
+            border-bottom: 2px solid #ff6b35;
+            margin-bottom: 2rem;
+        }
+        header h1 {
+            font-size: 2.5rem;
+            color: #ff6b35;
+            margin-bottom: 0.5rem;
+        }
+        header p {
+            color: #888;
+            font-size: 1.1rem;
+        }
+        .timestamp {
+            color: #f7931e;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+        .sources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 2rem;
+        }
+        @media (max-width: 600px) {
+            .sources-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .source-card {
+            background: #14141f;
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid #1f1f2e;
+        }
+        .source-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #1f1f2e;
+        }
+        .source-header i {
+            font-size: 1.5rem;
+            color: #ff6b35;
+        }
+        .source-header h2 {
+            color: #fff;
+            font-size: 1.3rem;
+        }
+        .article-list {
+            list-style: none;
+        }
+        .article-item {
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            background: #1a1a2e;
+            border-radius: 8px;
+            border-left: 3px solid #ff6b35;
+            transition: transform 0.2s, background 0.2s;
+        }
+        .article-item:hover {
+            transform: translateX(5px);
+            background: #252538;
+        }
+        .article-title {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .article-title a {
+            color: #e0e0e0;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .article-title a:hover {
+            color: #ff6b35;
+        }
+        .article-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.8rem;
+            color: #888;
+        }
+        .article-meta i {
+            color: #f7931e;
+        }
+        footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            color: #666;
+            border-top: 1px solid #1f1f2e;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-rss"></i> Tech Digest</h1>
+            <p>Agregador de noticias tech desde Hacker News y Lobste.rs</p>
+            <div class="timestamp">
+                <i class="fas fa-clock"></i> Generado: 2026-02-06 05:57:48 UTC
+            </div>
+        </header>
+        
+        <div class="sources-grid">
+            <div class="source-card">
+                <div class="source-header">
+                    <i class="fab fa-hacker-news"></i>
+                    <h2>Hacker News</h2>
+                </div>
+                <ul class="article-list">
+
+                    <li class="article-item">
+                        <div class="article-title">
+                            <a href="https://rcrowley.org/2010/01/06/things-unix-can-do-atomically.html" target="_blank" rel="noopener">
+                                Things Unix can do atomically
+                            </a>
+                        </div>
+                        <div class="article-meta">
+                            <span><i class="fas fa-calendar"></i> Fri, 06 Feb 2026 05:29:55</span>
+                        </div>
+                    </li>
+
+                    <li class="article-item">
+                        <div class="article-title">
+                            <a href="http://theprogrammersparadox.blogspot.com/2026/02/systems-thinking.html" target="_blank" rel="noopener">
+                                Systems Thinking
+                            </a>
+                        </div>
+                        <div class="article-meta">
+                            <span><i class="fas fa-calendar"></i> Fri, 06 Feb 2026 05:24:36</span>
+                        </div>
+                    </li>
+
+                    <li class="article-item">
+                        <div class="article-title">
+                            <a href="https://theodore.net/projects/Polargraph/" target="_blank" rel="noopener">
+                                Generative Pen-Trained Transformer
+                            </a>
+                        </div>
+                        <div class="article-meta">
+                            <span><i class="fas fa-calendar"></i> Fri, 06 Feb 2026 04:28:08</span>
+                        </div>
+                    </li>
+
+                    <li class="article-item">
+                        <div class="article-title">
+                            <a href="https://www.youtube.com/watch?v=QLb3nhIy2Lc" target="_blank" rel="noopener">
+                                Waiting for Postgres 19: Better planner hints with path generation strategies [video]
+                            </a>
+                        </div>
+                        <div class="article-meta">
+                            <span><i class="fas fa-calendar"></i> Fri, 06 Feb 2026 03:25:51</span>
+                        </div>
+                    </li>
+
+                    <li class="article-item">
+                        <div class="article-title">
+                            <a href="https://vespalec.com/blog/tower-of-flaws/" target="_blank" rel="noopener">
+                                I reversed Tower of Fantasy&#x27;s anti-cheat driver: a BYOVD toolkit never loaded
+                            </a>
+                        </div>
+                        <div class="article-meta">
+                            <span><i class="fas fa-calendar"></i> Fri, 06 Feb 2026 03:22:29</span>
+                        </div>
+                    </li>
+
+                    <li class="article-item">
+                        <div class="article-title">
+                            <a href="https://www.iankduncan.com/engineering/2026-02-05-github-actions-killing-your-team/" target="_blank" rel="noopener">
+                                GitHub Actions is slowly killing engineering teams
+                            </a>
+                        </div>
+                        <div class="article-meta">
+                            <span><i class="fas fa-calendar"></i> Fri, 06 Feb 2026 02:58:31</span>
+                        </div>
+                    </li>
+
+                    <li class="article-item">
+                        <div class="article-title">
+                            <a href="https://faultlore.com/blah/c-isnt-a-language/" target="_blank" rel="noopener">
+                                C isn&#x27;t a programming language anymore (2022)
+                            </a>
+                        </div>
+                        <div class="article-meta">
+                            <span><i class="fas fa-calendar"></i> Fri, 06 Feb 2026 00:15:55</span>
+                        </div>
+                    </li>
+
+                    <li class="article-item">
+                        <div class="article-title">
+                            <a href="https://github.com/resilientworkflowsentinel/resilient-workflow-sentinel" target="_blank" rel="noopener">
+                                Show HN: Local task classifier and dispatcher on RTX 3080
+                            </a>
+                        </div>
+                        <div class="article-meta">
+                            <span><i class="fas fa-calendar"></i> Thu, 05 Feb 2026 23:31:01</span>
+                        </div>
+                    </li>
+
+                    <li class="article-item">
+                        <div class="article-title">
+                            <a href="https://mrbruh.com/amd/" target="_blank" rel="noopener">
+                                The RCE that AMD won&#x27;t fix
+                            </a>
+                        </div>
+                        <div class="article-meta">
+                            <span><i class="fas fa-calendar"></i> Thu, 05 Feb 2026 23:29:18</span>
+                        </div>
+                    </li>
+
+                    <li class="article-item">
+                        <div class="article-title">
+                            <a href="https://github.com/calf-ai/calfkit-sdk" target="_blank" rel="noopener">
+                                Show HN: Calfkit – an SDK to build distributed, event-driven AI agents on Kafka
+                            </a>
+                        </div>
+                        <div class="article-meta">
+                            <span><i class="fas fa-calendar"></i> Thu, 05 Feb 2026 23:10:12</span>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+            
+            <div class="source-card">
+                <div class="source-header">
+                    <i class="fas fa-lobster"></i>
+                    <h2>Lobste.rs</h2>
+                </div>
+                <ul class="article-list">
+
+                    <li class="article-item">
+                        <div class="article-title">
+                            <a href="https://iankduncan.com/engineering/2026-02-05-github-actions-killing-your-team/" target="_blank" rel="noopener">
+                                GitHub Actions Is Slowly Killing Your Engineering Team
+                            </a>
+                        </div>
+                        <div class="article-meta">
+                            <span><i class="fas fa-calendar"></i> Thu, 05 Feb 2026 08:59:41</span>
+                        </div>
+                    </li>
+
+                    <li class="article-item">
+                        <div class="article-title">
+                            <a href="https://mitchellh.com/writing/my-ai-adoption-journey" target="_blank" rel="noopener">
+                                My AI Adoption Journey
+                            </a>
+                        </div>
+                        <div class="article-meta">
+                            <span><i class="fas fa-calendar"></i> Thu, 05 Feb 2026 13:58:49</span>
+                        </div>
+                    </li>
+
+                    <li class="article-item">
+                        <div class="article-title">
+                            <a href="https://www.anthropic.com/engineering/building-c-compiler" target="_blank" rel="noopener">
+                                Building a C compiler with a team of parallel Claudes
+                            </a>
+                        </div>
+                        <div class="article-meta">
+                            <span><i class="fas fa-calendar"></i> Thu, 05 Feb 2026 13:27:11</span>
+                        </div>
+                    </li>
+
+                    <li class="article-item">
+                        <div class="article-title">
+                            <a href="https://github.com/jj-vcs/jj/releases/tag/v0.38.0" target="_blank" rel="noopener">
+                                jujutsu v0.38.0 released
+                            </a>
+                        </div>
+                        <div class="article-meta">
+                            <span><i class="fas fa-calendar"></i> Thu, 05 Feb 2026 09:42:35</span>
+                        </div>
+                    </li>
+
+                    <li class="article-item">
+                        <div class="article-title">
+                            <a href="https://symbolic.software/blog/2026-02-05-cryspen/" target="_blank" rel="noopener">
+                                On the Promises of &#x27;High-Assurance&#x27; Cryptography
+                            </a>
+                        </div>
+                        <div class="article-meta">
+                            <span><i class="fas fa-calendar"></i> Thu, 05 Feb 2026 11:01:44</span>
+                        </div>
+                    </li>
+
+                    <li class="article-item">
+                        <div class="article-title">
+                            <a href="https://sluongng.substack.com/p/fosdem-26-my-hallway-track-takeaways" target="_blank" rel="noopener">
+                                FOSDEM 26 - My Hallway Track Takeaways
+                            </a>
+                        </div>
+                        <div class="article-meta">
+                            <span><i class="fas fa-calendar"></i> Thu, 05 Feb 2026 06:25:44</span>
+                        </div>
+                    </li>
+
+                    <li class="article-item">
+                        <div class="article-title">
+                            <a href="https://blog.comma.ai/datacenter/" target="_blank" rel="noopener">
+                                Owning a $5M data center
+                            </a>
+                        </div>
+                        <div class="article-meta">
+                            <span><i class="fas fa-calendar"></i> Thu, 05 Feb 2026 08:05:33</span>
+                        </div>
+                    </li>
+
+                    <li class="article-item">
+                        <div class="article-title">
+                            <a href="https://antonz.org/defer-in-c/" target="_blank" rel="noopener">
+                                (Un)portable defer in C
+                            </a>
+                        </div>
+                        <div class="article-meta">
+                            <span><i class="fas fa-calendar"></i> Thu, 05 Feb 2026 09:23:40</span>
+                        </div>
+                    </li>
+
+                    <li class="article-item">
+                        <div class="article-title">
+                            <a href="https://neosmart.net/blog/recreating-epstein-pdfs-from-raw-encoded-attachments/" target="_blank" rel="noopener">
+                                Recreating Epstein PDFs from raw encoded attachments
+                            </a>
+                        </div>
+                        <div class="article-meta">
+                            <span><i class="fas fa-calendar"></i> Wed, 04 Feb 2026 13:20:32</span>
+                        </div>
+                    </li>
+
+                    <li class="article-item">
+                        <div class="article-title">
+                            <a href="https://slightknack.dev/daily/2026-02-04/" target="_blank" rel="noopener">
+                                On craft and AI
+                            </a>
+                        </div>
+                        <div class="article-meta">
+                            <span><i class="fas fa-calendar"></i> Thu, 05 Feb 2026 02:45:48</span>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Tech Digest <i class="fas fa-code"></i> Generado automáticamente</p>
+        </footer>
+    </div>
+</body>
+</html>

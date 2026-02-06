@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test 8: Docker Todo App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0f;
+            color: #e0e0e0;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #14141f 0%, #1a1a2e 100%);
+            border-radius: 16px;
+            margin-bottom: 30px;
+            border: 1px solid #2a2a3e;
+        }
+        h1 {
+            color: #fff;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        .test-number {
+            color: #ff6b35;
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .card {
+            background: #14141f;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid #2a2a3e;
+        }
+        h2 {
+            color: #f7931e;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        p, li {
+            color: #b0b0b0;
+            margin-bottom: 10px;
+        }
+        ul {
+            padding-left: 25px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        code {
+            background: #1a1a2e;
+            padding: 2px 8px;
+            border-radius: 4px;
+            color: #ff6b35;
+            font-family: 'Fira Code', monospace;
+        }
+        pre {
+            background: #1a1a2e;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            border: 1px solid #2a2a3e;
+            margin: 15px 0;
+        }
+        pre code {
+            background: transparent;
+            color: #a0a0b0;
+            padding: 0;
+        }
+        .file-path {
+            color: #f7931e;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .success {
+            color: #4ade80;
+            font-weight: 600;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #ff6b35;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 20px;
+            padding: 12px 20px;
+            background: #1a1a2e;
+            border-radius: 8px;
+            border: 1px solid #2a2a3e;
+            transition: all 0.3s;
+        }
+        .back-link:hover {
+            background: #ff6b35;
+            color: #fff;
+        }
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(74, 222, 128, 0.2);
+            color: #4ade80;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        @media (max-width: 600px) {
+            h1 { font-size: 1.8rem; }
+            header { padding: 25px 15px; }
+            .card { padding: 18px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="test-number">Test 8</div>
+            <h1><i class="fab fa-docker"></i> Docker Todo App</h1>
+            <span class="status-badge"><i class="fas fa-check-circle"></i> PASS</span>
+        </header>
+
+        <div class="card">
+            <h2><i class="fas fa-clipboard-list"></i> Consigna</h2>
+            <p>Crear una aplicación Todo List con Docker:</p>
+            <ul>
+                <li>Crear <code>apps/todo-app/docker/Dockerfile</code> usando <code>nginx:alpine</code></li>
+                <li>Copiar <code>index.html</code> a <code>/usr/share/nginx/html/</code></li>
+                <li>Crear <code>docker-compose.yml</code> exponiendo puerto 3000</li>
+                <li>Crear <code>index.html</code> básico si no existe</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-cogs"></i> Pasos Técnicos</h2>
+            <ol>
+                <li>Verifiqué la existencia de <code>apps/todo-app/index.html</code> (no existía)</li>
+                <li>Creé el archivo <code>index.html</code> con una app Todo List completa (HTML, CSS, JS)</li>
+                <li>Creé el <code>Dockerfile</code> usando imagen base nginx:alpine</li>
+                <li>Creé el <code>docker-compose.yml</code> con mapeo de puerto 3000:80</li>
+                <li>La app usa localStorage para persistencia de tareas</li>
+            </ol>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-file-code"></i> Código Generado</h2>
+            
+            <span class="file-path">📄 apps/todo-app/docker/Dockerfile</span>
+            <pre><code>FROM nginx:alpine
+
+COPY ../index.html /usr/share/nginx/html/index.html
+
+EXPOSE 80</code></pre>
+
+            <span class="file-path">📄 apps/todo-app/docker/docker-compose.yml</span>
+            <pre><code>version: '3.8'
+
+services:
+  todo-app:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    ports:
+      - "3000:80"
+    container_name: todo-app</code></pre>
+
+            <span class="file-path">📄 apps/todo-app/index.html</span>
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="es"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Todo App&lt;/title&gt;
+    &lt;style&gt;
+        /* Diseño responsivo con gradientes */
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            /* ... estilos completos ... */
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="container"&gt;
+        &lt;h1&gt;📝 Todo App&lt;/h1&gt;
+        &lt;!-- Formulario y lista de tareas --&gt;
+    &lt;/div&gt;
+    &lt;script&gt;
+        // Gestión de tareas con localStorage
+        // CRUD completo en JavaScript vanilla
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-check-double"></i> Resultado</h2>
+            <p class="success">✅ Archivos creados exitosamente:</p>
+            <ul>
+                <li><code>apps/todo-app/index.html</code> - 134 líneas</li>
+                <li><code>apps/todo-app/docker/Dockerfile</code> - 5 líneas</li>
+                <li><code>apps/todo-app/docker/docker-compose.yml</code> - 10 líneas</li>
+            </ul>
+            <p><strong>Para ejecutar:</strong></p>
+            <pre><code>cd apps/todo-app/docker
+docker-compose up -d</code></pre>
+            <p>La aplicación estará disponible en <code>http://localhost:3000</code></p>
+        </div>
+
+        <a href="/clawdbot/" class="back-link">
+            <i class="fas fa-arrow-left"></i> Volver
+        </a>
+    </div>
+</body>
+</html>

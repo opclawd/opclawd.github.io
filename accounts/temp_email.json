@@ -1,0 +1,37 @@
+{
+  "test_info": {
+    "name": "Mail.tm API Test",
+    "date": "2026-02-06T05:58:51+00:00",
+    "status": "SUCCESS"
+  },
+  "domain": {
+    "endpoint": "GET https://api.mail.tm/domains",
+    "available_domain": "virgilian.com",
+    "domain_id": "6963580628188cd7eda170e0",
+    "is_active": true,
+    "is_private": false
+  },
+  "account": {
+    "endpoint": "POST https://api.mail.tm/accounts",
+    "id": "6985831b36e03f194701b756",
+    "address": "test_m89x6e54@virgilian.com",
+    "password": "1Be1XlCiAX1JUwO2",
+    "quota": 40000000,
+    "used": 0,
+    "is_disabled": false,
+    "created_at": "2026-02-06T05:58:51+00:00"
+  },
+  "token": {
+    "endpoint": "POST https://api.mail.tm/token",
+    "jwt": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NzAzNTc1MzYsInJvbGVzIjpbIlJPTEVfVVNFUiJdLCJhZGRyZXNzIjoidGVzdF9tODl4NmU1NEB2aXJnaWxpYW4uY29tIiwiaWQiOiI2OTg1ODMxYjM2ZTAzZjE5NDcwMWI3NTYiLCJtZXJjdXJlIjp7InN1YnNjcmliZSI6WyIvYWNjb3VudHMvNjk4NTgzMWIzNmUwM2YxOTQ3MDFiNzU2Il19fQ.7lOCwq3GIbwdAyP6UP6Vp8CaIfmg9PBlJBOQIg6FY9ViUlGxnrVCOTXCKwjx5ogfVOuj7Dn3UckFSfgR-tFz1w",
+    "token_type": "Bearer",
+    "algorithm": "HS512"
+  },
+  "api_features": [
+    "Temporary/disposable email addresses",
+    "RESTful JSON API",
+    "JWT authentication",
+    "Mercure real-time updates support",
+    "Hydra API documentation format"
+  ]
+}

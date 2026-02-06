@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test 2: API de Tipos de Cambio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0f;
+            color: #e0e0e0;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #ff6b35;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header .subtitle {
+            color: #888;
+            font-size: 0.95rem;
+        }
+        
+        .card {
+            background: #14141f;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #2a2a3a;
+        }
+        
+        .card h2 {
+            color: #ff6b35;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .card h2 i {
+            color: #f7931e;
+        }
+        
+        .card p, .card li {
+            color: #c0c0c0;
+            margin-bottom: 0.5rem;
+        }
+        
+        .card ul {
+            margin-left: 1.5rem;
+        }
+        
+        pre {
+            background: #1a1a2e;
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Fira Code', 'Consolas', monospace;
+            font-size: 0.85rem;
+            color: #a0a0c0;
+            border: 1px solid #2a2a4a;
+        }
+        
+        .rates-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        
+        .rates-table th,
+        .rates-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #2a2a3a;
+        }
+        
+        .rates-table th {
+            color: #ff6b35;
+            font-weight: 600;
+        }
+        
+        .rates-table td {
+            color: #c0c0c0;
+        }
+        
+        .rates-table tr:hover td {
+            background: #1a1a2a;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .badge-success {
+            background: rgba(0, 200, 100, 0.2);
+            color: #00c864;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #ff6b35;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 1rem;
+            transition: color 0.2s;
+        }
+        
+        .back-link:hover {
+            color: #f7931e;
+        }
+        
+        .timestamp {
+            color: #666;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .card {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-coins"></i> Test 2: API de Tipos de Cambio</h1>
+            <p class="subtitle">Consumo de API REST y procesamiento de JSON</p>
+        </div>
+        
+        <div class="card">
+            <h2><i class="fas fa-file-alt"></i> Consigna</h2>
+            <p>Consultar la API pública de tipos de cambio en <code>https://open.er-api.com/v6/latest/USD</code>, extraer las tasas para EUR, GBP, ARS y JPY, y guardar los resultados en un archivo JSON con timestamp.</p>
+        </div>
+        
+        <div class="card">
+            <h2><i class="fas fa-cogs"></i> Pasos Técnicos</h2>
+            <ul>
+                <li>Realicé una petición HTTP GET usando <code>curl</code> a la API de Exchange Rate</li>
+                <li>La API devolvió un objeto JSON con todas las tasas de cambio basadas en USD</li>
+                <li>Extraje las tasas específicas solicitadas: EUR, GBP, ARS, JPY</li>
+                <li>Generé el archivo <code>exports/exchange_rates.json</code> con los datos filtrados y metadata</li>
+            </ul>
+        </div>
+        
+        <div class="card">
+            <h2><i class="fas fa-chart-line"></i> Resultado - Tasas de Cambio</h2>
+            <p class="timestamp">Base: USD | Actualizado: 6 Feb 2026 00:02 UTC</p>
+            <table class="rates-table">
+                <thead>
+                    <tr>
+                        <th>Moneda</th>
+                        <th>Tasa</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>EUR</strong></td>
+                        <td>0.848203</td>
+                        <td>Euro</td>
+                    </tr>
+                    <tr>
+                        <td><strong>GBP</strong></td>
+                        <td>0.737962</td>
+                        <td>Libra Esterlina</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ARS</strong></td>
+                        <td>1,452.25</td>
+                        <td>Peso Argentino</td>
+                    </tr>
+                    <tr>
+                        <td><strong>JPY</strong></td>
+                        <td>156.843498</td>
+                        <td>Yen Japonés</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="card">
+            <h2><i class="fas fa-code"></i> Archivo Generado</h2>
+            <p><code>exports/exchange_rates.json</code>:</p>
+            <pre>{
+  "timestamp": "2026-02-06T05:26:00Z",
+  "base": "USD",
+  "rates": {
+    "EUR": 0.848203,
+    "GBP": 0.737962,
+    "ARS": 1452.25,
+    "JPY": 156.843498
+  },
+  "source": "https://open.er-api.com/v6/latest/USD",
+  "last_update": "Fri, 06 Feb 2026 00:02:31 +0000"
+}</pre>
+        </div>
+        
+        <div class="card">
+            <h2><i class="fas fa-check-circle"></i> Estado</h2>
+            <p><span class="badge badge-success">PASS</span> La API respondió correctamente y los datos fueron extraídos y guardados exitosamente.</p>
+        </div>
+        
+        <a href="/clawdbot/" class="back-link">
+            <i class="fas fa-arrow-left"></i> Volver
+        </a>
+    </div>
+</body>
+</html>

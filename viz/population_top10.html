@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top 10 Countries by Population</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #0a0a0f;
+            color: #e0e0e0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+        h1 {
+            color: #ff6b35;
+            margin-bottom: 10px;
+            font-size: 2rem;
+            text-align: center;
+        }
+        .subtitle {
+            color: #888;
+            margin-bottom: 40px;
+            font-size: 0.95rem;
+        }
+        .chart-container {
+            width: 100%;
+            max-width: 900px;
+            background: #14141f;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        }
+        .data-table {
+            width: 100%;
+            max-width: 900px;
+            margin-top: 40px;
+            background: #14141f;
+            border-radius: 12px;
+            padding: 20px 30px;
+        }
+        .data-table h2 {
+            color: #f7931e;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #2a2a3a;
+        }
+        th {
+            color: #ff6b35;
+            font-weight: 600;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        .rank {
+            color: #f7931e;
+            font-weight: bold;
+        }
+        .population {
+            color: #fff;
+            font-family: monospace;
+            font-size: 0.95rem;
+        }
+        .footer {
+            margin-top: 40px;
+            color: #666;
+            font-size: 0.85rem;
+        }
+        .footer a {
+            color: #ff6b35;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>🌍 Top 10 Countries by Population</h1>
+    <p class="subtitle">Data scraped from scrapethissite.com</p>
+    
+    <div class="chart-container">
+        <canvas id="populationChart"></canvas>
+    </div>
+
+    <div class="data-table">
+        <h2><i class="fas fa-table"></i> Data Table</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Country</th>
+                    <th>Population</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td class="rank">#1</td><td>China</td><td class="population">1,330,044,000</td></tr>
+                <tr><td class="rank">#2</td><td>India</td><td class="population">1,173,108,018</td></tr>
+                <tr><td class="rank">#3</td><td>United States</td><td class="population">310,232,863</td></tr>
+                <tr><td class="rank">#4</td><td>Indonesia</td><td class="population">242,968,342</td></tr>
+                <tr><td class="rank">#5</td><td>Brazil</td><td class="population">201,103,330</td></tr>
+                <tr><td class="rank">#6</td><td>Pakistan</td><td class="population">184,404,791</td></tr>
+                <tr><td class="rank">#7</td><td>Bangladesh</td><td class="population">156,118,464</td></tr>
+                <tr><td class="rank">#8</td><td>Nigeria</td><td class="population">154,000,000</td></tr>
+                <tr><td class="rank">#9</td><td>Russia</td><td class="population">140,702,000</td></tr>
+                <tr><td class="rank">#10</td><td>Japan</td><td class="population">127,288,000</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footer">
+        <p>Source: <a href="https://www.scrapethissite.com/pages/simple/" target="_blank">Scrape This Site - Countries of the World</a></p>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('populationChart').getContext('2d');
+        
+        const data = {
+            labels: ['China', 'India', 'United States', 'Indonesia', 'Brazil', 'Pakistan', 'Bangladesh', 'Nigeria', 'Russia', 'Japan'],
+            datasets: [{
+                label: 'Population',
+                data: [1330044000, 1173108018, 310232863, 242968342, 201103330, 184404791, 156118464, 154000000, 140702000, 127288000],
+                backgroundColor: '#ff6b35',
+                borderColor: '#ff6b35',
+                borderWidth: 0,
+                borderRadius: 6,
+                barThickness: 35
+            }]
+        };
+
+        const config = {
+            type: 'bar',
+            data: data,
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: '#1a1a2e',
+                        titleColor: '#ff6b35',
+                        bodyColor: '#e0e0e0',
+                        borderColor: '#ff6b35',
+                        borderWidth: 1,
+                        padding: 12,
+                        callbacks: {
+                            label: function(context) {
+                                return 'Population: ' + context.parsed.x.toLocaleString();
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            color: '#2a2a3a',
+                            drawBorder: false
+                        },
+                        ticks: {
+                            color: '#888',
+                            callback: function(value) {
+                                if (value >= 1000000000) {
+                                    return (value / 1000000000).toFixed(1) + 'B';
+                                } else if (value >= 1000000) {
+                                    return (value / 1000000).toFixed(0) + 'M';
+                                }
+                                return value;
+                            }
+                        }
+                    },
+                    y: {
+                        grid: {
+                            display: false,
+                            drawBorder: false
+                        },
+                        ticks: {
+                            color: '#e0e0e0',
+                            font: {
+                                size: 13
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        new Chart(ctx, config);
+    </script>
+</body>
+</html>

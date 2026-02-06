@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test 10: Analizador de Logs</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0f;
+            color: #e0e0e0;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #14141f 0%, #1a1a2e 100%);
+            border-radius: 16px;
+            margin-bottom: 30px;
+            border: 1px solid #2a2a3e;
+        }
+        .header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #ff6b35, #f7931e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+        .header .subtitle {
+            color: #888;
+            font-size: 1.1rem;
+        }
+        .card {
+            background: #14141f;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid #2a2a3e;
+        }
+        .card h2 {
+            color: #f7931e;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .card h2 i {
+            color: #ff6b35;
+        }
+        pre {
+            background: #1a1a2e;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            border: 1px solid #2a2a3e;
+            font-family: 'Fira Code', 'Consolas', monospace;
+            font-size: 0.9rem;
+            color: #c0c0c0;
+        }
+        code {
+            background: #1a1a2e;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Fira Code', monospace;
+            color: #ff6b35;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .stat-box {
+            background: #1a1a2e;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid #2a2a3e;
+        }
+        .stat-box .number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ff6b35;
+        }
+        .stat-box .label {
+            color: #888;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+        .stat-box.error .number {
+            color: #ff4444;
+        }
+        .stat-box.warning .number {
+            color: #ffaa00;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(90deg, #ff6b35, #f7931e);
+            color: #fff;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 500;
+            margin-top: 20px;
+            transition: opacity 0.2s;
+        }
+        .back-link:hover {
+            opacity: 0.9;
+        }
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #1a3a1a;
+            color: #4caf50;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-top: 15px;
+        }
+        ul {
+            margin-left: 20px;
+            color: #b0b0b0;
+        }
+        ul li {
+            margin-bottom: 8px;
+        }
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-file-alt"></i> Test 10</h1>
+            <div class="subtitle">Analizador de Logs con Bash</div>
+            <div class="status-badge">
+                <i class="fas fa-check-circle"></i> PASS
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-clipboard-list"></i> Consigna</h2>
+            <p>Crear un script Bash que:</p>
+            <ul>
+                <li>Busque archivos <code>.log</code> en el directorio <code>logs/</code></li>
+                <li>Cuente ocurrencias de <code>ERROR</code> y <code>WARNING</code> usando <code>grep</code></li>
+                <li>Si no hay logs, cree <code>logs/sample.log</code> con datos de ejemplo</li>
+                <li>Guarde el resumen en <code>reports/log_summary.txt</code></li>
+                <li>Ejecute el script</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-code"></i> Script log_analyzer.sh</h2>
+            <pre>#!/bin/bash
+
+# Log Analyzer Script
+LOG_DIR="logs"
+REPORT_FILE="reports/log_summary.txt"
+SAMPLE_LOG="logs/sample.log"
+
+# Crear directorios si no existen
+mkdir -p "$LOG_DIR" "reports"
+
+# Buscar archivos .log
+LOG_FILES=$(find "$LOG_DIR" -name "*.log" -type f 2>/dev/null)
+
+# Si no hay logs, crear sample.log
+if [ -z "$LOG_FILES" ]; then
+    cat &gt; "$SAMPLE_LOG" &lt;&lt; 'EOF'
+2024-01-15 10:23:45 INFO Application started
+2024-01-15 10:24:12 ERROR Connection timeout
+2024-01-15 10:24:15 WARNING Retrying connection
+EOF
+    LOG_FILES=$(find "$LOG_DIR" -name "*.log" -type f)
+fi
+
+# Contadores
+TOTAL_FILES=0
+TOTAL_ERROR=0
+TOTAL_WARNING=0
+TOTAL_LINES=0
+
+# Procesar cada archivo
+for LOG_FILE in $LOG_FILES; do
+    TOTAL_FILES=$((TOTAL_FILES + 1))
+    FILE_NAME=$(basename "$LOG_FILE")
+    FILE_LINES=$(wc -l &lt; "$LOG_FILE")
+    FILE_ERROR=$(grep -c "ERROR" "$LOG_FILE" || echo 0)
+    FILE_WARNING=$(grep -c "WARNING" "$LOG_FILE" || echo 0)
+    
+    TOTAL_LINES=$((TOTAL_LINES + FILE_LINES))
+    TOTAL_ERROR=$((TOTAL_ERROR + FILE_ERROR))
+    TOTAL_WARNING=$((TOTAL_WARNING + FILE_WARNING))
+done
+
+# Guardar reporte
+echo "..." &gt; "$REPORT_FILE"</pre>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-terminal"></i> Pasos Técnicos</h2>
+            <ul>
+                <li>Actualicé <code>scripts/log_analyzer.sh</code> para usar paths relativos</li>
+                <li>Agregué lógica de fallback: si no hay archivos .log, crea <code>sample.log</code></li>
+                <li>Usé <code>grep -c</code> para contar ocurrencias de ERROR y WARNING</li>
+                <li>Generé reporte formateado en <code>reports/log_summary.txt</code></li>
+                <li>Ejecuté el script con <code>chmod +x</code> y verifiqué resultados</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-chart-bar"></i> Resultados del Análisis</h2>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="number">3</div>
+                    <div class="label">Archivos Analizados</div>
+                </div>
+                <div class="stat-box">
+                    <div class="number">28</div>
+                    <div class="label">Líneas Totales</div>
+                </div>
+                <div class="stat-box error">
+                    <div class="number">8</div>
+                    <div class="label">Errores</div>
+                </div>
+                <div class="stat-box warning">
+                    <div class="number">9</div>
+                    <div class="label">Advertencias</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-file-alt"></i> Reporte Generado</h2>
+            <pre>========================================
+     LOG ANALYZER REPORT
+     Generated: 2026-02-06 05:44:36
+========================================
+
+📄 File: app.log
+   Total Lines: 10
+   ERROR:   3
+   WARNING: 3
+
+📄 File: server.log
+   Total Lines: 8
+   ERROR:   2
+   WARNING: 3
+
+📄 File: worker.log
+   Total Lines: 10
+   ERROR:   3
+   WARNING: 3
+
+========================================
+           SUMMARY
+========================================
+Total Files Analyzed: 3
+Total Lines Processed: 28
+Total ERROR entries:   8
+Total WARNING entries: 9
+========================================</pre>
+        </div>
+
+        <div style="text-align: center;">
+            <a href="/clawdbot/" class="back-link">
+                <i class="fas fa-arrow-left"></i> Volver
+            </a>
+        </div>
+    </div>
+</body>
+</html>

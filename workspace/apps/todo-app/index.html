@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #ff6b35;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+        }
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            font-size: 16px;
+        }
+        input::placeholder { color: rgba(255,255,255,0.5); }
+        button {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255,107,53,0.3);
+        }
+        ul {
+            list-style: none;
+        }
+        li {
+            background: rgba(255,255,255,0.05);
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #fff;
+            transition: all 0.3s;
+        }
+        li:hover { background: rgba(255,255,255,0.1); }
+        li.completed { text-decoration: line-through; opacity: 0.5; }
+        .delete-btn {
+            background: #e74c3c;
+            padding: 8px 15px;
+            font-size: 12px;
+        }
+        .info {
+            text-align: center;
+            color: rgba(255,255,255,0.5);
+            margin-top: 20px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📝 Todo App</h1>
+        <div class="input-group">
+            <input type="text" id="todoInput" placeholder="Agregar nueva tarea...">
+            <button onclick="addTodo()">Agregar</button>
+        </div>
+        <ul id="todoList"></ul>
+        <p class="info">Servido con Nginx en Docker</p>
+    </div>
+    <script>
+        let todos = JSON.parse(localStorage.getItem('todos')) || [];
+        function render() {
+            const list = document.getElementById('todoList');
+            list.innerHTML = todos.map((todo, i) => `
+                <li class="${todo.done ? 'completed' : ''}" onclick="toggle(${i})">
+                    ${todo.text}
+                    <button class="delete-btn" onclick="event.stopPropagation(); remove(${i})">Eliminar</button>
+                </li>
+            `).join('');
+            localStorage.setItem('todos', JSON.stringify(todos));
+        }
+        function addTodo() {
+            const input = document.getElementById('todoInput');
+            if (input.value.trim()) {
+                todos.push({ text: input.value, done: false });
+                input.value = '';
+                render();
+            }
+        }
+        function toggle(i) { todos[i].done = !todos[i].done; render(); }
+        function remove(i) { todos.splice(i, 1); render(); }
+        document.getElementById('todoInput').addEventListener('keypress', e => {
+            if (e.key === 'Enter') addTodo();
+        });
+        render();
+    </script>
+</body>
+</html>

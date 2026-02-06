@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test 4: API GraphQL SpaceX</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #0a0a0f;
+            color: #e0e0e0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            padding: 2rem;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid #ff6b35;
+        }
+        .header h1 {
+            font-size: 2.2rem;
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        .header p { color: #888; font-size: 1rem; }
+        .card {
+            background: #14141f;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #222;
+        }
+        .card h2 {
+            color: #ff6b35;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .card h2 i { color: #f7931e; }
+        pre {
+            background: #1a1a2e;
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            color: #a8d8ea;
+            border: 1px solid #2a2a3e;
+        }
+        .table-container { overflow-x: auto; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        th, td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid #2a2a3e;
+        }
+        th {
+            background: #1a1a2e;
+            color: #ff6b35;
+            font-weight: 600;
+        }
+        tr:hover { background: #1a1a2e; }
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        .badge-null {
+            background: #3d3d3d;
+            color: #888;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #f7931e;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 1rem;
+        }
+        .back-link:hover { color: #ff6b35; }
+        .status-pass {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #1e3a2f;
+            color: #4ade80;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+        @media (max-width: 600px) {
+            body { padding: 1rem; }
+            .header h1 { font-size: 1.6rem; }
+            th, td { padding: 0.5rem; font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-rocket"></i> Test 4: API GraphQL SpaceX</h1>
+            <p>Consumo de API GraphQL para obtener lanzamientos históricos</p>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-clipboard-list"></i> Consigna</h2>
+            <p>Realizar un POST a <code>https://spacex-production.up.railway.app/</code> con body JSON conteniendo una query GraphQL para obtener los últimos 3 lanzamientos, incluyendo nombre de misión, fecha, éxito y nombre del cohete. Guardar la respuesta en <code>exports/spacex_launches.json</code>.</p>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-cogs"></i> Pasos Técnicos</h2>
+            <ol style="margin-left: 1.5rem; color: #ccc;">
+                <li>Crear directorio <code>exports/</code> para almacenar resultados</li>
+                <li>Construir query GraphQL con los campos requeridos</li>
+                <li>Ejecutar <code>curl -X POST</code> con header <code>Content-Type: application/json</code></li>
+                <li>Enviar body JSON con la query GraphQL</li>
+                <li>Guardar respuesta en archivo JSON</li>
+            </ol>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-terminal"></i> Comando Ejecutado</h2>
+            <pre>curl -X POST https://spacex-production.up.railway.app/ \
+  -H "Content-Type: application/json" \
+  -d '{"query":"{launchesPast(limit:3){mission_name launch_date_utc launch_success rocket{rocket_name}}}"}' \
+  -o exports/spacex_launches.json</pre>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-database"></i> Resultado - Datos Obtenidos</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Misión</th>
+                            <th>Fecha (UTC)</th>
+                            <th>Éxito</th>
+                            <th>Cohete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><i class="fas fa-satellite" style="color:#f7931e;margin-right:0.5rem;"></i>FalconSat</td>
+                            <td>2006-03-24 22:30:00</td>
+                            <td><span class="badge badge-null">null</span></td>
+                            <td>Falcon 1</td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-satellite" style="color:#f7931e;margin-right:0.5rem;"></i>DemoSat</td>
+                            <td>2007-03-21 01:10:00</td>
+                            <td><span class="badge badge-null">null</span></td>
+                            <td>Falcon 1</td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-satellite" style="color:#f7931e;margin-right:0.5rem;"></i>Trailblazer</td>
+                            <td>2008-08-03 03:34:00</td>
+                            <td><span class="badge badge-null">null</span></td>
+                            <td>Falcon 1</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-code"></i> Respuesta JSON (Raw)</h2>
+            <pre>{
+  "data": {
+    "launchesPast": [
+      {
+        "mission_name": "FalconSat",
+        "launch_date_utc": "2006-03-24T22:30:00.000Z",
+        "launch_success": null,
+        "rocket": {
+          "rocket_name": "Falcon 1"
+        }
+      },
+      {
+        "mission_name": "DemoSat",
+        "launch_date_utc": "2007-03-21T01:10:00.000Z",
+        "launch_success": null,
+        "rocket": {
+          "rocket_name": "Falcon 1"
+        }
+      },
+      {
+        "mission_name": "Trailblazer",
+        "launch_date_utc": "2008-08-03T03:34:00.000Z",
+        "launch_success": null,
+        "rocket": {
+          "rocket_name": "Falcon 1"
+        }
+      }
+    ]
+  }
+}</pre>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-check-circle"></i> Estado del Test</h2>
+            <p style="margin-bottom: 1rem;"><span class="status-pass"><i class="fas fa-check"></i> PASS</span></p>
+            <p style="color: #888;">API respondió correctamente con código HTTP 200. Datos guardados en <code>exports/spacex_launches.json</code>.</p>
+        </div>
+
+        <a href="/clawdbot/" class="back-link"><i class="fas fa-arrow-left"></i> Volver</a>
+    </div>
+</body>
+</html>

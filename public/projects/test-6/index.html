@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test 6: API REST de Tareas</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0a0a0f;
+      color: #e4e4e7;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    header {
+      text-align: center;
+      padding: 3rem 0;
+      border-bottom: 1px solid #1f1f2e;
+      margin-bottom: 2rem;
+    }
+    .test-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #ff6b35, #f7931e);
+      color: #fff;
+      padding: 0.5rem 1.5rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.875rem;
+      margin-bottom: 1rem;
+    }
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, #fff, #a1a1aa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .subtitle {
+      color: #71717a;
+      font-size: 1.1rem;
+    }
+    .card {
+      background: #14141f;
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid #1f1f2e;
+    }
+    .card h2 {
+      color: #ff6b35;
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .card h2 i {
+      font-size: 1.1rem;
+    }
+    .card p, .card li {
+      color: #a1a1aa;
+      margin-bottom: 0.75rem;
+    }
+    .card ul {
+      margin-left: 1.5rem;
+    }
+    .card code {
+      background: #1a1a2e;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      color: #f7931e;
+    }
+    pre {
+      background: #1a1a2e;
+      padding: 1.5rem;
+      border-radius: 12px;
+      overflow-x: auto;
+      border: 1px solid #2e2e3e;
+      margin: 1rem 0;
+    }
+    pre code {
+      background: transparent !important;
+      padding: 0 !important;
+      color: #e4e4e7 !important;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      line-height: 1.6;
+    }
+    .endpoint {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      background: #1a1a2e;
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+      border-left: 3px solid #ff6b35;
+    }
+    .method {
+      font-weight: 600;
+      font-size: 0.75rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+    .method.get { background: #22c55e; color: #000; }
+    .method.post { background: #3b82f6; color: #fff; }
+    .method.put { background: #f59e0b; color: #000; }
+    .method.delete { background: #ef4444; color: #fff; }
+    .endpoint-path {
+      font-family: 'JetBrains Mono', monospace;
+      color: #e4e4e7;
+    }
+    .file-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .file-item {
+      background: #1a1a2e;
+      padding: 1rem;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      border: 1px solid #2e2e3e;
+    }
+    .file-item i {
+      color: #f7931e;
+      font-size: 1.25rem;
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #ff6b35;
+      text-decoration: none;
+      font-weight: 500;
+      margin-top: 2rem;
+      transition: color 0.2s;
+    }
+    .back-link:hover {
+      color: #f7931e;
+    }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #22c55e20;
+      color: #22c55e;
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      font-weight: 500;
+      font-size: 0.875rem;
+    }
+    @media (max-width: 768px) {
+      h1 { font-size: 1.75rem; }
+      .container { padding: 1rem; }
+      .card { padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="test-badge">TEST #6</div>
+      <h1>API REST de Tareas</h1>
+      <p class="subtitle">Express.js + JSON file storage</p>
+    </header>
+
+    <div class="card">
+      <h2><i class="fas fa-clipboard-list"></i> Consigna</h2>
+      <p>Crear una API REST completa para gestión de tareas utilizando Express.js con almacenamiento en archivo JSON. Incluir endpoints para listar, crear, actualizar y eliminar tareas.</p>
+      <div class="status-badge">
+        <i class="fas fa-check-circle"></i> Completado
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><i class="fas fa-cogs"></i> Pasos Técnicos</h2>
+      <ul>
+        <li>Creado <code>package.json</code> con dependencia de Express</li>
+        <li>Implementado <code>server.js</code> con todos los endpoints REST</li>
+        <li>Creado <code>db.json</code> vacío como base de datos inicial</li>
+        <li>Agregado <code>README.md</code> con documentación de uso</li>
+        <li>Helpers para lectura/escritura del archivo JSON</li>
+        <li>Manejo de errores y validaciones básicas</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2><i class="fas fa-folder-open"></i> Estructura de Archivos</h2>
+      <div class="file-list">
+        <div class="file-item">
+          <i class="fas fa-file-code"></i>
+          <span>server.js</span>
+        </div>
+        <div class="file-item">
+          <i class="fas fa-file-code"></i>
+          <span>package.json</span>
+        </div>
+        <div class="file-item">
+          <i class="fas fa-database"></i>
+          <span>db.json</span>
+        </div>
+        <div class="file-item">
+          <i class="fas fa-file-alt"></i>
+          <span>README.md</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><i class="fas fa-plug"></i> Endpoints de la API</h2>
+      
+      <div class="endpoint">
+        <span class="method get">GET</span>
+        <span class="endpoint-path">/tasks</span>
+      </div>
+      <p>Listar todas las tareas almacenadas</p>
+
+      <div class="endpoint">
+        <span class="method get">GET</span>
+        <span class="endpoint-path">/tasks/:id</span>
+      </div>
+      <p>Obtener una tarea específica por ID</p>
+
+      <div class="endpoint">
+        <span class="method post">POST</span>
+        <span class="endpoint-path">/tasks</span>
+      </div>
+      <p>Crear nueva tarea (requiere <code>title</code>)</p>
+
+      <div class="endpoint">
+        <span class="method put">PUT</span>
+        <span class="endpoint-path">/tasks/:id</span>
+      </div>
+      <p>Actualizar tarea existente</p>
+
+      <div class="endpoint">
+        <span class="method delete">DELETE</span>
+        <span class="endpoint-path">/tasks/:id</span>
+      </div>
+      <p>Eliminar tarea por ID</p>
+
+      <div class="endpoint">
+        <span class="method get">GET</span>
+        <span class="endpoint-path">/health</span>
+      </div>
+      <p>Health check del servidor</p>
+    </div>
+
+    <div class="card">
+      <h2><i class="fas fa-code"></i> Código del Servidor</h2>
+      <pre><code>const express = require('express');
+const fs = require('fs');
+const path = require('path');
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+const DB_PATH = path.join(__dirname, 'db.json');
+
+// Middleware
+app.use(express.json());
+
+// Helper functions
+const readDB = () => {
+  const data = fs.readFileSync(DB_PATH, 'utf8');
+  return JSON.parse(data);
+};
+
+const writeDB = (data) => {
+  fs.writeFileSync(DB_PATH, JSON.stringify(data, null, 2));
+};
+
+// GET /tasks - List all tasks
+app.get('/tasks', (req, res) => {
+  const db = readDB();
+  res.json({
+    success: true,
+    count: db.tasks.length,
+    tasks: db.tasks
+  });
+});
+
+// POST /tasks - Create new task
+app.post('/tasks', (req, res) => {
+  const { title, description, completed = false } = req.body;
+  
+  if (!title) {
+    return res.status(400).json({
+      success: false,
+      error: 'Title is required'
+    });
+  }
+  
+  const db = readDB();
+  const newTask = {
+    id: Date.now().toString(),
+    title,
+    description: description || '',
+    completed: Boolean(completed),
+    createdAt: new Date().toISOString()
+  };
+  
+  db.tasks.push(newTask);
+  writeDB(db);
+  
+  res.status(201).json({
+    success: true,
+    message: 'Task created',
+    task: newTask
+  });
+});
+
+// DELETE /tasks/:id
+app.delete('/tasks/:id', (req, res) => {
+  const db = readDB();
+  const taskIndex = db.tasks.findIndex(t => t.id === req.params.id);
+  
+  if (taskIndex === -1) {
+    return res.status(404).json({
+      success: false,
+      error: 'Task not found'
+    });
+  }
+  
+  const deletedTask = db.tasks[taskIndex];
+  db.tasks.splice(taskIndex, 1);
+  writeDB(db);
+  
+  res.json({
+    success: true,
+    message: 'Task deleted',
+    task: deletedTask
+  });
+});
+
+app.listen(PORT, () => {
+  console.log(`🚀 Server on http://localhost:${PORT}`);
+});</code></pre>
+    </div>
+
+    <div class="card">
+      <h2><i class="fas fa-terminal"></i> Ejemplo de Uso</h2>
+      <pre><code># Crear una tarea
+curl -X POST http://localhost:3000/tasks \
+  -H "Content-Type: application/json" \
+  -d '{"title":"Learn Express","description":"Build a REST API"}'
+
+# Listar todas las tareas
+curl http://localhost:3000/tasks
+
+# Actualizar una tarea
+curl -X PUT http://localhost:3000/tasks/1707300000000 \
+  -H "Content-Type: application/json" \
+  -d '{"completed":true}'
+
+# Eliminar una tarea
+curl -X DELETE http://localhost:3000/tasks/1707300000000</code></pre>
+    </div>
+
+    <div class="card">
+      <h2><i class="fas fa-check-double"></i> Resultado</h2>
+      <p>API REST funcional con almacenamiento persistente en archivo JSON. Incluye validaciones, manejo de errores 404/500, y respuestas consistentes con formato JSON.</p>
+      <ul>
+        <li>✅ Express server configurado</li>
+        <li>✅ CRUD completo de tareas</li>
+        <li>✅ Persistencia en db.json</li>
+        <li>✅ Validación de datos de entrada</li>
+        <li>✅ Manejo de errores</li>
+        <li>✅ Documentación README</li>
+      </ul>
+    </div>
+
+    <a href="/clawdbot/" class="back-link">
+      <i class="fas fa-arrow-left"></i> Volver
+    </a>
+  </div>
+</body>
+</html>

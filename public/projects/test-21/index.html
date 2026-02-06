@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test 21: Configuración de Entorno</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #0a0a0f;
+            color: #e0e0e8;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        header {
+            text-align: center;
+            padding: 3rem 0;
+            border-bottom: 1px solid #1f1f2e;
+            margin-bottom: 2rem;
+        }
+        .icon {
+            font-size: 4rem;
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+        .subtitle {
+            color: #888;
+            font-size: 1.1rem;
+        }
+        .card {
+            background-color: #14141f;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #1f1f2e;
+        }
+        .card h2 {
+            color: #ff6b35;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .card h2 i {
+            color: #f7931e;
+        }
+        .card p, .card ul {
+            color: #b0b0c0;
+            margin-bottom: 0.75rem;
+        }
+        .card ul {
+            padding-left: 1.5rem;
+        }
+        .card ul li {
+            margin-bottom: 0.5rem;
+        }
+        code, pre {
+            font-family: 'Fira Code', 'Consolas', monospace;
+            background-color: #1a1a2e;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+        pre {
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            border-left: 3px solid #ff6b35;
+        }
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: #1a1a2e;
+            color: #ff6b35;
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            border: 1px solid #ff6b35;
+            transition: all 0.2s;
+        }
+        .btn:hover {
+            background-color: #ff6b35;
+            color: #0a0a0f;
+        }
+        .back-link {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #1f1f2e;
+        }
+        .back-link a {
+            color: #f7931e;
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .back-link a:hover {
+            color: #ff6b35;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        .tool-item {
+            background-color: #1a1a2e;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 3px solid #f7931e;
+        }
+        .tool-item strong {
+            color: #fff;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+        .tool-item span {
+            color: #888;
+            font-size: 0.85rem;
+        }
+        @media (max-width: 600px) {
+            h1 { font-size: 1.75rem; }
+            .container { padding: 1rem; }
+            header { padding: 2rem 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="icon"><i class="fa-solid fa-sliders"></i></div>
+            <h1>Test 21: Configuración de Entorno</h1>
+            <p class="subtitle">Setup completo del workspace de OpenClaw</p>
+        </header>
+
+        <div class="card">
+            <h2><i class="fa-solid fa-bullseye"></i> Consigna</h2>
+            <p>Configurar el entorno de trabajo del agente OpenClaw estableciendo:</p>
+            <ul>
+                <li>Configuración de Git (user.name, user.email)</li>
+                <li>Identidad del agente (IDENTITY.md)</li>
+                <li>Perfil del usuario (USER.md)</li>
+                <li>Inventario de herramientas (TOOLS.md)</li>
+                <li>Catálogo de habilidades (SKILLS_INVENTORY.md)</li>
+                <li>Página HTML de documentación</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2><i class="fa-solid fa-list-check"></i> Pasos Ejecutados</h2>
+            <ul>
+                <li>✅ Verificada configuración Git (<code>git config --list</code>)</li>
+                <li>✅ Creado <code>IDENTITY.md</code> con identidad del agente (Claw ⚡)</li>
+                <li>✅ Creado <code>USER.md</code> con perfil de opclawd</li>
+                <li>✅ Creado <code>TOOLS.md</code> con herramientas disponibles</li>
+                <li>✅ Creado <code>SKILLS_INVENTORY.md</code> con 20 capacidades</li>
+                <li>✅ Generada página HTML de documentación</li>
+                <li>✅ Actualizado <code>public/projects/index.json</code></li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2><i class="fa-solid fa-toolbox"></i> Herramientas Configuradas</h2>
+            <div class="grid">
+                <div class="tool-item">
+                    <strong>Chromium</strong>
+                    <span>/usr/bin/chromium --no-sandbox</span>
+                </div>
+                <div class="tool-item">
+                    <strong>Python 3</strong>
+                    <span>+ requests, urllib, json, csv, sqlite3</span>
+                </div>
+                <div class="tool-item">
+                    <strong>Git</strong>
+                    <span>user=openclaw, email=opclawd@gmail.com</span>
+                </div>
+                <div class="tool-item">
+                    <strong>cURL</strong>
+                    <span>HTTP requests + jq JSON processing</span>
+                </div>
+                <div class="tool-item">
+                    <strong>SQLite3</strong>
+                    <span>Base de datos local</span>
+                </div>
+                <div class="tool-item">
+                    <strong>GitHub API</strong>
+                    <span>Integración con token auth</span>
+                </div>
+                <div class="tool-item">
+                    <strong>Telegram Bot API</strong>
+                    <span>Mensajería y notificaciones</span>
+                </div>
+                <div class="tool-item">
+                    <strong>Gmail SMTP</strong>
+                    <span>smtp.gmail.com:587</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><i class="fa-solid fa-file-code"></i> Archivos Generados</h2>
+            <pre><code># Estructura del workspace
+├── IDENTITY.md           # Identidad del agente (Claw ⚡)
+├── USER.md               # Perfil del usuario (opclawd)
+├── TOOLS.md              # Inventario de herramientas
+├── SKILLS_INVENTORY.md   # 20 capacidades documentadas
+└── public/projects/
+    ├── index.json        # Índice de proyectos
+    └── test-21/
+        └── index.html    # Esta página</code></pre>
+        </div>
+
+        <div class="card">
+            <h2><i class="fa-solid fa-check-circle"></i> Resultado</h2>
+            <p><span class="status-badge"><i class="fa-solid fa-check"></i> PASS</span></p>
+            <p style="margin-top: 1rem;">Entorno configurado exitosamente. El agente opera ahora con identidad propia, perfil de usuario definido, y catálogo completo de herramientas y habilidades.</p>
+            
+            <div class="links">
+                <a href="/clawdbot/IDENTITY.md" class="btn"><i class="fa-solid fa-id-card"></i> IDENTITY.md</a>
+                <a href="/clawdbot/USER.md" class="btn"><i class="fa-solid fa-user"></i> USER.md</a>
+                <a href="/clawdbot/TOOLS.md" class="btn"><i class="fa-solid fa-toolbox"></i> TOOLS.md</a>
+                <a href="/clawdbot/SKILLS_INVENTORY.md" class="btn"><i class="fa-solid fa-list"></i> SKILLS.md</a>
+            </div>
+        </div>
+
+        <div class="back-link">
+            <a href="/clawdbot/"><i class="fa-solid fa-arrow-left"></i> Volver</a>
+        </div>
+    </div>
+</body>
+</html>
