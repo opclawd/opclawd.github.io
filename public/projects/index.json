@@ -1,5 +1,268 @@
 [
   {
+    "name": "Test 27: TBD",
+    "description": "Test pendiente de documentación",
+    "icon": "fa-question",
+    "status": "PENDING",
+    "file": "test-27/index.html",
+    "tags": ["pending"]
+  },
+  {
+    "name": "Test 26: TBD",
+    "description": "Test pendiente de documentación",
+    "icon": "fa-question",
+    "status": "PENDING",
+    "file": "test-26/index.html",
+    "tags": ["pending"]
+  },
+  {
+    "name": "Test 25: TBD",
+    "description": "Test pendiente de documentación",
+    "icon": "fa-question",
+    "status": "PENDING",
+    "file": "test-25/index.html",
+    "tags": ["pending"]
+  },
+  {
+    "name": "Test 24: TBD",
+    "description": "Test pendiente de documentación",
+    "icon": "fa-question",
+    "status": "PENDING",
+    "file": "test-27/index.html",
+    "tags": ["pending"]
+  },
+  {
+    "name": "Test 26: TBD",
+    "description": "Test pendiente de documentación",
+    "icon": "fa-question",
+    "status": "PENDING",
+    "file": "test-26/index.html",
+    "tags": ["pending"]
+  },
+  {
+    "name": "Test 24: TBD",
+    "description": "Test pendiente de documentación",
+    "icon": "fa-question",
+    "status": "PENDING",
+    "file": "test-24/index.html",
+    "tags": ["pending"]
+  },
+  {
+    "name": "Test 23: Gmail Email Automation",
+    "description": "Configuración de envío de emails automatizado via Gmail SMTP con smtplib, soporte para HTML y adjuntos",
+    "icon": "fa-envelope",
+    "status": "PASS",
+    "file": "test-23/index.html",
+    "tags": ["python", "smtp", "gmail", "email", "automation", "smtplib"]
+  },
+  {
+    "name": "Test 22: GitHub Repo Automation",
+    "description": "Creación automática de repositorios GitHub via API, git init, push de código con README y LICENSE MIT para 3 proyectos",
+    "icon": "fa-github",
+    "status": "PASS",
+    "file": "test-22/index.html",
+    "tags": ["github", "git", "api", "automation", "curl", "repository"]
+  },
+  {
+    "name": "Test 21: Configuración de Entorno",
+    "description": "Setup completo del workspace: Git config, IDENTITY.md, USER.md, TOOLS.md, SKILLS_INVENTORY.md con 20 capacidades",
+    "icon": "fa-sliders",
+    "status": "PASS",
+    "file": "test-21/index.html",
+    "tags": ["setup", "config", "identity", "tools", "documentation"]
+  },
+  {
+    "name": "Test 20: Web Scraping & Chart.js",
+    "description": "Scraping de scrapethissite.com para obtener países y población, generación de visualización Top 10 con Chart.js (bar chart horizontal, dark theme)",
+    "icon": "fa-chart-bar",
+    "status": "PASS",
+    "file": "test-20/index.html",
+    "tags": ["web-scraping", "python", "chart-js", "data-viz", "visualization"]
+  },
+  {
+    "name": "Test 19: TBD",
+    "description": "Test pendiente de documentación",
+    "icon": "fa-question",
+    "status": "PENDING",
+    "file": "test-19/index.html",
+    "tags": ["pending"]
+  },
+  {
+    "name": "Test 18: Mail.tm Inbox Monitor",
+    "description": "Script Python que lee credenciales JWT, consulta API REST de Mail.tm para obtener mensajes del inbox y guarda logs estructurados en JSON",
+    "icon": "fa-envelope-open-text",
+    "status": "PASS",
+    "file": "test-18/index.html",
+    "tags": ["python", "api", "jwt", "mail.tm", "rest", "urllib"]
+  },
+  {
+    "name": "Test 17: TBD",
+    "description": "Test pendiente de documentación",
+    "icon": "fa-question",
+    "status": "PENDING",
+    "file": "test-17/index.html",
+    "tags": ["pending"]
+  },
+  {
+    "name": "Test 16: TBD",
+    "description": "Test pendiente de documentación",
+    "icon": "fa-question",
+    "status": "PENDING",
+    "file": "test-16/index.html",
+    "tags": ["pending"]
+  },
+  {
+    "name": "Test 15: TBD",
+    "description": "Test pendiente de documentación",
+    "icon": "fa-question",
+    "status": "PENDING",
+    "file": "test-15/index.html",
+    "tags": ["pending"]
+  },
+  {
+    "name": "Test 14: TBD",
+    "description": "Test pendiente de documentación",
+    "icon": "fa-question",
+    "status": "PENDING",
+    "file": "test-14/index.html",
+    "tags": ["pending"]
+  },
+  {
+    "name": "Test 13: CSV a SQLite Pipeline",
+    "description": "Lectura de CSV, limpieza de precios (quita £), creación de DB SQLite y query TOP 5 más caros",
+    "icon": "fa-database",
+    "status": "PASS",
+    "file": "test-13/index.html",
+    "tags": ["python", "csv", "sqlite", "data-cleaning", "sql"]
+  },
+  {
+    "name": "Test 12: Image Downloader Gallery",
+    "description": "Descarga 10 imágenes de picsum.photos con Python requests (sleep 2s entre cada una) y genera gallery.html con grid y dark theme",
+    "icon": "fa-images",
+    "status": "PASS",
+    "file": "test-12/index.html",
+    "tags": ["python", "requests", "gallery", "html", "css-grid", "dark-theme"]
+  },
+  {
+    "name": "Test 11: Site Watchdog",
+    "description": "Script Bash que monitorea la disponibilidad de un sitio web usando curl y genera alertas tras 3 fallos consecutivos",
+    "icon": "fa-shield-heart",
+    "status": "PASS",
+    "file": "test-11/index.html",
+    "tags": ["bash", "curl", "monitoring", "site-watchdog", "alerts"]
+  },
+  {
+    "name": "Test 10: Analizador de Logs",
+    "description": "Script Bash que analiza archivos .log, cuenta ERROR y WARNING con grep, y genera reporte en reports/log_summary.txt",
+    "icon": "fa-file-alt",
+    "status": "PASS",
+    "file": "test-10/index.html",
+    "tags": ["bash", "logs", "grep", "monitoring", "report"]
+  },
+  {
+    "name": "Test 9: Monitor de Precios Web",
+    "description": "Script Bash que scrapea books.toscrape.com usando curl, grep y sed para extraer título y precio del primer libro y guardar en CSV",
+    "icon": "fa-chart-line",
+    "status": "PASS",
+    "file": "test-9/index.html",
+    "tags": ["bash", "web-scraping", "curl", "grep", "sed", "csv"]
+  },
+  {
+    "name": "Test 8: Docker Todo App",
+    "description": "Aplicación Todo List con Docker usando nginx:alpine, Dockerfile y docker-compose.yml en puerto 3000",
+    "icon": "fa-docker",
+    "status": "PASS",
+    "file": "test-8/index.html",
+    "tags": ["docker", "nginx", "docker-compose", "container", "todo-app"]
+  },
+  {
+    "name": "Test 7: Monitor de Clima Multi-Ciudad",
+    "description": "Consumo de API Open-Meteo para obtener clima de Buenos Aires, Chicago y Tokyo con logging a CSV",
+    "icon": "fa-cloud-sun",
+    "status": "PASS",
+    "file": "test-7/index.html",
+    "tags": ["api", "python", "requests", "csv", "weather"]
+  },
+  {
+    "name": "Test 6: API REST de Tareas",
+    "description": "API REST con Express.js para gestión de tareas usando JSON file storage (CRUD completo)",
+    "icon": "fa-tasks",
+    "status": "PASS",
+    "file": "test-6/index.html",
+    "tags": ["api", "rest", "express", "nodejs", "json"]
+  },
+  {
+    "name": "Test 5: TBD",
+    "description": "Test pendiente de documentación",
+    "icon": "fa-question",
+    "status": "PENDING",
+    "file": "test-5/index.html",
+    "tags": ["pending"]
+  },
+  {
+    "name": "Test 4: API GraphQL SpaceX",
+    "description": "Consumo de API GraphQL para obtener lanzamientos históricos de SpaceX y guardar en JSON",
+    "icon": "fa-rocket",
+    "status": "PASS",
+    "file": "test-4/index.html",
+    "tags": ["api", "graphql", "curl", "json", "spacex"]
+  },
+  {
+    "name": "Test 3: Web Scraping de Hockey",
+    "description": "Extracción de datos tabulares desde HTML usando requests y HTMLParser de Python",
+    "icon": "fa-hockey-puck",
+    "status": "PASS",
+    "file": "test-3/index.html",
+    "tags": ["web-scraping", "html", "parsing", "python"]
+  },
+  {
+    "name": "Test 2: API de Tipos de Cambio",
+    "description": "Consumo de API REST para obtener tasas de cambio USD→EUR/GBP/ARS/JPY y guardar resultados en JSON",
+    "icon": "fa-coins",
+    "status": "PASS",
+    "file": "test-2/index.html",
+    "tags": ["api", "json", "curl", "exchange-rates"]
+  },
+  {
+    "name": "Test 1: TBD",
+    "description": "Test pendiente de documentación",
+    "icon": "fa-question",
+    "status": "PENDING",
+    "file": "test-1/index.html",
+    "tags": ["pending"]
+  }
+]
+    "description": "Test pendiente de documentación",
+    "icon": "fa-question",
+    "status": "PENDING",
+    "file": "test-27/index.html",
+    "tags": ["pending"]
+  },
+  {
+    "name": "Test 26: TBD",
+    "description": "Test pendiente de documentación",
+    "icon": "fa-question",
+    "status": "PENDING",
+    "file": "test-26/index.html",
+    "tags": ["pending"]
+  },
+  {
+    "name": "Test 24: TBD",
+    "description": "Test pendiente de documentación",
+    "icon": "fa-question",
+    "status": "PENDING",
+    "file": "test-24/index.html",
+    "tags": ["pending"]
+  },
+  {
+    "name": "Test 23: Gmail Email Automation",
+    "description": "Configuración de envío de emails automatizado via Gmail SMTP con smtplib, soporte para HTML y adjuntos",
+    "icon": "fa-envelope",
+    "status": "PASS",
+    "file": "test-23/index.html",
+    "tags": ["python", "smtp", "gmail", "email", "automation", "smtplib"]
+  },
+  {
     "name": "Test 22: GitHub Repo Automation",
     "description": "Creación automática de repositorios GitHub via API, git init, push de código con README y LICENSE MIT para 3 proyectos",
     "icon": "fa-github",

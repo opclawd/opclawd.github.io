@@ -1,0 +1,17 @@
+{
+  "name": "openclaw-url-shortener",
+  "version": "1.0.0",
+  "description": "URL shortener service with SQLite storage and dark theme frontend",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": ["url-shortener", "express", "sqlite", "nodejs"],
+  "author": "openclaw",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "better-sqlite3": "^9.4.3"
+  }
+}

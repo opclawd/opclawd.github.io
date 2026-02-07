@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test 23: Gmail Email Automation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0a0a0f;
+            --card-bg: #14141f;
+            --accent-orange: #ff6b35;
+            --accent-amber: #f7931e;
+            --code-bg: #1a1a2e;
+            --text-primary: #f0f0f5;
+            --text-secondary: #9494a8;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .test-number {
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-orange);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .meta {
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+        
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255, 107, 53, 0.1);
+        }
+        
+        .card h2 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--accent-orange);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .card p, .card li {
+            color: var(--text-secondary);
+        }
+        
+        .card ul {
+            padding-left: 1.5rem;
+        }
+        
+        .card li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .status-pass {
+            background: rgba(34, 197, 94, 0.15);
+            color: #22c55e;
+        }
+        
+        pre {
+            background: var(--code-bg);
+            padding: 1.5rem;
+            border-radius: 12px;
+            overflow-x: auto;
+            font-family: 'Fira Code', 'Consolas', monospace;
+            font-size: 0.875rem;
+            line-height: 1.6;
+            margin-top: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        code {
+            font-family: 'Fira Code', 'Consolas', monospace;
+            color: var(--text-primary);
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent-orange);
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.2s;
+            margin-top: 2rem;
+        }
+        
+        .back-link:hover {
+            opacity: 0.8;
+        }
+        
+        .test-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        
+        .test-table th,
+        .test-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .test-table th {
+            color: var(--accent-orange);
+            font-weight: 600;
+        }
+        
+        .test-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        @media (max-width: 600px) {
+            h1 { font-size: 1.75rem; }
+            .card { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="test-number">Test 23</div>
+            <h1><i class="fas fa-envelope"></i> Gmail Email Automation</h1>
+            <div class="meta">Scripts Python para envío automatizado de emails vía SMTP</div>
+        </header>
+
+        <div class="card">
+            <h2><i class="fas fa-bullseye"></i> Consigna</h2>
+            <p>Configurar un sistema de envío de emails automatizado usando Gmail SMTP con smtplib. El script debe soportar envío de emails HTML con adjuntos opcionales.</p>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-list-check"></i> Pasos Realizados</h2>
+            <ul>
+                <li>Creación de <code>scripts/send_email.py</code> con smtplib</li>
+                <li>Configuración de conexión SMTP a smtp.gmail.com:587 con STARTTLS</li>
+                <li>Login con credenciales opclawd@gmail.com (App Password)</li>
+                <li>Soporte para emails HTML con codificación UTF-8</li>
+                <li>Soporte para adjuntos múltiples (MIME multipart)</li>
+                <li>Envío de email de prueba con reporte de proyectos (Batch 1)</li>
+                <li>Verificación de entrega exitosa</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-code"></i> Código Principal</h2>
+            <pre><code>def send_email(to_email, subject, body_html, attachments=None):
+    msg = MIMEMultipart("alternative")
+    msg["Subject"] = subject
+    msg["From"] = f"OpenClaw Bot &lt;{SMTP_USER}&gt;"
+    msg["To"] = to_email
+    
+    # Cuerpo HTML
+    html_part = MIMEText(body_html, "html", "utf-8")
+    msg.attach(html_part)
+    
+    # Archivos adjuntos
+    for filepath in attachments or []:
+        part = MIMEBase("application", "octet-stream")
+        with open(filepath, "rb") as f:
+            part.set_payload(f.read())
+        encoders.encode_base64(part)
+        part.add_header(
+            "Content-Disposition",
+            f"attachment; filename=\"{filename}\"",
+        )
+        msg.attach(part)
+    
+    # Conexión TLS y envío
+    with smtplib.SMTP(SMTP_HOST, SMTP_PORT) as server:
+        server.starttls(context=ssl.create_default_context())
+        server.login(SMTP_USER, SMTP_PASS)
+        server.sendmail(SMTP_USER, [to_email], msg.as_string())</code></pre>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-chart-pie"></i> Resultado: Email Enviado</h2>
+            <table class="test-table">
+                <tr><th>Destinatario</th><td>opclawd@gmail.com</td></tr>
+                <tr><th>Asunto</th><td>OpenClaw Batch 1 Report</td></tr>
+                <tr><th>Tipo</th><td>HTML con tabla de proyectos</td></tr>
+                <tr><th>Servidor</th><td>smtp.gmail.com:587 (STARTTLS)</td></tr>
+                <tr><th>Estado</th><td><span class="status-badge status-pass"><i class="fas fa-check-circle"></i> ENVIADO</span></td></tr>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-terminal"></i> Uso del Script</h2>
+            <pre><code># Email simple
+python scripts/send_email.py \\
+    --to "destino@email.com" \\
+    --subject "Hola" \\
+    --body "&lt;h1&gt;Hola Mundo&lt;/h1&gt;"
+
+# Email con adjuntos
+python scripts/send_email.py \\
+    --to "destino@email.com" \\
+    --subject "Reporte" \\
+    --body "&lt;h1&gt;Adjunto&lt;/h1&gt;" \\
+    --attach archivo.pdf imagen.png</code></pre>
+        </div>
+
+        <a href="/clawdbot/" class="back-link"><i class="fas fa-arrow-left"></i> Volver</a>
+    </div>
+</body>
+</html>
