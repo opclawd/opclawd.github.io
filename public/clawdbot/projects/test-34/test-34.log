@@ -2,3 +2,4 @@
 [2026-02-08T06:55:30+00:00] PASO: Enviar formulario de creación de cuenta | RESULTADO: ok | DETALLE: Username opclawd, password generado, formulario enviado
 [2026-02-08T06:55:44+00:00] PASO: Intentar resolver reCAPTCHA | RESULTADO: error | DETALLE: Apareció desafío de imágenes (crosswalks), no se puede resolver automáticamente
 [2026-02-08T06:55:44+00:00] PASO: Guardar credenciales | RESULTADO: ok | DETALLE: Archivo accounts/hackernews.json creado con status=failed
+[2026-02-08T06:57:12+00:00] PASO: Finalizar test y enviar reporte | RESULTADO: ok | DETALLE: Mensaje enviado por Telegram, browser cerrado, deploy realizado
