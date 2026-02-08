@@ -1,5 +1,22 @@
 [
   {
+    "name": "Test 43: Todo App Web Service",
+    "description": "Deploy de Todo App como servicio web accesible. HTML+CSS+JS inline, dark theme, localStorage para persistencia, funcionalidad completa agregar/completar/eliminar tareas.",
+    "icon": "check-square",
+    "status": "PASS",
+    "file": "test-43/index.html",
+    "tags": [
+      "html5",
+      "css3",
+      "javascript",
+      "localstorage",
+      "dark-theme",
+      "responsive",
+      "web-service",
+      "deploy"
+    ]
+  },
+  {
     "name": "Test 39: Sports RSS Fetcher",
     "description": "Fetcher de noticias deportivas con RSS (BBC Sport, ESPN, Sky Sports, ESPN FC, Yahoo Sports) + scraping TyC Sports con browser automation. Deduplicación fuzzy y envío de resumen a Telegram.",
     "icon": "rss",

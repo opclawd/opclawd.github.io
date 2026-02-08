@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test 43: Todo App Web Service</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0a0a0f; color: #e4e4e7; line-height: 1.6;
+        }
+        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+        .header {
+            text-align: center; margin-bottom: 40px; padding: 40px 20px;
+            background: linear-gradient(135deg, #14141f 0%, #1a1a2e 100%);
+            border-radius: 20px; border: 1px solid #2a2a3e;
+        }
+        .header h1 {
+            font-size: 2rem; font-weight: 700;
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; margin-bottom: 10px;
+        }
+        .header .badge {
+            display: inline-block; padding: 4px 12px; border-radius: 20px;
+            background: rgba(76,175,80,0.15); color: #4caf50;
+            font-size: 0.8rem; font-weight: 600;
+        }
+        .section {
+            background: #14141f; border-radius: 16px; padding: 25px;
+            border: 1px solid #2a2a3e; margin-bottom: 20px;
+        }
+        .section h2 {
+            color: #f7931e; font-size: 1.2rem; margin-bottom: 15px;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .section p { color: #888; margin-bottom: 10px; }
+        .section ul { margin-left: 20px; color: #888; }
+        .section li { margin-bottom: 8px; }
+        .code-block {
+            background: #1a1a2e; padding: 15px; border-radius: 8px;
+            font-family: 'Fira Code', 'Consolas', monospace;
+            font-size: 0.85rem; overflow-x: auto;
+            border: 1px solid #2a2a3e; color: #a0a0b0;
+        }
+        .link-box {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            padding: 20px; border-radius: 12px; text-align: center;
+            margin: 20px 0;
+        }
+        .link-box a {
+            color: #fff; text-decoration: none; font-weight: 600; font-size: 1.1rem;
+        }
+        .link-box a:hover { text-decoration: underline; }
+        .btn-back {
+            display: inline-block; padding: 12px 24px;
+            background: #1a1a2e; color: #ff6b35;
+            text-decoration: none; border-radius: 8px;
+            border: 1px solid #2a2a3e; margin-top: 20px;
+        }
+        .btn-back:hover { border-color: #ff6b35; }
+        .footer {
+            text-align: center; margin-top: 40px; padding-top: 30px;
+            border-top: 1px solid #2a2a3e; color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-check-square"></i> Test 43: Todo App Web Service</h1>
+            <span class="badge">✓ COMPLETADO</span>
+        </div>
+
+        <div class="section">
+            <h2><i class="fas fa-clipboard-list"></i> Consigna</h2>
+            <p>Desplegar la Todo App (test-8) como servicio web accesible públicamente con las siguientes características:</p>
+            <ul>
+                <li>Dark theme moderno</li>
+                <li>Persistencia via localStorage</li>
+                <li>Funcionalidad completa: agregar, completar, eliminar tareas</li>
+                <li>Responsive design</li>
+                <li>Deploy automático via git push</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2><i class="fas fa-list-ol"></i> Pasos Ejecutados</h2>
+            <ul>
+                <li><strong>Paso 1:</strong> Lectura de apps/todo-app/index.html (existente de test-8)</li>
+                <li><strong>Paso 2:</strong> Copia a public/clawdbot/apps/todo-app/index.html</li>
+                <li><strong>Paso 3:</strong> Test de navegación con Chromium headless</li>
+                <li><strong>Paso 4:</strong> Agregado link a Todo App en homepage principal</li>
+                <li><strong>Paso 5:</strong> Git add, commit y push para deploy</li>
+                <li><strong>Paso 6:</strong> Verificación HTTP 200 con curl</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2><i class="fas fa-check-circle"></i> Resultado</h2>
+            <p>✅ Todo App desplegada exitosamente como servicio web</p>
+            <p>✅ Responde HTTP 200 en URL productiva</p>
+            <p>✅ Homepage actualizada con link a la app</p>
+            <p>✅ Proyecto registrado en índice</p>
+            
+            <div class="link-box">
+                <a href="/clawdbot/apps/todo-app/" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> Abrir Todo App
+                </a>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2><i class="fas fa-code"></i> Tecnologías</h2>
+            <div class="code-block">HTML5 + CSS3 (inline) | JavaScript ES6 | localStorage API
+Chromium Headless | Git Deploy | Nginx Static Hosting</div>
+        </div>
+
+        <div class="section">
+            <h2><i class="fas fa-link"></i> Links</h2>
+            <ul>
+                <li><a href="/clawdbot/apps/todo-app/" style="color:#ff6b35">/clawdbot/apps/todo-app/</a> - App en vivo</li>
+                <li><a href="/clawdbot/" style="color:#ff6b35">/clawdbot/</a> - Homepage con navegación</li>
+            </ul>
+            <a href="/clawdbot/" class="btn-back"><i class="fas fa-arrow-left"></i> Volver</a>
+        </div>
+
+        <div class="footer">
+            <p><i class="fas fa-code"></i> Generado por OpenClaw | Test 43</p>
+        </div>
+    </div>
+</body>
+</html>
