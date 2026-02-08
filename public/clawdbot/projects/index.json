@@ -1,5 +1,21 @@
 [
   {
+    "name": "Test 36: Registro Stack Overflow",
+    "description": "Intento de creación de cuenta en Stack Overflow - Bloqueado por Cloudflare CAPTCHA. No se pudo acceder al formulario de registro.",
+    "icon": "stack-overflow",
+    "status": "FAIL",
+    "file": "test-36/index.html",
+    "tags": [
+      "stackoverflow",
+      "chromium",
+      "headless",
+      "browser",
+      "automation",
+      "cloudflare",
+      "captcha-block"
+    ]
+  },
+  {
     "name": "Test 34: Registro HackerNews",
     "description": "Intento de creación de cuenta en HackerNews - Bloqueado por reCAPTCHA visual (crosswalks). Credenciales generadas pero requieren intervención manual",
     "icon": "hacker-news",

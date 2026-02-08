@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test 36 - Stack Overflow Registration</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0f;
+            color: #e4e4e7;
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, #14141f 0%, #1a1a2e 100%);
+            border-radius: 16px;
+            border: 1px solid #252538;
+        }
+        .header i {
+            font-size: 3rem;
+            color: #f48024;
+            margin-bottom: 1rem;
+        }
+        .header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #fafafa;
+            margin-bottom: 0.5rem;
+        }
+        .header p {
+            color: #a1a1aa;
+            font-size: 1rem;
+        }
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+        .status-fail {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+        .card {
+            background: #14141f;
+            border: 1px solid #252538;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .card h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #fafafa;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .card h2 i {
+            color: #ff6b35;
+        }
+        .consigna {
+            background: #1a1a2e;
+            border-left: 4px solid #f7931e;
+            padding: 1rem 1.25rem;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.9375rem;
+            color: #d4d4d8;
+            line-height: 1.6;
+        }
+        .steps-list {
+            list-style: none;
+        }
+        .steps-list li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #252538;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+        .steps-list li:last-child {
+            border-bottom: none;
+        }
+        .step-num {
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            color: #fff;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        .step-content {
+            flex: 1;
+        }
+        .step-title {
+            font-weight: 500;
+            color: #fafafa;
+            margin-bottom: 0.25rem;
+        }
+        .step-status {
+            font-size: 0.875rem;
+        }
+        .status-ok { color: #22c55e; }
+        .status-error { color: #ef4444; }
+        .status-skip { color: #f59e0b; }
+        .result-box {
+            background: #1a1a2e;
+            border-radius: 8px;
+            padding: 1.25rem;
+        }
+        .result-box h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fafafa;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .result-box h3 i {
+            color: #ef4444;
+        }
+        .error-detail {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        .error-detail p {
+            margin-bottom: 0.5rem;
+            font-size: 0.9375rem;
+        }
+        .error-detail p:last-child {
+            margin-bottom: 0;
+        }
+        .ray-id {
+            font-family: 'Monaco', 'Menlo', monospace;
+            background: #0a0a0f;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8125rem;
+            color: #f7931e;
+        }
+        pre {
+            background: #0a0a0f;
+            border: 1px solid #252538;
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
+            font-size: 0.875rem;
+            color: #a1a1aa;
+        }
+        .screenshot-placeholder {
+            background: #1a1a2e;
+            border: 2px dashed #3f3f55;
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            color: #71717a;
+        }
+        .screenshot-placeholder i {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        .links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.9375rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            color: #fff;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(247, 147, 30, 0.3);
+        }
+        .btn-secondary {
+            background: #252538;
+            color: #e4e4e7;
+            border: 1px solid #3f3f55;
+        }
+        .btn-secondary:hover {
+            background: #2d2d44;
+        }
+        .timestamp {
+            text-align: center;
+            color: #52525b;
+            font-size: 0.875rem;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #252538;
+        }
+        @media (max-width: 640px) {
+            .header { padding: 1.5rem 1rem; }
+            .header h1 { font-size: 1.375rem; }
+            .card { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <i class="fab fa-stack-overflow"></i>
+            <h1>Test 36: Stack Overflow Account Creation</h1>
+            <p>Intento de registro automatizado con Chromium headless</p>
+            <span class="status-badge status-fail">
+                <i class="fas fa-times-circle"></i>
+                FALLIDO - Cloudflare CAPTCHA
+            </span>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-tasks"></i> Consigna</h2>
+            <div class="consigna">
+                Crear una cuenta en Stack Overflow (<code>https://stackoverflow.com/users/signup</code>) utilizando navegación con Chromium headless, seleccionando "Sign up with Email" (no OAuth), con display name "Orlando Clawd", email "opclawd@gmail.com" y password seguro. Verificar email via IMAP si es necesario y documentar cualquier CAPTCHA encontrado.
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-list-ol"></i> Pasos Ejecutados</h2>
+            <ul class="steps-list">
+                <li>
+                    <span class="step-num">1</span>
+                    <div class="step-content">
+                        <div class="step-title">Inicializar logging en logs/test-36.log</div>
+                        <div class="step-status status-ok"><i class="fas fa-check"></i> Completado</div>
+                    </div>
+                </li>
+                <li>
+                    <span class="step-num">2</span>
+                    <div class="step-content">
+                        <div class="step-title">Navegar a Stack Overflow signup con Chromium</div>
+                        <div class="step-status status-ok"><i class="fas fa-check"></i> Página cargada</div>
+                    </div>
+                </li>
+                <li>
+                    <span class="step-num">3</span>
+                    <div class="step-content">
+                        <div class="step-title">Buscar opción "Sign up with Email"</div>
+                        <div class="step-status status-error"><i class="fas fa-times"></i> Bloqueado por CAPTCHA</div>
+                    </div>
+                </li>
+                <li>
+                    <span class="step-num">4</span>
+                    <div class="step-content">
+                        <div class="step-title">Completar formulario de registro</div>
+                        <div class="step-status status-skip"><i class="fas fa-ban"></i> No accesible</div>
+                    </div>
+                </li>
+                <li>
+                    <span class="step-num">5</span>
+                    <div class="step-content">
+                        <div class="step-title">Verificar email via IMAP</div>
+                        <div class="step-status status-skip"><i class="fas fa-ban"></i> No requerido</div>
+                    </div>
+                </li>
+                <li>
+                    <span class="step-num">6</span>
+                    <div class="step-content">
+                        <div class="step-title">Guardar credenciales en accounts/stackoverflow.json</div>
+                        <div class="step-status status-ok"><i class="fas fa-check"></i> Guardado con estado "failed"</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-exclamation-triangle"></i> Resultado</h2>
+            <div class="result-box">
+                <h3><i class="fas fa-shield-alt"></i> Bloqueo de Seguridad Detectado</h3>
+                <div class="error-detail">
+                    <p><strong>Tipo:</strong> Cloudflare CAPTCHA / Human Verification Challenge</p>
+                    <p><strong>Descripción:</strong> Al navegar a la página de registro de Stack Overflow, se presentó una pantalla de verificación de Cloudflare que requiere interacción humana para continuar.</p>
+                    <p><strong>Ray ID:</strong> <span class="ray-id">9ca93f174c82d62f</span></p>
+                    <p><strong>Mensaje:</strong> "Verify you are human by completing the action below."</p>
+                </div>
+                
+                <h3 style="margin-top: 1.5rem;"><i class="fas fa-image"></i> Captura de Pantalla</h3>
+                <div class="screenshot-placeholder">
+                    <i class="fas fa-camera"></i>
+                    <p>Cloudflare CAPTCHA screenshot capturado y guardado en media/browser/</p>
+                    <p style="font-size: 0.8125rem; margin-top: 0.5rem;">Screenshot ID: 91b6b8c5-4a5b-45db-b97d-21f229d3f63a.png</p>
+                </div>
+
+                <h3 style="margin-top: 1.5rem;"><i class="fas fa-key"></i> Credenciales Generadas (No Utilizadas)</h3>
+                <pre>{
+  "site": "Stack Overflow",
+  "url": "https://stackoverflow.com/users/signup",
+  "username": "opclawd",
+  "email": "opclawd@gmail.com",
+  "password": "N/A - Task failed",
+  "status": "failed",
+  "error": "Cloudflare CAPTCHA/security challenge blocking signup page",
+  "created": "2026-02-08T06:47:00Z"
+}</pre>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-link"></i> Links</h2>
+            <div class="links">
+                <a href="/clawdbot/" class="btn btn-primary">
+                    <i class="fas fa-arrow-left"></i> Volver al Panel
+                </a>
+                <a href="https://stackoverflow.com/users/signup" target="_blank" class="btn btn-secondary">
+                    <i class="fas fa-external-link-alt"></i> Stack Overflow Signup
+                </a>
+                <a href="/clawdbot/projects/test-36/test-36.log" class="btn btn-secondary">
+                    <i class="fas fa-file-alt"></i> Ver Log
+                </a>
+            </div>
+        </div>
+
+        <div class="timestamp">
+            <i class="far fa-clock"></i> Ejecutado el 8 de febrero de 2026 a las 06:47 UTC
+        </div>
+    </div>
+</body>
+</html>
