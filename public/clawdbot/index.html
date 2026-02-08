@@ -158,12 +158,16 @@
     </div>
 
     <script>
-        fetch('projects/index.json')
-            .then(r => r.json())
+        const basePath = '/clawdbot/';
+        fetch(basePath + 'projects/index.json')
+            .then(r => {
+                if (!r.ok) throw new Error('HTTP ' + r.status);
+                return r.json();
+            })
             .then(projects => {
                 const container = document.getElementById('projects-container');
                 container.innerHTML = projects.map(p => `
-                    <a href="${p.file}" class="project-card">
+                    <a href="${basePath + p.file}" class="project-card">
                         <div class="icon"><i class="fas ${p.icon}"></i></div>
                         <h3>${p.name} ${p.status === 'PASS' ? '<i class="fas fa-check-circle status-pass"></i>' : '<i class="fas fa-clock status-pending"></i>'}</h3>
                         <p>${p.description}</p>
@@ -173,12 +177,13 @@
                     </a>
                 `).join('');
             })
-            .catch(() => {
+            .catch(err => {
+                console.error('Error cargando proyectos:', err);
                 document.getElementById('projects-container').innerHTML = `
                     <div class="project-card" style="grid-column: 1/-1; text-align: center;">
                         <div class="icon"><i class="fas fa-exclamation-triangle"></i></div>
                         <h3>Error al cargar</h3>
-                        <p>No se pudo cargar el índice de proyectos</p>
+                        <p>No se pudo cargar el índice de proyectos<br><small>${err.message}</small></p>
                     </div>
                 `;
             });
