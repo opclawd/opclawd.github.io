@@ -1,5 +1,37 @@
 [
   {
+    "name": "Test 34: Registro HackerNews",
+    "description": "Intento de creación de cuenta en HackerNews - Bloqueado por reCAPTCHA visual (crosswalks). Credenciales generadas pero requieren intervención manual",
+    "icon": "hacker-news",
+    "status": "FAIL",
+    "file": "test-34/index.html",
+    "tags": [
+      "hackernews",
+      "chromium",
+      "headless",
+      "browser",
+      "automation",
+      "recaptcha",
+      "captcha-block"
+    ]
+  },
+  {
+    "name": "Test 33: Registro Kaggle",
+    "description": "Intento de creación de cuenta en Kaggle - Bloqueado por reCAPTCHA visual. Se generaron credenciales pero requiere intervención manual o Google OAuth",
+    "icon": "kaggle",
+    "status": "FAIL",
+    "file": "test-33/index.html",
+    "tags": [
+      "kaggle",
+      "chromium",
+      "headless",
+      "browser",
+      "automation",
+      "recaptcha",
+      "captcha-block"
+    ]
+  },
+  {
     "name": "Test 2: API de Tipos de Cambio",
     "description": "Consumo de API REST para obtener tasas de cambio USD→EUR/GBP/ARS/JPY y guardar resultados en JSON",
     "icon": "coins",

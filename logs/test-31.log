@@ -1,2 +1,20 @@
 [2026-02-08T06:37:00+00:00] PASO: Inicio Test-31 | RESULTADO: ok | DETALLE: Creacion de cuenta en Medium via magic link
 [2026-02-08T06:37:30+00:00] PASO: Navegar a Medium signup | RESULTADO: error | DETALLE: Browser service no disponible, usando alternativa
+[2026-02-08T06:41:17.875Z] PASO: Iniciar navegador Playwright | RESULTADO: ok | DETALLE: Chromium headless
+[2026-02-08T06:41:18.013Z] PASO: Navegar a Medium signup | RESULTADO: iniciando | DETALLE: https://medium.com/m/signin
+[2026-02-08T06:42:39.141Z] PASO: Iniciar navegador | RESULTADO: ok | DETALLE: Chromium con user-agent realista
+[2026-02-08T06:42:39.255Z] PASO: Navegar a Medium | RESULTADO: iniciando | DETALLE: medium.com
+[2026-02-08T06:42:41.440Z] PASO: Screenshot homepage | RESULTADO: ok | DETALLE: medium-01-home.png
+[2026-02-08T06:42:44.955Z] PASO: Screenshot pagina signin | RESULTADO: ok | DETALLE: medium-02-signin.png
+[2026-02-08T06:42:44.984Z] PASO: Error | RESULTADO: error | DETALLE: No se encontro campo de email
+[2026-02-08T06:43:05.148Z] PASO: Iniciar navegador | RESULTADO: ok | DETALLE: Chromium con user-agent realista
+[2026-02-08T06:43:05.259Z] PASO: Navegar a Medium | RESULTADO: iniciando | DETALLE: medium.com
+[2026-02-08T06:43:07.498Z] PASO: Screenshot homepage | RESULTADO: ok | DETALLE: medium-01-home.png
+[2026-02-08T06:43:11.002Z] PASO: Screenshot pagina signin | RESULTADO: ok | DETALLE: medium-02-signin.png
+[2026-02-08T06:43:11.026Z] PASO: Click Sign in with email | RESULTADO: ok | DETALLE: Seleccionando metodo email
+[2026-02-08T06:43:14.135Z] PASO: Campo email encontrado | RESULTADO: ok | DETALLE: Ingresando email
+[2026-02-08T06:43:14.676Z] PASO: Click boton submit | RESULTADO: ok | DETALLE: Enviando email
+[2026-02-08T06:43:19.784Z] PASO: Screenshot confirmacion | RESULTADO: ok | DETALLE: medium-03-confirmation.png
+[2026-02-08T06:43:19.793Z] PASO: Titulo de pagina | RESULTADO: ok | DETALLE: Medium
+[2026-02-08T06:43:19.794Z] PASO: Magic link solicitado | RESULTADO: success | DETALLE: Revisar email opclawd@gmail.com
+[2026-02-08T06:43:19.827Z] PASO: Guardar estado | RESULTADO: ok | DETALLE: accounts/medium.json

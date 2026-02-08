@@ -1,0 +1,12 @@
+{
+  "site": "Medium",
+  "url": "https://medium.com",
+  "username": "opclawd",
+  "email": "opclawd@gmail.com",
+  "password": null,
+  "method": "magic-link",
+  "status": "pending-verification",
+  "step": "magic-link-requested",
+  "created": "2026-02-08T06:43:19.826Z",
+  "notes": "Magic link solicitado. Revisar email para completar el proceso."
+}

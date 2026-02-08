@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test 34: Registro HackerNews</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0f;
+            color: #e4e4e7;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(255, 107, 53, 0.3);
+        }
+        .header h1 {
+            font-size: 2rem;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+        .header p {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.1rem;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-top: 15px;
+        }
+        .status-fail {
+            background: #dc2626;
+            color: white;
+        }
+        .card {
+            background: #14141f;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid #27273a;
+        }
+        .card h2 {
+            color: #ff6b35;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .card h2 i {
+            font-size: 1.1rem;
+        }
+        .card p, .card li {
+            color: #a1a1aa;
+            margin-bottom: 10px;
+        }
+        .card ul {
+            margin-left: 20px;
+        }
+        .card li {
+            margin-bottom: 8px;
+        }
+        pre {
+            background: #1a1a2e;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Fira Code', 'Consolas', monospace;
+            font-size: 0.85rem;
+            color: #e4e4e7;
+            border: 1px solid #27273a;
+        }
+        code {
+            color: #f7931e;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #ff6b35;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 30px;
+            padding: 12px 24px;
+            background: #14141f;
+            border-radius: 8px;
+            border: 1px solid #ff6b35;
+            transition: all 0.3s ease;
+        }
+        .back-link:hover {
+            background: #ff6b35;
+            color: #fff;
+        }
+        .error-box {
+            background: rgba(220, 38, 38, 0.1);
+            border: 1px solid #dc2626;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        .error-box i {
+            color: #dc2626;
+            margin-right: 8px;
+        }
+        .solution-box {
+            background: rgba(247, 147, 30, 0.1);
+            border: 1px solid #f7931e;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        .solution-box i {
+            color: #f7931e;
+            margin-right: 8px;
+        }
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            .card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fab fa-hacker-news"></i> Test 34: Registro HackerNews</h1>
+            <p>Automatización de creación de cuenta en HackerNews con Chromium headless</p>
+            <span class="status-badge status-fail"><i class="fas fa-times-circle"></i> FALLIDO - reCAPTCHA</span>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-tasks"></i> Consigna</h2>
+            <ul>
+                <li>Navegar a <code>https://news.ycombinator.com/login?creating=t</code></li>
+                <li>Crear cuenta con username <strong>opclawd</strong> y contraseña segura</li>
+                <li>Agregar bio al perfil: "Digital creator from Buenos Aires. Building with AI."</li>
+                <li>Guardar credenciales en <code>accounts/hackernews.json</code></li>
+                <li>Reportar resultado vía Telegram</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-cogs"></i> Pasos Ejecutados</h2>
+            <ol>
+                <li>Iniciar Chromium headless en modo sandbox</li>
+                <li>Navegar al formulario de creación de cuenta</li>
+                <li>Generar contraseña segura de 20 caracteres</li>
+                <li>Completar campos username y password</li>
+                <li>Enviar formulario</li>
+                <li>Resolver reCAPTCHA "I'm not a robot"</li>
+            </ol>
+            <div class="error-box">
+                <i class="fas fa-exclamation-triangle"></i>
+                <strong>Bloqueo detectado:</strong> Apareció desafío de imágenes reCAPTCHA v2 (seleccionar crosswalks). No es posible resolver este tipo de CAPTCHA visual de forma automatizada sin servicios externos o visión computacional.
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-key"></i> Credenciales Generadas</h2>
+            <pre>{
+  "site": "hackernews",
+  "url": "https://news.ycombinator.com/login?creating=t",
+  "username": "opclawd",
+  "email": "opclawd@gmail.com",
+  "password": "MU3tlWx4ptRqcE6wA9qj",
+  "status": "failed",
+  "error": "reCAPTCHA image challenge (crosswalks) - cannot solve programmatically",
+  "created": "2026-02-08T06:43:00Z"
+}</pre>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-clipboard-list"></i> Log de Ejecución</h2>
+            <pre>2026-02-08T06:55:10+00:00 - Directorios creados, browser iniciado
+2026-02-08T06:55:30+00:00 - Formulario enviado (username: opclawd)
+2026-02-08T06:55:44+00:00 - ERROR: Desafío reCAPTCHA imágenes (crosswalks)
+2026-02-08T06:55:44+00:00 - Credenciales guardadas con status=failed</pre>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-lightbulb"></i> Solución Alternativa</h2>
+            <div class="solution-box">
+                <i class="fas fa-info-circle"></i>
+                <strong>Opciones para completar el registro:</strong>
+            </div>
+            <ul style="margin-top: 15px;">
+                <li><strong>Intervención manual:</strong> Usar las credenciales generadas y completar el registro manualmente en navegador</li>
+                <li><strong>Email a HN:</strong> Según el mensaje del sitio, se puede enviar email a <code>hn@ycombinator.com</code> con el username deseado y ellos crean la cuenta</li>
+                <li><strong>Servicios CAPTCHA:</strong> Integrar 2captcha o Anti-Captcha para resolver desafíos visuales (costo adicional)</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-link"></i> Links</h2>
+            <ul>
+                <li><i class="fas fa-external-link-alt" style="color: #ff6b35;"></i> <a href="https://news.ycombinator.com/login?creating=t" target="_blank" style="color: #ff6b35;">HackerNews Signup</a></li>
+                <li><i class="fas fa-file-code" style="color: #ff6b35;"></i> <a href="/clawdbot/projects/test-34/test-34.log" style="color: #ff6b35;">Log completo</a></li>
+                <li><i class="fas fa-folder" style="color: #ff6b35;"></i> <a href="/clawdbot/accounts/hackernews.json" style="color: #ff6b35;">Credenciales</a></li>
+            </ul>
+        </div>
+
+        <a href="/clawdbot/" class="back-link"><i class="fas fa-arrow-left"></i> Volver al Panel</a>
+    </div>
+</body>
+</html>

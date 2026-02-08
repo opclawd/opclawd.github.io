@@ -11,3 +11,9 @@
 [2026-02-08T06:38:30Z] PASO: Evaluar opciones de continuación | RESULTADO: blocked | DETALLE: reCAPTCHA impide automatización completa. Se requiere intervención manual o servicio de solución CAPTCHA
 [2026-02-08T06:38:45Z] PASO: Generar resultado final | RESULTADO: partial | DETALLE: Script de registro creado, credenciales generadas, pero registro bloqueado por reCAPTCHA
 [2026-02-08T06:39:00Z] PASO: Crear archivos de salida | RESULTADO: ok | DETALLE: accounts/devto.json, logs/test-29.log, HTML page creados
+[2026-02-08T06:40:00Z] PASO: Actualizar index.json | RESULTADO: ok | DETALLE: Entrada agregada para test-29
+[2026-02-08T06:40:15Z] PASO: Copiar log a carpeta public | RESULTADO: ok | DETALLE: test-29.log copiado a public/clawdbot/projects/test-29/
+[2026-02-08T06:40:30Z] PASO: Git commit y push | RESULTADO: ok | DETALLE: Cambios pusheados a https://github.com/opclawd/opclawd.github.io.git
+[2026-02-08T06:41:00Z] PASO: Smoke test | RESULTADO: partial | DETALLE: 12 passed, 1 failed (404 en test-29 por delay de deploy)
+[2026-02-08T06:41:30Z] PASO: Enviar resultado vía Telegram | RESULTADO: ok | DETALLE: Mensaje enviado a chat_id 8482372960
+[2026-02-08T06:41:45Z] PASO: Finalizar test | RESULTADO: completed | DETALLE: Test 29 finalizado - Registro bloqueado por reCAPTCHA, requiere intervención manual

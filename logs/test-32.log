@@ -1,0 +1,11 @@
+[2026-02-08T06:44:41+00:00] TEST: Test32 - Pinterest Account Creation | STATUS: started
+[2026-02-08T06:45:06+00:00] PASO: Verificar servicio browser | RESULTADO: error | DETALLE: OpenClaw gateway no disponible
+[2026-02-08T06:45:19+00:00] PASO: Iniciar Chromium headless | RESULTADO: ok | DETALLE: Chrome/144.0.7559.109 en puerto 18800
+[2026-02-08T06:45:29+00:00] PASO: Cargar formulario Pinterest | RESULTADO: ok | DETALLE: Formulario de signup visible con campos email, password, birthdate
+[$(date -Iseconds)] PASO: Ingresar email | RESULTADO: ok | DETALLE: opclawd@gmail.com ingresado correctamente
+[$(date -Iseconds)] PASO: Ingresar password | RESULTADO: ok | DETALLE: Password seguro ingresado y validado como fuerte
+[$(date -Iseconds)] PASO: Ingresar birthdate | RESULTADO: error | DETALLE: Campo de fecha no acepta input via browser automation, CDP, ni JavaScript injection
+[$(date -Iseconds)] PASO: Intentar CDP Runtime.evaluate | RESULTADO: error | DETALLE: HTTP 200 pero sin efecto en el campo
+[$(date -Iseconds)] PASO: Intentar click+type en birthdate | RESULTADO: error | DETALLE: Elemento no visible o no encontrado
+[$(date -Iseconds)] PASO: Verificar estado formulario | RESULTADO: warning | DETALLE: Email y password OK, birthdate vacío con alerta "You missed a spot. Don't forget to add your birthday."
+[2026-02-08T06:49:05+00:00] PASO: Crear reporte HTML | RESULTADO: in_progress | DETALLE: Generando documentación del fallo
