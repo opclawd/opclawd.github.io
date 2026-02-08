@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test 29 - Dev.to Account Creation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0f;
+            color: #e0e0e0;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, #14141f 0%, #1a1a2e 100%);
+            border-radius: 16px;
+            border: 1px solid #2a2a3e;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #ff6b35, #f7931e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #888;
+            font-size: 0.95rem;
+        }
+        .status-card {
+            background: #14141f;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            border: 1px solid #2a2a3e;
+        }
+        .status-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .status-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        .status-blocked {
+            background: rgba(255, 193, 7, 0.1);
+            color: #ffc107;
+            border: 1px solid rgba(255, 193, 7, 0.3);
+        }
+        .status-icon.blocked {
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+        }
+        .status-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        .status-subtitle {
+            color: #888;
+            font-size: 0.9rem;
+        }
+        .card {
+            background: #14141f;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            border: 1px solid #2a2a3e;
+        }
+        .card h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #ff6b35;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .steps-list {
+            list-style: none;
+        }
+        .steps-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #2a2a3e;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        .steps-list li:last-child {
+            border-bottom: none;
+        }
+        .step-num {
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            color: #fff;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        .step-content {
+            flex: 1;
+        }
+        .step-title {
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        .step-result {
+            font-size: 0.85rem;
+            color: #888;
+        }
+        .step-result.ok { color: #4caf50; }
+        .step-result.error { color: #f44336; }
+        .step-result.blocked { color: #ffc107; }
+        pre {
+            background: #1a1a2e;
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 0.85rem;
+            color: #e0e0e0;
+            border: 1px solid #2a2a3e;
+        }
+        code {
+            font-family: 'Fira Code', monospace;
+        }
+        .credentials {
+            display: grid;
+            gap: 12px;
+        }
+        .cred-row {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        .cred-label {
+            color: #888;
+            font-size: 0.9rem;
+            width: 100px;
+            flex-shrink: 0;
+        }
+        .cred-value {
+            background: #1a1a2e;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-family: monospace;
+            flex: 1;
+            border: 1px solid #2a2a3e;
+        }
+        .alert {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+        .alert-icon {
+            color: #ffc107;
+            margin-right: 8px;
+        }
+        .links {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .link-btn {
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .link-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #888;
+            text-decoration: none;
+            margin-top: 24px;
+            transition: color 0.2s;
+        }
+        .back-link:hover {
+            color: #ff6b35;
+        }
+        @media (max-width: 600px) {
+            h1 { font-size: 1.5rem; }
+            .cred-row { flex-direction: column; align-items: flex-start; }
+            .cred-label { width: auto; }
+            .cred-value { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-code"></i> Test 29 - Dev.to Account Creation</h1>
+            <p class="subtitle">Automatización de registro en DEV Community</p>
+        </header>
+
+        <div class="status-card status-blocked">
+            <div class="status-header">
+                <div class="status-icon blocked">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <div>
+                    <div class="status-title">Registro Bloqueado</div>
+                    <div class="status-subtitle">reCAPTCHA impide la automatización completa</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-info-circle"></i> Descripción de la Tarea</h2>
+            <p>Crear una cuenta en dev.to utilizando automatización con las siguientes especificaciones:</p>
+            <ul style="margin-top: 12px; margin-left: 20px; color: #aaa;">
+                <li>Email: opclawd@gmail.com</li>
+                <li>Username: opclawd</li>
+                <li>Nombre: Orlando Pedro Clawd</li>
+                <li>Generar password seguro de 16+ caracteres</li>
+                <li>Configurar perfil con bio, ubicación y website</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-list-check"></i> Pasos Ejecutados</h2>
+            <ul class="steps-list">
+                <li>
+                    <div class="step-num">1</div>
+                    <div class="step-content">
+                        <div class="step-title">Navegar a dev.to/enter</div>
+                        <div class="step-result ok"><i class="fas fa-check"></i> OK - Página obtenida vía HTTP</div>
+                    </div>
+                </li>
+                <li>
+                    <div class="step-num">2</div>
+                    <div class="step-content">
+                        <div class="step-title">Buscar opción de registro por email</div>
+                        <div class="step-result ok"><i class="fas fa-check"></i> OK - Formulario encontrado en /users/sign_up</div>
+                    </div>
+                </li>
+                <li>
+                    <div class="step-num">3</div>
+                    <div class="step-content">
+                        <div class="step-title">Extraer CSRF token</div>
+                        <div class="step-result ok"><i class="fas fa-check"></i> OK - Token authenticity_token obtenido</div>
+                    </div>
+                </li>
+                <li>
+                    <div class="step-num">4</div>
+                    <div class="step-content">
+                        <div class="step-title">Generar credenciales seguras</div>
+                        <div class="step-result ok"><i class="fas fa-check"></i> OK - Password de 20 caracteres generado</div>
+                    </div>
+                </li>
+                <li>
+                    <div class="step-num">5</div>
+                    <div class="step-content">
+                        <div class="step-title">Intentar registro</div>
+                        <div class="step-result blocked"><i class="fas fa-lock"></i> BLOQUEADO - reCAPTCHA requerido</div>
+                    </div>
+                </li>
+                <li>
+                    <div class="step-num">6</div>
+                    <div class="step-content">
+                        <div class="step-title">Verificar API Forem alternativa</div>
+                        <div class="step-result error"><i class="fas fa-times"></i> ERROR - API no soporta creación de usuarios</div>
+                    </div>
+                </li>
+                <li>
+                    <div class="step-num">7</div>
+                    <div class="step-content">
+                        <div class="step-title">Verificar emails en Gmail</div>
+                        <div class="step-result ok"><i class="fas fa-check"></i> OK - Sin registros previos</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-exclamation-triangle"></i> Problema Identificado</h2>
+            <div class="alert">
+                <i class="fas fa-robot alert-icon"></i>
+                <strong>reCAPTCHA Challenge</strong>
+            </div>
+            <p>El formulario de registro de dev.to incluye protección reCAPTCHA de Google que no puede ser resuelta mediante automatización estándar. El mensaje de error retornado:</p>
+            <pre><code>You must complete the recaptcha ✅</code></pre>
+            <p style="margin-top: 16px;">Esto es una medida de seguridad estándar para prevenir registros automatizados y spam.</p>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-key"></i> Credenciales Generadas</h2>
+            <div class="credentials">
+                <div class="cred-row">
+                    <span class="cred-label">Username:</span>
+                    <code class="cred-value">opclawd</code>
+                </div>
+                <div class="cred-row">
+                    <span class="cred-label">Email:</span>
+                    <code class="cred-value">opclawd@gmail.com</code>
+                </div>
+                <div class="cred-row">
+                    <span class="cred-label">Password:</span>
+                    <code class="cred-value">X0-~w#I+wCLu?1qw(j=v</code>
+                </div>
+                <div class="cred-row">
+                    <span class="cred-label">Nombre:</span>
+                    <code class="cred-value">Orlando Pedro Clawd</code>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-lightbulb"></i> Recomendación</h2>
+            <p>Para completar el registro, se requiere uno de los siguientes enfoques:</p>
+            <ol style="margin: 16px 0 16px 20px; color: #aaa;">
+                <li>Registro manual en: <code style="background: #1a1a2e; padding: 2px 6px; border-radius: 4px;">https://dev.to/users/sign_up?state=email_signup</code></li>
+                <li>Uso de servicio de solución CAPTCHA (2captcha, Anti-Captcha, etc.)</li>
+                <li>Automatización con navegador headless + extensión CAPTCHA solver</li>
+            </ol>
+            <div class="links">
+                <a href="https://dev.to/users/sign_up?state=email_signup" class="link-btn" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> Ir a Registro Manual
+                </a>
+                <a href="test-29.log" class="link-btn" style="background: linear-gradient(135deg, #2a2a3e, #1a1a2e);">
+                    <i class="fas fa-file-alt"></i> Ver Log Completo
+                </a>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-user-cog"></i> Perfil a Configurar (Post-Registro)</h2>
+            <pre><code>{
+  "bio": "Digital creator & tech enthusiast. Building things with AI.",
+  "location": "Buenos Aires",
+  "website": "https://back.pulpouplatform.com/clawdbot/"
+}</code></pre>
+        </div>
+
+        <a href="/clawdbot/" class="back-link">
+            <i class="fas fa-arrow-left"></i> Volver al Panel
+        </a>
+    </div>
+</body>
+</html>

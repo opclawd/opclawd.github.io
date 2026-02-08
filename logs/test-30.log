@@ -1,0 +1,12 @@
+[2026-02-08T06:36:49+00:00] INICIO: Test30 - Creación cuenta CodePen | RESULTADO: ok | DETALLE: Job ID f71c48ae-7d84-414c-aa97-e30764fb0c83
+[2026-02-08T06:36:49+00:00] PASO: Estructura de directorios creada | RESULTADO: ok | DETALLE: logs/, accounts/, public/projects/test-30/
+[2026-02-08T06:37:12+00:00] ERROR: Servicio de navegador no disponible | RESULTADO: error | DETALLE: No se puede conectar a OpenClaw browser control
+[2026-02-08T06:37:18+00:00] PASO: Archivo de credenciales creado | RESULTADO: failed | DETALLE: Servicio de navegador no disponible
+[2026-02-08T06:38:30+00:00] PASO: Archivo HTML del proyecto creado | RESULTADO: ok | DETALLE: public/projects/test-30/index.html (12885 bytes)
+[2026-02-08T06:38:30+00:00] PASO: Archivo index.json actualizado | RESULTADO: ok | DETALLE: Proyecto test-30 agregado al índice
+[2026-02-08T06:38:30+00:00] PASO: Log copiado a directorio del proyecto | RESULTADO: ok | DETALLE: public/projects/test-30/test-30.log
+[2026-02-08T06:38:39+00:00] PASO: Verificación HTTP test-30 | RESULTADO: error | DETALLE: HTTP 404
+[2026-02-08T06:38:53+00:00] PASO: Smoke test ejecutado | RESULTADO: failed | DETALLE: Fallos en test-29 (no relacionado), test-30 no deployado aún
+[2026-02-08T06:38:53+00:00] PASO: Git add & commit | RESULTADO: error | DETALLE: Permiso denegado en .git/objects (owned by root, running as node)
+[2026-02-08T06:38:53+00:00] PASO: Deploy a producción | RESULTADO: error | DETALLE: No se puede hacer git push sin permisos de escritura
+[2026-02-08T06:38:53+00:00] FIN: Test30 completado con fallos técnicos | RESULTADO: failed | DETALLE: Browser service unavailable + Git permission denied

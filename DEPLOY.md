@@ -1,23 +1,40 @@
 # DEPLOY.md - Guia de Deploy y QA
 
-## Arquitectura de Deploy
+## Arquitectura de Deploy (Git-based)
 
 ```
 Tu workspace (donde escribis):
-  /home/node/.openclaw/workspace/public/clawdbot/
+  /home/node/workspace/public/    ← repo git (openclaw-site)
 
-Se sincroniza automaticamente cada 10s a:
-  /home/node/workspace/public/clawdbot/
+Cuando haces git push:
+  GitHub webhook → auto-deploy → nginx sirve en ~5 segundos
 
-Que es servido por nginx en:
-  https://back.pulpouplatform.com/clawdbot/
+Website publico:
+  https://back.pulpouplatform.com/
 ```
 
-### Como funciona
-- Un script de rsync externo copia TODO lo que pongas en `public/` a la carpeta del website cada 10 segundos
-- NO necesitas hacer deploy manual, ni rsync, ni scp
-- Solo escribi archivos en `public/clawdbot/` y aparecen solos en la web
-- El website se sirve desde el container `clawdbot-web` en el mismo Docker network
+### Como funciona (NUEVO - Git deploy)
+- El directorio `public/` es un repo Git clonado de `github.com/opclawd/openclaw-site`
+- Para publicar cambios: `git add -A && git commit -m "msg" && git push origin main`
+- Un webhook de GitHub dispara el auto-deploy al servidor
+- Los cambios aparecen en el website en ~5 segundos
+- **NO usar rsync, scp, ni copiar manualmente**
+
+### Workflow de deploy
+```bash
+# 1. Hacer cambios en public/
+# 2. Verificar con smoke test
+bash tools/smoke-test.sh
+
+# 3. Si pasa, hacer deploy
+cd /home/node/workspace/public
+git add -A
+git commit -m "descripcion del cambio"
+git push origin main
+
+# 4. Verificar que el deploy funciono (~5 seg despues)
+curl -s -o /dev/null -w "%{http_code}" http://clawdbot-web/clawdbot/
+```
 
 ### Paths importantes
 | Lo que escribis | URL en la web |
@@ -25,10 +42,11 @@ Que es servido por nginx en:
 | `public/clawdbot/index.html` | `https://back.pulpouplatform.com/clawdbot/` |
 | `public/clawdbot/projects/index.json` | `https://back.pulpouplatform.com/clawdbot/projects/index.json` |
 | `public/clawdbot/projects/test-N/index.html` | `https://back.pulpouplatform.com/clawdbot/projects/test-N/` |
+| `public/index.html` | `https://back.pulpouplatform.com/` |
 
 ## QA Obligatorio - NUNCA digas "listo" sin verificar
 
-### Pre-flight check (OBLIGATORIO antes de reportar exito)
+### Pre-flight check (OBLIGATORIO antes de git push)
 ```bash
 # Smoke test rapido (< 5 segundos)
 bash tools/smoke-test.sh
@@ -48,22 +66,29 @@ ls -la public/clawdbot/projects/test-N/index.html
 # 2. Verificar contenido no vacio
 wc -c public/clawdbot/projects/test-N/index.html
 
-# 3. Esperar sync (10 segundos)
-sleep 12
+# 3. Hacer deploy con git
+cd /home/node/workspace/public
+git add -A
+git commit -m "agregar test-N"
+git push origin main
 
-# 4. Verificar HTTP 200 desde el website
+# 4. Esperar deploy (~5 segundos)
+sleep 6
+
+# 5. Verificar HTTP 200 desde el website
 curl -s -o /dev/null -w "%{http_code}" http://clawdbot-web/clawdbot/projects/test-N/index.html
 
-# 5. Verificar que el HTML tiene contenido real
+# 6. Verificar que el HTML tiene contenido real
 curl -s http://clawdbot-web/clawdbot/projects/test-N/index.html | head -5
 
-# 6. Verificar index.json tiene la entrada
+# 7. Verificar index.json tiene la entrada
 cat public/clawdbot/projects/index.json | jq length
 ```
 
 ### Regla de oro
 **NUNCA reportes "terminado" o "todo bien" sin haber ejecutado `bash tools/smoke-test.sh` primero.**
 Si el smoke test falla, arregla los errores y volve a correrlo hasta que pase.
+**SIEMPRE hacer git push despues de modificar archivos en public/.**
 
 ## Errores comunes y como arreglarlos
 
@@ -81,10 +106,14 @@ Si el smoke test falla, arregla los errores y volve a correrlo hasta que pase.
 - Causa: Error al escribir el archivo
 - Fix: Regenerar el contenido del HTML
 
-### Sync no funciona
-- Causa: Permisos incorrectos
-- Fix: Los archivos deben ser de tu usuario (UID 1000)
-- Verificar: `ls -la public/clawdbot/`
+### Push falla (authentication)
+- Causa: Token expirado o remote URL incorrecta
+- Fix: Verificar `git remote -v` y que el token este en la URL
+- El remote debe ser: `https://<token>@github.com/opclawd/openclaw-site.git`
+
+### Push falla (conflict)
+- Causa: Cambios remotos no integrados
+- Fix: `git pull --rebase origin main` y luego reintentar push
 
 ## Como hacer HTTP requests para verificar
 ```bash

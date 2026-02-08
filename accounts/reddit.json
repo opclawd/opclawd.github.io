@@ -1,0 +1,10 @@
+{
+  "site": "Reddit",
+  "url": "https://www.reddit.com/register",
+  "username": "opclawd",
+  "email": "opclawd@gmail.com",
+  "password": null,
+  "status": "failed",
+  "error": "Network security block - Reddit detected automated access and blocked the connection",
+  "created": "2026-02-08T06:31:00Z"
+}

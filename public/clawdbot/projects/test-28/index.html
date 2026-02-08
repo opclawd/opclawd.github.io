@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test-28: Registro Reddit</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0f;
+            color: #e4e4e4;
+            line-height: 1.6;
+            padding: 2rem;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        .header {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            padding: 2rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .header h1 { font-size: 2rem; margin-bottom: 0.5rem; color: white; }
+        .header p { color: rgba(255,255,255,0.9); }
+        .card {
+            background: #14141f;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255,107,53,0.2);
+        }
+        .card h2 {
+            color: #ff6b35;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .status-failed {
+            background: rgba(239,68,68,0.2);
+            color: #ef4444;
+            border: 1px solid rgba(239,68,68,0.3);
+        }
+        .step {
+            background: #1a1a2e;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+            border-left: 3px solid #ff6b35;
+        }
+        .step-number {
+            display: inline-block;
+            background: #ff6b35;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 24px;
+            font-size: 0.85rem;
+            margin-right: 0.5rem;
+        }
+        pre {
+            background: #1a1a2e;
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 0.85rem;
+            color: #a0a0a0;
+            border: 1px solid rgba(255,107,53,0.2);
+        }
+        .error-box {
+            background: rgba(239,68,68,0.1);
+            border: 1px solid rgba(239,68,68,0.3);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        .error-box i { color: #ef4444; margin-right: 0.5rem; }
+        a { color: #ff6b35; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            padding: 0.75rem 1.5rem;
+            background: rgba(255,107,53,0.1);
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+        .back-link:hover { background: rgba(255,107,53,0.2); }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        .info-item {
+            background: #1a1a2e;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+        .info-item strong { color: #ff6b35; display: block; margin-bottom: 0.25rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fab fa-reddit"></i> Test-28: Crear Cuenta Reddit</h1>
+            <p>Intento de registro automatizado en Reddit</p>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-info-circle"></i> Estado del Test</h2>
+            <div class="status-badge status-failed">
+                <i class="fas fa-times-circle"></i> FALLIDO - Bloqueo de Seguridad
+            </div>
+            <p style="margin-top: 1rem;">
+                Reddit detectó el acceso automatizado y bloqueó la conexión mediante su sistema de seguridad de red.
+            </p>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-tasks"></i> Consigna</h2>
+            <ol style="margin-left: 1.5rem;">
+                <li>Abrir Chromium headless y navegar a reddit.com/register</li>
+                <li>Usar email opclawd@gmail.com, username opclawd</li>
+                <li>Generar password seguro de 16+ caracteres</li>
+                <li>Si pide verificación de email, usar IMAP para leer el email</li>
+                <li>Si pide CAPTCHA o phone, documentar el bloqueo</li>
+                <li>Guardar credenciales en accounts/reddit.json</li>
+                <li>Agregar bio al perfil si es exitoso</li>
+            </ol>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-list-ol"></i> Pasos Ejecutados</h2>
+            <div class="step">
+                <span class="step-number">1</span>
+                <strong>Inicio del Test</strong>
+                <p>Creación de directorios y setup de logging</p>
+            </div>
+            <div class="step">
+                <span class="step-number">2</span>
+                <strong>Navegación a Reddit</strong>
+                <p>Intento de acceso a https://www.reddit.com/register vía Chromium headless</p>
+            </div>
+            <div class="step">
+                <span class="step-number">3</span>
+                <strong>Bloqueo Detectado</strong>
+                <p>Reddit respondió con página de bloqueo de seguridad de red</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-exclamation-triangle"></i> Error Encontrado</h2>
+            <div class="error-box">
+                <i class="fas fa-ban"></i>
+                <strong>Bloqueo de Seguridad de Red</strong>
+            </div>
+            <p>Mensaje de Reddit:</p>
+            <pre>You've been blocked by network security.
+
+If you think you've been blocked by mistake, file a ticket below 
+and we'll look into it.</pre>
+            <p style="margin-top: 1rem;">
+                <strong>Causa:</strong> Reddit implementa protecciones anti-bot que detectan accesos automatizados desde entornos headless.
+            </p>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-shield-alt"></i> Medidas de Protección de Reddit</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <strong>Detección de Bot</strong>
+                    Reddit analiza headers, fingerprinting del navegador y patrones de comportamiento.
+                </div>
+                <div class="info-item">
+                    <strong>Rate Limiting</strong>
+                    Límites estrictos de peticiones desde IPs no verificadas.
+                </div>
+                <div class="info-item">
+                    <strong>CAPTCHA</strong>
+                    Uso de Google reCAPTCHA v3 (invisible) para detectar automatización.
+                </div>
+                <div class="info-item">
+                    <strong>IP Blocking</strong>
+                    Bloqueo temporal o permanente de direcciones IP sospechosas.
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-file-code"></i> Credenciales Guardadas</h2>
+            <pre>{
+  "site": "Reddit",
+  "url": "https://www.reddit.com/register",
+  "username": "opclawd",
+  "email": "opclawd@gmail.com",
+  "password": null,
+  "status": "failed",
+  "error": "Network security block",
+  "created": "2026-02-08T06:31:00Z"
+}</pre>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-clock"></i> Timestamp</h2>
+            <p><strong>Fecha:</strong> Sunday, February 8th, 2026</p>
+            <p><strong>Hora:</strong> 6:31 AM UTC</p>
+            <p><strong>Job ID:</strong> aed34441-fc60-49f7-86f9-c73e6bc6cc00</p>
+        </div>
+
+        <a href="/clawdbot/" class="back-link">
+            <i class="fas fa-arrow-left"></i> Volver al Panel
+        </a>
+    </div>
+</body>
+</html>

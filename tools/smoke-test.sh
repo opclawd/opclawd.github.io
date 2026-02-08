@@ -38,9 +38,9 @@ TOTAL=0
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
-ok()   { ((TOTAL++)); ((PASS++));  printf "  ${GREEN}PASS${RESET} %s\n" "$1"; }
-fail() { ((TOTAL++)); ((FAIL++));  printf "  ${RED}FAIL${RESET} %s\n" "$1"; }
-warn() { ((TOTAL++)); ((WARN++));  printf "  ${YELLOW}WARN${RESET} %s\n" "$1"; }
+ok()   { TOTAL=$((TOTAL+1)); PASS=$((PASS+1));  printf "  ${GREEN}PASS${RESET} %s\n" "$1"; }
+fail() { TOTAL=$((TOTAL+1)); FAIL=$((FAIL+1));  printf "  ${RED}FAIL${RESET} %s\n" "$1"; }
+warn() { TOTAL=$((TOTAL+1)); WARN=$((WARN+1));  printf "  ${YELLOW}WARN${RESET} %s\n" "$1"; }
 info() { printf "  ${DIM}%s${RESET}\n" "$1"; }
 
 check_http() {
@@ -112,7 +112,7 @@ else
     if [ "${ENTRY_COUNT:-0}" -gt 0 ]; then
         while IFS= read -r file_ref; do
             if [ -n "$file_ref" ] && [ ! -f "${PROJECTS_DIR}/${file_ref}" ]; then
-                ((BROKEN_REFS++))
+                BROKEN_REFS=$((BROKEN_REFS+1))
             fi
         done < <(jq -r '.[].file // empty' "$INDEX_JSON" 2>/dev/null)
 
@@ -139,14 +139,14 @@ else
 
     for d in "$PROJECTS_DIR"/test-*/; do
         [ -d "$d" ] || continue
-        ((DIR_COUNT++))
+        DIR_COUNT=$((DIR_COUNT+1))
         dirname=$(basename "$d")
 
         if [ ! -f "${d}index.html" ]; then
-            ((MISSING_INDEX++))
+            MISSING_INDEX=$((MISSING_INDEX+1))
             MISSING_DIRS="${MISSING_DIRS} ${dirname}"
         elif [ ! -s "${d}index.html" ]; then
-            ((EMPTY_FILES++))
+            EMPTY_FILES=$((EMPTY_FILES+1))
             MISSING_DIRS="${MISSING_DIRS} ${dirname}(empty)"
         fi
     done
@@ -173,7 +173,7 @@ else
             [ -d "$d" ] || continue
             dirname=$(basename "$d")
             if ! echo "$INDEXED_DIRS" | grep -qx "$dirname"; then
-                ((UNINDEXED++))
+                UNINDEXED=$((UNINDEXED+1))
             fi
         done
         if [ "$UNINDEXED" -eq 0 ]; then

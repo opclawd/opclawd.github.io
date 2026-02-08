@@ -1,0 +1,10 @@
+[
+  {
+    "id": "test-30",
+    "title": "Test 30 - CodePen Account Creation",
+    "description": "Intento de creación de cuenta en CodePen y primer Pen con todo-app. Fallido por indisponibilidad del servicio de navegador.",
+    "status": "failed",
+    "created": "2026-02-08T06:35:00Z",
+    "url": "/clawdbot/projects/test-30/"
+  }
+]

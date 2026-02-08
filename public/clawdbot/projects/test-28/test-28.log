@@ -1,0 +1,4 @@
+[2026-02-08T06:31:42+00:00] PASO: Inicio Test28 - Crear cuenta Reddit | RESULTADO: ok | DETALLE: Directorios creados
+[2026-02-08T06:32:00+00:00] PASO: Iniciar Chromium | RESULTADO: error | DETALLE: Servicio browser no disponible, usando exec directo
+[2026-02-08T06:32:36+00:00] PASO: Navegar a Reddit register | RESULTADO: failed | DETALLE: Bloqueo de seguridad de red - You've been blocked by network security
+[2026-02-08T06:32:36+00:00] PASO: Intentar registro | RESULTADO: blocked | DETALLE: Reddit detectó acceso automatizado y bloqueó la IP

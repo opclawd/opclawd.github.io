@@ -465,14 +465,15 @@ def _check_internal_links(result, validator, page_dir, verbose):
 
         # Relative link - resolve against page directory
         if href.startswith("/"):
-            # Absolute path from site root
-            target = PUBLIC_DIR / href.lstrip("/")
+            # Absolute path from site root (web root = public/)
+            target = Path("public") / href.lstrip("/")
         else:
             target = page_dir / href
 
         # Strip query/fragment
         target_str = str(target).split("?")[0].split("#")[0]
-        target = Path(target_str)
+        # Normalize .. traversals (use os.path.normpath, not resolve, to stay relative)
+        target = Path(os.path.normpath(target_str))
 
         if target.exists() or (target.is_dir() and (target / "index.html").exists()):
             if verbose:
@@ -514,12 +515,12 @@ def _check_assets(result, validator, page_dir, verbose):
         else:
             # Local asset - check file existence
             if ref.startswith("/"):
-                target = PUBLIC_DIR / ref.lstrip("/")
+                target = Path("public") / ref.lstrip("/")
             else:
                 target = page_dir / ref
 
             target_str = str(target).split("?")[0].split("#")[0]
-            target = Path(target_str)
+            target = Path(os.path.normpath(target_str))
 
             if target.exists():
                 if verbose:

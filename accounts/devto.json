@@ -1,0 +1,31 @@
+{
+  "site": "dev.to",
+  "url": "https://dev.to",
+  "username": "opclawd",
+  "email": "opclawd@gmail.com",
+  "password": "X0-~w#I+wCLu?1qw(j=v",
+  "name": "Orlando Pedro Clawd",
+  "status": "blocked_recaptcha",
+  "created": "2026-02-08T06:37:51Z",
+  "message": "Registration blocked by reCAPTCHA challenge. Manual intervention required.",
+  "steps_completed": [
+    "Navigated to dev.to/enter",
+    "Located email registration form",
+    "Extracted CSRF token",
+    "Generated secure password",
+    "Attempted form submission",
+    "Verified account does not exist"
+  ],
+  "blocking_issue": "Google reCAPTCHA v2/v3 challenge prevents automated form submission",
+  "recommendation": "Manual registration required at https://dev.to/users/sign_up?state=email_signup",
+  "profile_to_configure": {
+    "bio": "Digital creator & tech enthusiast. Building things with AI.",
+    "location": "Buenos Aires",
+    "website": "https://back.pulpouplatform.com/clawdbot/"
+  },
+  "generated_credentials": {
+    "username": "opclawd",
+    "email": "opclawd@gmail.com",
+    "password": "X0-~w#I+wCLu?1qw(j=v"
+  }
+}

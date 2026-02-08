@@ -3,190 +3,259 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OpenClaw Test Results</title>
+    <title>OpenClaw - Proyectos</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #0a0a0f;
-            color: #e4e4e7;
-            line-height: 1.6;
-            min-height: 100vh;
+            background: #0a0a0f; color: #e4e4e7; line-height: 1.6; min-height: 100vh;
         }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
         .header {
-            text-align: center;
-            margin-bottom: 50px;
-            padding: 40px 20px;
+            text-align: center; margin-bottom: 50px; padding: 40px 20px;
             background: linear-gradient(135deg, #14141f 0%, #1a1a2e 100%);
-            border-radius: 20px;
-            border: 1px solid #2a2a3e;
+            border-radius: 20px; border: 1px solid #2a2a3e;
         }
         .header h1 {
-            font-size: 3rem;
-            font-weight: 700;
+            font-size: 3rem; font-weight: 700;
             background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 15px;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; margin-bottom: 15px;
         }
-        .header p {
-            color: #888;
-            font-size: 1.2rem;
-            max-width: 600px;
-            margin: 0 auto;
-        }
+        .header p { color: #888; font-size: 1.2rem; max-width: 600px; margin: 0 auto; }
         .stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px; margin-bottom: 40px;
         }
         .stat-card {
-            background: #14141f;
-            padding: 25px;
-            border-radius: 16px;
-            border: 1px solid #2a2a3e;
-            text-align: center;
+            background: #14141f; padding: 25px; border-radius: 16px;
+            border: 1px solid #2a2a3e; text-align: center;
         }
-        .stat-card .number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #ff6b35;
+        .stat-card .number { font-size: 2.5rem; font-weight: 700; color: #ff6b35; }
+        .stat-card .label { color: #888; margin-top: 5px; }
+
+        /* Filter bar */
+        .filter-bar {
+            margin-bottom: 24px; display: flex; flex-wrap: wrap; gap: 16px; align-items: center;
         }
-        .stat-card .label {
-            color: #888;
-            margin-top: 5px;
+        .search-wrapper {
+            flex: 1; min-width: 220px; position: relative;
         }
+        .search-wrapper i {
+            position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+            color: #666; font-size: 0.9rem; pointer-events: none;
+        }
+        .search-input {
+            width: 100%; padding: 12px 16px 12px 42px; border-radius: 12px;
+            background: #14141f; border: 1px solid #2a2a3e; color: #e4e4e7;
+            font-family: inherit; font-size: 0.95rem; outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .search-input::placeholder { color: #555; }
+        .search-input:focus {
+            border-color: #ff6b35;
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.15);
+        }
+        .filter-buttons {
+            display: flex; gap: 8px; flex-wrap: wrap;
+        }
+        .filter-btn {
+            padding: 10px 20px; border-radius: 50px; border: 1px solid #2a2a3e;
+            background: #14141f; color: #888; font-family: inherit; font-size: 0.85rem;
+            font-weight: 500; cursor: pointer; transition: all 0.25s ease;
+            white-space: nowrap;
+        }
+        .filter-btn:hover {
+            border-color: #ff6b35; color: #e4e4e7;
+        }
+        .filter-btn.active {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: #fff; border-color: transparent; font-weight: 600;
+        }
+        .result-count {
+            color: #666; font-size: 0.85rem; margin-bottom: 16px;
+            transition: opacity 0.2s;
+        }
+
         .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;
         }
         .project-card {
-            background: #14141f;
-            border-radius: 16px;
-            padding: 25px;
-            border: 1px solid #2a2a3e;
-            transition: transform 0.2s, border-color 0.2s;
-            text-decoration: none;
-            color: inherit;
-            display: block;
+            background: #14141f; border-radius: 16px; padding: 25px;
+            border: 1px solid #2a2a3e; transition: transform 0.2s, border-color 0.2s, opacity 0.3s;
+            text-decoration: none; color: inherit; display: block;
         }
-        .project-card:hover {
-            transform: translateY(-4px);
-            border-color: #ff6b35;
+        .project-card:hover { transform: translateY(-4px); border-color: #ff6b35; }
+        .project-card .icon { font-size: 2rem; color: #ff6b35; margin-bottom: 15px; }
+        .project-card h3 { font-size: 1.1rem; margin-bottom: 10px; color: #f7931e; }
+        .project-card p { color: #888; font-size: 0.9rem; margin-bottom: 15px; }
+        .project-card .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+        .tag { background: #1a1a2e; color: #ff6b35; padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; }
+        .status-badge {
+            display: inline-block; padding: 2px 8px; border-radius: 8px;
+            font-size: 0.7rem; font-weight: 600; margin-left: 8px; vertical-align: middle;
         }
-        .project-card .icon {
-            font-size: 2rem;
-            color: #ff6b35;
-            margin-bottom: 15px;
+        .badge-pass { background: rgba(76,175,80,0.15); color: #4caf50; }
+        .badge-pending { background: rgba(255,170,0,0.15); color: #ffaa00; }
+
+        .no-results {
+            grid-column: 1 / -1; text-align: center; padding: 60px 20px;
         }
-        .project-card h3 {
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-            color: #f7931e;
-        }
-        .project-card p {
-            color: #888;
-            font-size: 0.95rem;
-            margin-bottom: 15px;
-        }
-        .project-card .tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        .tag {
-            background: #1a1a2e;
-            color: #ff6b35;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 0.75rem;
-        }
-        .status-pass { color: #4caf50; }
-        .status-pending { color: #ffaa00; }
+        .no-results i { font-size: 3rem; color: #444; margin-bottom: 16px; }
+        .no-results h3 { color: #666; font-weight: 500; }
+        .no-results p { color: #555; margin-top: 8px; font-size: 0.9rem; }
+
         .footer {
-            text-align: center;
-            margin-top: 50px;
-            padding-top: 30px;
-            border-top: 1px solid #2a2a3e;
-            color: #666;
+            text-align: center; margin-top: 50px; padding-top: 30px;
+            border-top: 1px solid #2a2a3e; color: #666;
+        }
+
+        @media (max-width: 640px) {
+            .filter-bar { flex-direction: column; }
+            .search-wrapper { min-width: 100%; }
+            .filter-buttons { width: 100%; justify-content: center; }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1><i class="fas fa-robot"></i> OpenClaw Tests</h1>
-            <p>Resultados de evaluación automatizada - Batch 1 y 2 de capacidades demostradas</p>
+            <h1><i class="fas fa-robot"></i> OpenClaw</h1>
+            <p>Proyectos y capacidades demostradas de forma autónoma</p>
         </div>
-
         <div class="stats">
-            <div class="stat-card">
-                <div class="number">27</div>
-                <div class="label">Tests Totales</div>
+            <div class="stat-card"><div class="number" id="stat-total">-</div><div class="label">Proyectos</div></div>
+            <div class="stat-card"><div class="number" style="color:#4caf50" id="stat-pass">-</div><div class="label">Completados</div></div>
+            <div class="stat-card"><div class="number" style="color:#ffaa00" id="stat-pending">-</div><div class="label">En progreso</div></div>
+        </div>
+        <div class="filter-bar">
+            <div class="search-wrapper">
+                <i class="fas fa-search"></i>
+                <input type="text" class="search-input" id="search-input" placeholder="Buscar proyectos..." autocomplete="off">
             </div>
-            <div class="stat-card">
-                <div class="number" style="color: #4caf50;">17</div>
-                <div class="label">Completados</div>
-            </div>
-            <div class="stat-card">
-                <div class="number" style="color: #ffaa00;">10</div>
-                <div class="label">Pendientes</div>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">Todos</button>
+                <button class="filter-btn" data-filter="pass">Completados</button>
+                <button class="filter-btn" data-filter="pending">Pendientes</button>
             </div>
         </div>
-
+        <div class="result-count" id="result-count"></div>
         <div id="projects-container" class="projects-grid">
-            <div class="project-card">
-                <div class="icon"><i class="fas fa-spinner fa-spin"></i></div>
-                <h3>Cargando...</h3>
-                <p>Cargando lista de tests</p>
-            </div>
+            <div class="project-card"><div class="icon"><i class="fas fa-spinner fa-spin"></i></div><h3>Cargando...</h3></div>
         </div>
-
-        <div class="footer">
-            <p><i class="fas fa-code"></i> Generado automáticamente por OpenClaw</p>
-        </div>
+        <div class="footer"><p><i class="fas fa-code"></i> Generado por OpenClaw</p></div>
     </div>
-
     <script>
-        const basePath = '/clawdbot/';
-        fetch(basePath + 'projects/index.json')
-            .then(r => {
-                if (!r.ok) throw new Error('HTTP ' + r.status);
-                return r.json();
-            })
-            .then(projects => {
-                const container = document.getElementById('projects-container');
-                container.innerHTML = projects.map(p => `
-                    <a href="${basePath + p.file}" class="project-card">
-                        <div class="icon"><i class="fas ${p.icon}"></i></div>
-                        <h3>${p.name} ${p.status === 'PASS' ? '<i class="fas fa-check-circle status-pass"></i>' : '<i class="fas fa-clock status-pending"></i>'}</h3>
-                        <p>${p.description}</p>
-                        <div class="tags">
-                            ${p.tags.slice(0, 4).map(t => `<span class="tag">${t}</span>`).join('')}
-                        </div>
-                    </a>
-                `).join('');
-            })
-            .catch(err => {
-                console.error('Error cargando proyectos:', err);
-                document.getElementById('projects-container').innerHTML = `
-                    <div class="project-card" style="grid-column: 1/-1; text-align: center;">
-                        <div class="icon"><i class="fas fa-exclamation-triangle"></i></div>
-                        <h3>Error al cargar</h3>
-                        <p>No se pudo cargar el índice de proyectos<br><small>${err.message}</small></p>
-                    </div>
-                `;
-            });
+    var allProjects = [];
+    var currentFilter = 'all';
+    var currentSearch = '';
+
+    function escapeHtml(str) {
+        var div = document.createElement('div');
+        div.appendChild(document.createTextNode(str));
+        return div.innerHTML;
+    }
+
+    function renderProjects() {
+        var container = document.getElementById('projects-container');
+        var countEl = document.getElementById('result-count');
+        var query = currentSearch.toLowerCase().trim();
+        var visible = [];
+
+        for (var i = 0; i < allProjects.length; i++) {
+            var p = allProjects[i];
+            // Status filter
+            if (currentFilter === 'pass' && p.status !== 'PASS') continue;
+            if (currentFilter === 'pending' && p.status === 'PASS') continue;
+            // Text search
+            if (query) {
+                var haystack = ((p.name || '') + ' ' + (p.description || '') + ' ' + (p.tags || []).join(' ')).toLowerCase();
+                if (haystack.indexOf(query) === -1) continue;
+            }
+            visible.push(p);
+        }
+
+        // Update result count
+        if (allProjects.length > 0) {
+            countEl.textContent = 'Mostrando ' + visible.length + ' de ' + allProjects.length + ' proyectos';
+        } else {
+            countEl.textContent = '';
+        }
+
+        if (visible.length === 0 && allProjects.length > 0) {
+            container.innerHTML = '<div class="no-results">' +
+                '<div><i class="fas fa-search"></i></div>' +
+                '<h3>No se encontraron proyectos</h3>' +
+                '<p>Intenta cambiar los filtros o el texto de busqueda</p></div>';
+            return;
+        }
+
+        var html = '';
+        for (var i = 0; i < visible.length; i++) {
+            var p = visible[i];
+            var icon = (p.icon || 'file-code').replace(/^fa-/, '');
+            var bc = p.status === 'PASS' ? 'badge-pass' : 'badge-pending';
+            var st = p.status || 'PENDING';
+            var href = '/clawdbot/projects/' + (p.file || '');
+            var tags = (p.tags || []).slice(0, 4);
+            var tagHtml = '';
+            for (var j = 0; j < tags.length; j++) tagHtml += '<span class="tag">' + escapeHtml(tags[j]) + '</span>';
+            html += '<a href="' + escapeHtml(href) + '" class="project-card">' +
+                '<div class="icon"><i class="fas fa-' + escapeHtml(icon) + '"></i></div>' +
+                '<h3>' + escapeHtml(p.name || '') + ' <span class="status-badge ' + bc + '">' + escapeHtml(st) + '</span></h3>' +
+                '<p>' + escapeHtml(p.description || '') + '</p>' +
+                '<div class="tags">' + tagHtml + '</div></a>';
+        }
+        container.innerHTML = html;
+    }
+
+    async function loadProjects() {
+        var container = document.getElementById('projects-container');
+        try {
+            var r = await fetch('/clawdbot/projects/index.json?_=' + Date.now());
+            if (!r.ok) throw new Error('HTTP ' + r.status);
+            var text = await r.text();
+            var projects = JSON.parse(text);
+            if (!Array.isArray(projects) || projects.length === 0) throw new Error('Sin proyectos');
+            allProjects = projects;
+            var pass = 0, pending = 0;
+            for (var i = 0; i < projects.length; i++) {
+                if (projects[i].status === 'PASS') pass++;
+                else pending++;
+            }
+            document.getElementById('stat-total').textContent = projects.length;
+            document.getElementById('stat-pass').textContent = pass;
+            document.getElementById('stat-pending').textContent = pending;
+            renderProjects();
+        } catch(err) {
+            container.innerHTML = '<div class="project-card" style="grid-column:1/-1;text-align:center;padding:60px 20px">' +
+                '<div style="font-size:3rem;color:#f44336;margin-bottom:20px"><i class="fas fa-exclamation-triangle"></i></div>' +
+                '<h3 style="color:#f44336">Error al cargar proyectos</h3>' +
+                '<p style="color:#888;margin-top:10px">' + err.message + '</p></div>';
+        }
+    }
+
+    // Filter buttons
+    var filterBtns = document.querySelectorAll('.filter-btn');
+    for (var i = 0; i < filterBtns.length; i++) {
+        filterBtns[i].addEventListener('click', function() {
+            for (var j = 0; j < filterBtns.length; j++) filterBtns[j].classList.remove('active');
+            this.classList.add('active');
+            currentFilter = this.getAttribute('data-filter');
+            renderProjects();
+        });
+    }
+
+    // Search input
+    document.getElementById('search-input').addEventListener('input', function() {
+        currentSearch = this.value;
+        renderProjects();
+    });
+
+    document.addEventListener('DOMContentLoaded', loadProjects);
+    setInterval(loadProjects, 60000);
     </script>
 </body>
 </html>

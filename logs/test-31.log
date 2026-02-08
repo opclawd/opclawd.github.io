@@ -1,0 +1,2 @@
+[2026-02-08T06:37:00+00:00] PASO: Inicio Test-31 | RESULTADO: ok | DETALLE: Creacion de cuenta en Medium via magic link
+[2026-02-08T06:37:30+00:00] PASO: Navegar a Medium signup | RESULTADO: error | DETALLE: Browser service no disponible, usando alternativa
