@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test 38 - WordPress Docker Installation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0f;
+            color: #e4e4e7;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #1f1f2e;
+        }
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        .header p {
+            color: #71717a;
+            font-size: 1.1rem;
+        }
+        .card {
+            background: #14141f;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid #1f1f2e;
+            transition: border-color 0.3s ease;
+        }
+        .card:hover {
+            border-color: #ff6b3544;
+        }
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .card-header i {
+            font-size: 1.5rem;
+            color: #ff6b35;
+        }
+        .card-header h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #fafafa;
+        }
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        .status-pending {
+            background: #f7931e22;
+            color: #f7931e;
+        }
+        .status-ok {
+            background: #22c55e22;
+            color: #22c55e;
+        }
+        .status-error {
+            background: #ef444422;
+            color: #ef4444;
+        }
+        pre {
+            background: #1a1a2e;
+            border-radius: 12px;
+            padding: 20px;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: 0.9rem;
+            border: 1px solid #27273a;
+            margin: 15px 0;
+        }
+        code {
+            color: #a78bfa;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #27273a;
+        }
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        .info-label {
+            color: #71717a;
+            font-weight: 500;
+        }
+        .info-value {
+            color: #e4e4e7;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 20px;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+        }
+        .steps-list {
+            list-style: none;
+            counter-reset: step;
+        }
+        .steps-list li {
+            position: relative;
+            padding-left: 50px;
+            margin-bottom: 20px;
+        }
+        .steps-list li::before {
+            counter-increment: step;
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .alert {
+            background: #f7931e22;
+            border-left: 4px solid #f7931e;
+            padding: 20px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+        .alert i {
+            color: #f7931e;
+            margin-right: 10px;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #71717a;
+            text-decoration: none;
+            margin-bottom: 20px;
+            transition: color 0.2s;
+        }
+        .back-link:hover {
+            color: #ff6b35;
+        }
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.8rem; }
+            .card { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/clawdbot/" class="back-link">
+            <i class="fas fa-arrow-left"></i> Volver
+        </a>
+
+        <div class="header">
+            <h1><i class="fab fa-wordpress"></i> Test 38 - WordPress Docker</h1>
+            <p>Instalación de WordPress en Docker con MySQL, proxy Nginx y automatización WP-CLI</p>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-info-circle"></i>
+                <h2>Estado del Proyecto</h2>
+            </div>
+            <div class="alert">
+                <i class="fas fa-exclamation-triangle"></i>
+                <strong>Configuración Lista - Pendiente de Deploy</strong><br>
+                Docker no está disponible en el entorno actual. Todos los archivos de configuración están listos para desplegar en un entorno con Docker.
+            </div>
+            <div class="info-row">
+                <span class="info-label">Estado</span>
+                <span class="status-badge status-pending">
+                    <i class="fas fa-clock"></i> PENDING
+                </span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Fecha</span>
+                <span class="info-value">2026-02-08 06:52 UTC</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Contenedores Configurados</span>
+                <span class="info-value">2 (WordPress + MySQL)</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Puerto Local</span>
+                <span class="info-value">8080</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Proxy URL</span>
+                <span class="info-value">/clawdbot/sports/</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-tasks"></i>
+                <h2>Pasos Ejecutados</h2>
+            </div>
+            <ul class="steps-list">
+                <li><strong>Crear directorios:</strong> apps/wordpress/, logs/, accounts/, public/projects/test-38/</li>
+                <li><strong>docker-compose.yml:</strong> WordPress:latest + MySQL 5.7 con volumes persistentes</li>
+                <li><strong>.env:</strong> MYSQL_ROOT_PASSWORD generado seguro</li>
+                <li><strong>nginx-wordpress.conf:</strong> Proxy para /clawdbot/sports/</li>
+                <li><strong>install-wp.sh:</strong> Script WP-CLI para instalación automática</li>
+                <li><strong>install-curl.sh:</strong> Alternativa curl/Chromium</li>
+                <li><strong>Credenciales:</strong> Guardadas en accounts/wordpress-local.json</li>
+                <li><strong>Intento Docker:</strong> Permission denied - no disponible</li>
+            </ul>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-server"></i>
+                    <h2>Docker Compose</h2>
+                </div>
+                <pre><code>version: '3.8'
+services:
+  wordpress:
+    image: wordpress:latest
+    ports:
+      - "8080:80"
+    environment:
+      WORDPRESS_DB_HOST: mysql:3306
+      WORDPRESS_DB_NAME: wp_sports
+    volumes:
+      - wordpress_data:/var/www/html
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: wp_sports</code></pre>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-user-shield"></i>
+                    <h2>Credenciales</h2>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Site Title</span>
+                    <span class="info-value">OpenClaw Sports</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Admin User</span>
+                    <span class="info-value">opclawd</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Email</span>
+                    <span class="info-value">opclawd@gmail.com</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Password</span>
+                    <span class="info-value">••••••••••••••••</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">DB Name</span>
+                    <span class="info-value">wp_sports</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-terminal"></i>
+                <h2>Comandos para Deploy</h2>
+            </div>
+            <pre><code># 1. Iniciar contenedores
+cd apps/wordpress
+docker compose up -d
+
+# 2. Esperar e instalar WordPress
+docker exec -it wordpress_sports bash
+chmod +x install-wp.sh
+./install-wp.sh
+
+# 3. O instalar via curl
+./install-curl.sh
+
+# 4. Configurar Nginx
+sudo cp nginx-wordpress.conf /etc/nginx/conf.d/
+sudo nginx -s reload</code></pre>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-network-wired"></i>
+                <h2>Configuración Nginx Proxy</h2>
+            </div>
+            <pre><code>location /clawdbot/sports/ {
+    proxy_pass http://localhost:8080/;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+}</code></pre>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-file-alt"></i>
+                <h2>Archivos Generados</h2>
+            </div>
+            <div class="info-row">
+                <span class="info-label"><i class="fas fa-file-code"></i> apps/wordpress/docker-compose.yml</span>
+                <span class="status-badge status-ok"><i class="fas fa-check"></i> OK</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label"><i class="fas fa-file-code"></i> apps/wordpress/.env</span>
+                <span class="status-badge status-ok"><i class="fas fa-check"></i> OK</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label"><i class="fas fa-file-code"></i> apps/wordpress/nginx-wordpress.conf</span>
+                <span class="status-badge status-ok"><i class="fas fa-check"></i> OK</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label"><i class="fas fa-file-code"></i> apps/wordpress/install-wp.sh</span>
+                <span class="status-badge status-ok"><i class="fas fa-check"></i> OK</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label"><i class="fas fa-file-code"></i> apps/wordpress/install-curl.sh</span>
+                <span class="status-badge status-ok"><i class="fas fa-check"></i> OK</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label"><i class="fas fa-key"></i> accounts/wordpress-local.json</span>
+                <span class="status-badge status-ok"><i class="fas fa-check"></i> OK</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label"><i class="fas fa-clipboard-list"></i> logs/test-38.log</span>
+                <span class="status-badge status-ok"><i class="fas fa-check"></i> OK</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-link"></i>
+                <h2>Links</h2>
+            </div>
+            <p><strong>URL Local (cuando Docker esté corriendo):</strong></p>
+            <pre><code>http://localhost:8080          # Frontend
+http://localhost:8080/wp-admin # Admin Panel</code></pre>
+            <p style="margin-top: 15px;"><strong>URL Pública (con proxy Nginx):</strong></p>
+            <pre><code>https://back.pulpouplatform.com/clawdbot/sports/</code></pre>
+            <a href="/clawdbot/" class="btn">
+                <i class="fas fa-arrow-left"></i> Volver al Panel
+            </a>
+        </div>
+    </div>
+</body>
+</html>

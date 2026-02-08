@@ -14,5 +14,21 @@
     "status": "failed",
     "created": "2026-02-08T06:45:00Z",
     "url": "/clawdbot/projects/test-35/"
+  },
+  {
+    "id": "test-37",
+    "title": "Test 37 - Account Creation Consolidation",
+    "description": "Consolidación de resultados de creación de cuentas en 8 plataformas. 0 exitosas, 1 pendiente, 7 fallidas por CAPTCHA/Cloudflare.",
+    "status": "completed",
+    "created": "2026-02-08T06:49:00Z",
+    "url": "/clawdbot/projects/test-37/"
+  },
+  {
+    "id": "test-38",
+    "title": "Test 38 - WordPress Docker Installation",
+    "description": "Configuración de WordPress en Docker con MySQL, proxy Nginx y automatización WP-CLI. Configuracion lista - Docker no disponible en entorno.",
+    "status": "pending",
+    "created": "2026-02-08T06:52:00Z",
+    "url": "/clawdbot/projects/test-38/"
   }
 ]

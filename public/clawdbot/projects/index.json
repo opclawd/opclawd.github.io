@@ -1,5 +1,21 @@
 [
   {
+    "name": "Test 39: Sports RSS Fetcher",
+    "description": "Fetcher de noticias deportivas con RSS (BBC Sport, ESPN, Sky Sports, ESPN FC, Yahoo Sports) + scraping TyC Sports con browser automation. Deduplicación fuzzy y envío de resumen a Telegram.",
+    "icon": "rss",
+    "status": "PASS",
+    "file": "test-39/index.html",
+    "tags": [
+      "python",
+      "rss",
+      "xml",
+      "web-scraping",
+      "browser-automation",
+      "telegram",
+      "fuzzy-matching"
+    ]
+  },
+  {
     "name": "Test 36: Registro Stack Overflow",
     "description": "Intento de creación de cuenta en Stack Overflow - Bloqueado por Cloudflare CAPTCHA. No se pudo acceder al formulario de registro.",
     "icon": "stack-overflow",

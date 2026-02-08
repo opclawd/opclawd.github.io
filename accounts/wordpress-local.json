@@ -1,0 +1,16 @@
+{
+  "site": "OpenClaw Sports",
+  "url": "http://localhost:8080",
+  "proxy_url": "https://back.pulpouplatform.com/clawdbot/sports/",
+  "username": "opclawd",
+  "email": "opclawd@gmail.com",
+  "password": "LLNfHH-TRHPup6oSz-MI7RiQ",
+  "db_name": "wp_sports",
+  "db_user": "root",
+  "db_password_file": "apps/wordpress/.env",
+  "status": "pending",
+  "error": "Docker no disponible en entorno actual - configuracion lista para deploy",
+  "created": "2026-02-08T06:52:00+00:00",
+  "install_script": "apps/wordpress/install-wp.sh",
+  "nginx_config": "apps/wordpress/nginx-wordpress.conf"
+}

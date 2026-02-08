@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test 37 - Account Creation Consolidation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0f;
+            color: #e4e4e7;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        header {
+            text-align: center;
+            padding: 3rem 0;
+            border-bottom: 1px solid #1f1f2e;
+            margin-bottom: 2rem;
+        }
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        header p { color: #71717a; font-size: 1.1rem; }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .stat-card {
+            background: #14141f;
+            border: 1px solid #1f1f2e;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        .stat-card.success { border-color: #22c55e; }
+        .stat-card.pending { border-color: #f59e0b; }
+        .stat-card.failed { border-color: #ef4444; }
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+        .stat-card.success .stat-number { color: #22c55e; }
+        .stat-card.pending .stat-number { color: #f59e0b; }
+        .stat-card.failed .stat-number { color: #ef4444; }
+        .stat-label { color: #71717a; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .card {
+            background: #14141f;
+            border: 1px solid #1f1f2e;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .card h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #f4f4f5;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #1f1f2e;
+        }
+        th {
+            color: #a1a1aa;
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.5px;
+        }
+        td { color: #e4e4e7; }
+        tr:hover { background: rgba(255,255,255,0.02); }
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.375rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        .badge-success {
+            background: rgba(34, 197, 94, 0.15);
+            color: #22c55e;
+        }
+        .badge-pending {
+            background: rgba(245, 158, 11, 0.15);
+            color: #f59e0b;
+        }
+        .badge-failed {
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+        }
+        .site-link {
+            color: #f7931e;
+            text-decoration: none;
+        }
+        .site-link:hover { text-decoration: underline; }
+        .username { font-family: monospace; color: #a1a1aa; }
+        .error-detail {
+            color: #ef4444;
+            font-size: 0.85rem;
+        }
+        .error-type {
+            display: inline-block;
+            background: #1a1a2e;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            color: #f59e0b;
+            margin-top: 0.25rem;
+        }
+        .blockers-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        .blocker-item {
+            background: #1a1a2e;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 3px solid #f7931e;
+        }
+        .blocker-item h4 {
+            font-size: 0.9rem;
+            color: #f4f4f5;
+            margin-bottom: 0.5rem;
+        }
+        .blocker-item p {
+            font-size: 0.85rem;
+            color: #a1a1aa;
+        }
+        .blocker-count {
+            float: right;
+            background: #ff6b35;
+            color: #0a0a0f;
+            padding: 0.125rem 0.5rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        pre {
+            background: #1a1a2e;
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 0.85rem;
+            color: #a1a1aa;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #f7931e;
+            text-decoration: none;
+            margin-top: 2rem;
+            padding: 0.75rem 1rem;
+            background: rgba(247, 147, 30, 0.1);
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+        .back-link:hover { background: rgba(247, 147, 30, 0.2); }
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid #1f1f2e;
+            margin-top: 2rem;
+            color: #71717a;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-users-cog"></i> Test 37</h1>
+            <p>Account Creation Consolidation Report</p>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card success">
+                <div class="stat-number">0</div>
+                <div class="stat-label">Exitosas</div>
+            </div>
+            <div class="stat-card pending">
+                <div class="stat-number">1</div>
+                <div class="stat-label">Pendientes</div>
+            </div>
+            <div class="stat-card failed">
+                <div class="stat-number">7</div>
+                <div class="stat-label">Fallidas</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">8</div>
+                <div class="stat-label">Total</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-clipboard-list"></i> Resumen de Cuentas</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Sitio</th>
+                        <th>Username</th>
+                        <th>Status</th>
+                        <th>Fecha</th>
+                        <th>Notas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href="https://codepen.io" class="site-link" target="_blank"><i class="fab fa-codepen"></i> CodePen</a></td>
+                        <td class="username">opclawd</td>
+                        <td><span class="badge badge-failed"><i class="fas fa-times"></i> Failed</span></td>
+                        <td>2026-02-08</td>
+                        <td>
+                            <span class="error-detail">Browser automation unavailable</span>
+                            <span class="error-type">service_unavailable</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a href="https://dev.to" class="site-link" target="_blank"><i class="fab fa-dev"></i> Dev.to</a></td>
+                        <td class="username">opclawd</td>
+                        <td><span class="badge badge-failed"><i class="fas fa-times"></i> Blocked</span></td>
+                        <td>2026-02-08</td>
+                        <td>
+                            <span class="error-detail">reCAPTCHA challenge</span>
+                            <span class="error-type">recaptcha</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a href="https://news.ycombinator.com" class="site-link" target="_blank"><i class="fab fa-y-combinator"></i> Hacker News</a></td>
+                        <td class="username">opclawd</td>
+                        <td><span class="badge badge-failed"><i class="fas fa-times"></i> Failed</span></td>
+                        <td>2026-02-08</td>
+                        <td>
+                            <span class="error-detail">reCAPTCHA image (crosswalks)</span>
+                            <span class="error-type">recaptcha_visual</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a href="https://kaggle.com" class="site-link" target="_blank"><i class="fab fa-kaggle"></i> Kaggle</a></td>
+                        <td class="username">OrlandoPedroClawd</td>
+                        <td><span class="badge badge-failed"><i class="fas fa-times"></i> Blocked</span></td>
+                        <td>2026-02-08</td>
+                        <td>
+                            <span class="error-detail">reCAPTCHA visual (motorcycles)</span>
+                            <span class="error-type">recaptcha_visual</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a href="https://medium.com" class="site-link" target="_blank"><i class="fab fa-medium"></i> Medium</a></td>
+                        <td class="username">opclawd</td>
+                        <td><span class="badge badge-pending"><i class="fas fa-clock"></i> Pending</span></td>
+                        <td>2026-02-08</td>
+                        <td>
+                            <span class="error-detail">Magic link enviado - revisar email</span>
+                            <span class="error-type">email_verification</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a href="https://producthunt.com" class="site-link" target="_blank"><i class="fab fa-product-hunt"></i> ProductHunt</a></td>
+                        <td class="username">opclawd</td>
+                        <td><span class="badge badge-failed"><i class="fas fa-times"></i> Failed</span></td>
+                        <td>2026-02-08</td>
+                        <td>
+                            <span class="error-detail">Cloudflare anti-bot challenge</span>
+                            <span class="error-type">cloudflare</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a href="https://reddit.com" class="site-link" target="_blank"><i class="fab fa-reddit"></i> Reddit</a></td>
+                        <td class="username">opclawd</td>
+                        <td><span class="badge badge-failed"><i class="fas fa-times"></i> Failed</span></td>
+                        <td>2026-02-08</td>
+                        <td>
+                            <span class="error-detail">Network security block</span>
+                            <span class="error-type">security_block</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a href="https://stackoverflow.com" class="site-link" target="_blank"><i class="fab fa-stack-overflow"></i> Stack Overflow</a></td>
+                        <td class="username">opclawd</td>
+                        <td><span class="badge badge-failed"><i class="fas fa-times"></i> Failed</span></td>
+                        <td>2026-02-08</td>
+                        <td>
+                            <span class="error-detail">Cloudflare CAPTCHA challenge</span>
+                            <span class="error-type">cloudflare</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-shield-alt"></i> Bloqueos Comunes</h2>
+            <div class="blockers-list">
+                <div class="blocker-item">
+                    <span class="blocker-count">3</span>
+                    <h4><i class="fab fa-google"></i> reCAPTCHA</h4>
+                    <p>Dev.to, Hacker News, Kaggle</p>
+                </div>
+                <div class="blocker-item">
+                    <span class="blocker-count">2</span>
+                    <h4><i class="fas fa-cloud"></i> Cloudflare</h4>
+                    <p>ProductHunt, Stack Overflow</p>
+                </div>
+                <div class="blocker-item">
+                    <span class="blocker-count">2</span>
+                    <h4><i class="fas fa-ban"></i> Security Block</h4>
+                    <p>Reddit, CodePen</p>
+                </div>
+                <div class="blocker-item">
+                    <span class="blocker-count">1</span>
+                    <h4><i class="fas fa-envelope"></i> Email Verification</h4>
+                    <p>Medium (magic link)</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-code"></i> Datos Consolidados (JSON)</h2>
+            <pre>{
+  "summary": {
+    "total_attempts": 8,
+    "successful": 0,
+    "pending": 1,
+    "failed": 7,
+    "success_rate": "0%"
+  }
+}</pre>
+        </div>
+
+        <a href="/clawdbot/" class="back-link"><i class="fas fa-arrow-left"></i> Volver al Panel</a>
+
+        <footer>
+            <p><i class="fas fa-robot"></i> Generado por Claw | Test 37 | 2026-02-08</p>
+        </footer>
+    </div>
+</body>
+</html>

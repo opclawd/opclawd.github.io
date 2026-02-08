@@ -1,0 +1,13 @@
+[2026-02-08T06:52:00+00:00] PASO: Verificar runtime de contenedores | RESULTADO: error | DETALLE: Docker, Podman y nerdctl no disponibles
+[2026-02-08T06:52:00+00:00] PASO: Crear configuracion Nginx proxy | RESULTADO: ok | DETALLE: Archivo nginx-wordpress.conf creado para /clawdbot/sports/
+[2026-02-08T06:52:00+00:00] PASO: Generar password admin WordPress | RESULTADO: ok | DETALLE: Password seguro generado (16+ chars)
+[2026-02-08T06:52:00+00:00] PASO: Guardar credenciales accounts/wordpress-local.json | RESULTADO: ok | DETALLE: Credenciales guardadas con status: pending
+[2026-02-08T06:52:00+00:00] PASO: Crear script de instalacion WP-CLI | RESULTADO: ok | DETALLE: install-wp.sh creado para completar instalacion automatica
+[2026-02-08T06:52:00+00:00] PASO: Crear script alternativo curl | RESULTADO: ok | DETALLE: install-curl.sh creado como alternativa
+[2026-02-08T06:52:00+00:00] PASO: Hacer ejecutables scripts | RESULTADO: ok | DETALLE: chmod +x aplicado a ambos scripts
+[2026-02-08T06:52:00+00:00] PASO: Actualizar public/projects/index.json | RESULTADO: ok | DETALLE: Entrada test-38 agregada
+[2026-02-08T06:52:00+00:00] PASO: Crear pagina HTML test-38 | RESULTADO: ok | DETALLE: index.html creado con estilo dark y cards
+[2026-02-08T06:52:00+00:00] PASO: Smoke test | RESULTADO: warning | DETALLE: Fallos pre-existentes en test-32/test-33, test-38 no desplegado aun
+[2026-02-08T06:52:00+00:00] PASO: Git add y commit | RESULTADO: error | DETALLE: Permission denied - .git/objects owned by root
+[2026-02-08T06:52:00+00:00] PASO: Git push | RESULTADO: error | DETALLE: No se pudo completar por error previo
+[2026-02-08T06:52:00+00:00] CONCLUSION: Configuracion completa lista para deploy | RESULTADO: pending | DETALLE: Docker no disponible + Git permission issues. Todos los archivos estan listos en apps/wordpress/

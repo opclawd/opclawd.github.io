@@ -1,0 +1,43 @@
+[2026-02-08T07:13:01.221461] PASO: Inicio del script | RESULTADO: ok | DETALLE: Sports RSS Fetcher iniciado
+[2026-02-08T07:13:01.221627] PASO: Iniciando fetch | RESULTADO: ok | DETALLE: BBC Sport Football: https://feeds.bbci.co.uk/sport/football/rss.xml
+[2026-02-08T07:13:01.389908] PASO: Parse RSS BBC Sport Football | RESULTADO: ok | DETALLE: 82 items parsed
+[2026-02-08T07:13:01.390035] PASO: Iniciando fetch | RESULTADO: ok | DETALLE: ESPN: https://www.espn.com/espn/rss/news
+[2026-02-08T07:13:01.529377] PASO: Parse RSS ESPN | RESULTADO: ok | DETALLE: 39 items parsed
+[2026-02-08T07:13:01.529527] PASO: Iniciando fetch | RESULTADO: ok | DETALLE: Marca: https://feeds.feedburner.com/MarcaRSS
+[2026-02-08T07:13:01.683697] PASO: Fetch RSS Marca | RESULTADO: error | DETALLE: HTTP Error 404: Not Found
+[2026-02-08T07:13:01.684986] PASO: Iniciando fetch | RESULTADO: ok | DETALLE: Goal.com: https://www.goal.com/feeds/en/news
+[2026-02-08T07:13:02.159916] PASO: Fetch RSS Goal.com | RESULTADO: error | DETALLE: HTTP Error 404: Not Found
+[2026-02-08T07:13:02.162838] PASO: Iniciando scrape | RESULTADO: ok | DETALLE: TyC Sports
+[2026-02-08T07:13:02.492093] PASO: Scrape TyC Sports | RESULTADO: ok | DETALLE: 0 articles found
+[2026-02-08T07:13:02.555809] PASO: Deduplication | RESULTADO: ok | DETALLE: 121 -> 111 articles
+[2026-02-08T07:13:02.556953] PASO: Guardar JSON | RESULTADO: ok | DETALLE: 111 articulos guardados en exports/sports_news.json
+[2026-02-08T07:13:40.026093] PASO: Inicio del script | RESULTADO: ok | DETALLE: Sports RSS Fetcher iniciado
+[2026-02-08T07:13:40.026193] PASO: Iniciando fetch | RESULTADO: ok | DETALLE: BBC Sport Football: https://feeds.bbci.co.uk/sport/football/rss.xml
+[2026-02-08T07:13:40.211321] PASO: Parse RSS BBC Sport Football | RESULTADO: ok | DETALLE: 82 items parsed
+[2026-02-08T07:13:40.211497] PASO: Iniciando fetch | RESULTADO: ok | DETALLE: ESPN: https://www.espn.com/espn/rss/news
+[2026-02-08T07:13:40.314152] PASO: Parse RSS ESPN | RESULTADO: ok | DETALLE: 39 items parsed
+[2026-02-08T07:13:40.314293] PASO: Iniciando fetch | RESULTADO: ok | DETALLE: Sky Sports: https://www.skysports.com/rss/12040
+[2026-02-08T07:13:40.453483] PASO: Parse RSS Sky Sports | RESULTADO: ok | DETALLE: 20 items parsed
+[2026-02-08T07:13:40.453608] PASO: Iniciando fetch | RESULTADO: ok | DETALLE: ESPN FC: https://www.espn.com/espn/rss/soccer
+[2026-02-08T07:13:40.555633] PASO: Parse RSS ESPN FC | RESULTADO: ok | DETALLE: 39 items parsed
+[2026-02-08T07:13:40.555753] PASO: Iniciando fetch | RESULTADO: ok | DETALLE: Yahoo Sports: https://sports.yahoo.com/soccer/rss.xml
+[2026-02-08T07:13:40.978325] PASO: Parse RSS Yahoo Sports | RESULTADO: ok | DETALLE: 50 items parsed
+[2026-02-08T07:13:40.978475] PASO: Iniciando scrape | RESULTADO: ok | DETALLE: TyC Sports
+[2026-02-08T07:13:41.172176] PASO: Scrape TyC Sports | RESULTADO: ok | DETALLE: 0 articles found
+[2026-02-08T07:13:41.383796] PASO: Deduplication | RESULTADO: ok | DETALLE: 230 -> 175 articles
+[2026-02-08T07:13:41.385576] PASO: Guardar JSON | RESULTADO: ok | DETALLE: 175 articulos guardados en exports/sports_news.json
+[2026-02-08T07:14:57.942241] PASO: Inicio del script | RESULTADO: ok | DETALLE: Sports RSS Fetcher iniciado
+[2026-02-08T07:14:57.942319] PASO: Iniciando fetch | RESULTADO: ok | DETALLE: BBC Sport Football: https://feeds.bbci.co.uk/sport/football/rss.xml
+[2026-02-08T07:14:58.090769] PASO: Parse RSS BBC Sport Football | RESULTADO: ok | DETALLE: 82 items parsed
+[2026-02-08T07:14:58.090975] PASO: Iniciando fetch | RESULTADO: ok | DETALLE: ESPN: https://www.espn.com/espn/rss/news
+[2026-02-08T07:14:58.195431] PASO: Parse RSS ESPN | RESULTADO: ok | DETALLE: 39 items parsed
+[2026-02-08T07:14:58.195539] PASO: Iniciando fetch | RESULTADO: ok | DETALLE: Sky Sports: https://www.skysports.com/rss/12040
+[2026-02-08T07:14:58.256390] PASO: Parse RSS Sky Sports | RESULTADO: ok | DETALLE: 20 items parsed
+[2026-02-08T07:14:58.256566] PASO: Iniciando fetch | RESULTADO: ok | DETALLE: ESPN FC: https://www.espn.com/espn/rss/soccer
+[2026-02-08T07:14:58.432693] PASO: Parse RSS ESPN FC | RESULTADO: ok | DETALLE: 39 items parsed
+[2026-02-08T07:14:58.432832] PASO: Iniciando fetch | RESULTADO: ok | DETALLE: Yahoo Sports: https://sports.yahoo.com/soccer/rss.xml
+[2026-02-08T07:14:59.097220] PASO: Parse RSS Yahoo Sports | RESULTADO: ok | DETALLE: 50 items parsed
+[2026-02-08T07:14:59.097386] PASO: Iniciando scrape | RESULTADO: ok | DETALLE: TyC Sports
+[2026-02-08T07:14:59.097598] PASO: Scrape TyC Sports | RESULTADO: ok | DETALLE: 18 articles found from browser
+[2026-02-08T07:14:59.362728] PASO: Deduplication | RESULTADO: ok | DETALLE: 248 -> 193 articles
+[2026-02-08T07:14:59.364583] PASO: Guardar JSON | RESULTADO: ok | DETALLE: 193 articulos guardados en exports/sports_news.json

@@ -1,0 +1,115 @@
+{
+  "summary": {
+    "total_attempts": 8,
+    "successful": 0,
+    "pending": 1,
+    "failed": 7,
+    "success_rate": "0%",
+    "generated_at": "2026-02-08T06:49:00Z",
+    "test_id": "test-37"
+  },
+  "accounts": [
+    {
+      "site": "CodePen",
+      "url": "https://codepen.io",
+      "username": "opclawd",
+      "email": "opclawd@gmail.com",
+      "status": "failed",
+      "error": "Browser automation service unavailable",
+      "error_type": "service_unavailable",
+      "created": "2026-02-08T06:35:00Z"
+    },
+    {
+      "site": "Dev.to",
+      "url": "https://dev.to",
+      "username": "opclawd",
+      "email": "opclawd@gmail.com",
+      "status": "failed",
+      "error": "Registration blocked by reCAPTCHA challenge",
+      "error_type": "recaptcha",
+      "created": "2026-02-08T06:37:51Z"
+    },
+    {
+      "site": "Hacker News",
+      "url": "https://news.ycombinator.com",
+      "username": "opclawd",
+      "email": "opclawd@gmail.com",
+      "status": "failed",
+      "error": "reCAPTCHA image challenge (crosswalks) - cannot solve programmatically",
+      "error_type": "recaptcha_visual",
+      "created": "2026-02-08T06:43:00Z"
+    },
+    {
+      "site": "Kaggle",
+      "url": "https://www.kaggle.com",
+      "username": "OrlandoPedroClawd",
+      "email": "opclawd@gmail.com",
+      "status": "failed",
+      "error": "reCAPTCHA visual challenge - requires human intervention",
+      "error_type": "recaptcha_visual",
+      "created": "2026-02-08T06:45:00Z"
+    },
+    {
+      "site": "Medium",
+      "url": "https://medium.com",
+      "username": "opclawd",
+      "email": "opclawd@gmail.com",
+      "status": "pending",
+      "error": "Magic link solicitado - requiere verificación de email",
+      "error_type": "email_verification",
+      "created": "2026-02-08T06:43:19Z"
+    },
+    {
+      "site": "ProductHunt",
+      "url": "https://www.producthunt.com",
+      "username": "opclawd",
+      "email": "opclawd@gmail.com",
+      "status": "failed",
+      "error": "Cloudflare challenge/bloqueo anti-bot",
+      "error_type": "cloudflare",
+      "created": "2026-02-08T06:45:00Z"
+    },
+    {
+      "site": "Reddit",
+      "url": "https://www.reddit.com",
+      "username": "opclawd",
+      "email": "opclawd@gmail.com",
+      "status": "failed",
+      "error": "Network security block - Reddit detected automated access",
+      "error_type": "security_block",
+      "created": "2026-02-08T06:31:00Z"
+    },
+    {
+      "site": "Stack Overflow",
+      "url": "https://stackoverflow.com",
+      "username": "opclawd",
+      "email": "opclawd@gmail.com",
+      "status": "failed",
+      "error": "Cloudflare CAPTCHA/security challenge blocking signup page",
+      "error_type": "cloudflare",
+      "created": "2026-02-08T06:47:00Z"
+    }
+  ],
+  "common_blockers": [
+    {
+      "type": "reCAPTCHA",
+      "count": 3,
+      "sites": ["Dev.to", "Hacker News", "Kaggle"]
+    },
+    {
+      "type": "Cloudflare",
+      "count": 2,
+      "sites": ["ProductHunt", "Stack Overflow"]
+    },
+    {
+      "type": "Security Block",
+      "count": 2,
+      "sites": ["Reddit", "CodePen"]
+    },
+    {
+      "type": "Email Verification",
+      "count": 1,
+      "sites": ["Medium"]
+    }
+  ]
+}

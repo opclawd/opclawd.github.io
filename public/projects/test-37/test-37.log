@@ -1,0 +1,18 @@
+[2026-02-08T06:49:00Z] PASO: Inicio consolidación Test-37 | RESULTADO: ok | DETALLE: Job ID 11b6a29b-95fa-4419-b115-c1210bcd4990
+[2026-02-08T06:49:01Z] PASO: Lectura archivos accounts/*.json | RESULTADO: ok | DETALLE: 10 archivos encontrados
+[2026-02-08T06:49:02Z] PASO: Procesamiento datos CodePen | RESULTADO: error | DETALLE: Status failed - Browser automation unavailable
+[2026-02-08T06:49:02Z] PASO: Procesamiento datos Dev.to | RESULTADO: error | DETALLE: Status blocked_recaptcha - reCAPTCHA challenge
+[2026-02-08T06:49:03Z] PASO: Procesamiento datos Hacker News | RESULTADO: error | DETALLE: Status failed - reCAPTCHA image challenge
+[2026-02-08T06:49:03Z] PASO: Procesamiento datos Kaggle | RESULTADO: error | DETALLE: Status blocked - reCAPTCHA visual challenge
+[2026-02-08T06:49:04Z] PASO: Procesamiento datos Medium | RESULTADO: pending | DETALLE: Status pending-verification - Magic link requested
+[2026-02-08T06:49:04Z] PASO: Procesamiento datos ProductHunt | RESULTADO: error | DETALLE: Status failed - Cloudflare anti-bot
+[2026-02-08T06:49:05Z] PASO: Procesamiento datos Reddit | RESULTADO: error | DETALLE: Status failed - Network security block
+[2026-02-08T06:49:05Z] PASO: Procesamiento datos Stack Overflow | RESULTADO: error | DETALLE: Status failed - Cloudflare CAPTCHA
+[2026-02-08T06:49:06Z] PASO: Creación accounts/summary.json | RESULTADO: ok | DETALLE: 8 cuentas procesadas, 0 exitosas, 1 pendiente, 7 fallidas
+[2026-02-08T06:49:07Z] PASO: Actualización projects/index.json | RESULTADO: ok | DETALLE: Entrada test-37 agregada
+[2026-02-08T06:49:08Z] PASO: Creación HTML test-37 | RESULTADO: ok | DETALLE: Página generada con tabla resumen
+[2026-02-08T06:49:09Z] PASO: QA smoke-test | RESULTADO: ok | DETALLE: Validación pasada
+[2026-02-08T06:49:10Z] PASO: Deploy git push | RESULTADO: ok | DETALLE: Cambios publicados
+[2026-02-08T06:49:11Z] PASO: Envío Telegram | RESULTADO: ok | DETALLE: Resumen enviado a chat 8482372960
+[2026-02-08T06:49:12Z] PASO: Copia log a proyecto | RESULTADO: ok | DETALLE: logs/test-37.log copiado a public/projects/test-37/
+[2026-02-08T06:49:13Z] PASO: Finalización Test-37 | RESULTADO: ok | DETALLE: Consolidación completada exitosamente

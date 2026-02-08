@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test 39 - Sports RSS Fetcher</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0f;
+            color: #e4e4e7;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+        .header .subtitle {
+            color: #71717a;
+            font-size: 1.1rem;
+        }
+        .card {
+            background: #14141f;
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 24px;
+            border: 1px solid #27272a;
+        }
+        .card h2 {
+            color: #ff6b35;
+            font-size: 1.3rem;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .card h2 i {
+            color: #f7931e;
+        }
+        .card p, .card ul {
+            color: #a1a1aa;
+            margin-bottom: 12px;
+        }
+        .card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .card ul li {
+            padding: 8px 0;
+            padding-left: 24px;
+            position: relative;
+        }
+        .card ul li::before {
+            content: "▸";
+            color: #f7931e;
+            position: absolute;
+            left: 0;
+        }
+        pre {
+            background: #1a1a2e;
+            border-radius: 12px;
+            padding: 20px;
+            overflow-x: auto;
+            border: 1px solid #27272a;
+            font-family: 'Fira Code', 'Consolas', monospace;
+            font-size: 0.85rem;
+            color: #e4e4e7;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 16px;
+            margin-top: 20px;
+        }
+        .stat-item {
+            background: #1a1a2e;
+            padding: 16px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid #27272a;
+        }
+        .stat-item .number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ff6b35;
+        }
+        .stat-item .label {
+            color: #71717a;
+            font-size: 0.9rem;
+            margin-top: 4px;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #f7931e;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 30px;
+            transition: color 0.2s;
+        }
+        .back-link:hover {
+            color: #ff6b35;
+        }
+        .success-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #22c55e20;
+            color: #22c55e;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        @media (max-width: 600px) {
+            .header h1 { font-size: 1.8rem; }
+            .card { padding: 20px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-rss"></i> Test 39</h1>
+            <p class="subtitle">Sports RSS Fetcher</p>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-clipboard-list"></i> Consigna</h2>
+            <p>Construir un fetcher de noticias deportivas que:</p>
+            <ul>
+                <li>Descargue RSS de BBC Sport Football, ESPN, Sky Sports, ESPN FC, Yahoo Sports</li>
+                <li>Scrapee TyC Sports página principal (sección fútbol)</li>
+                <li>Parsee cada feed (XML), extraiga: título, link, descripción, fecha, fuente</li>
+                <li>Deduplique por título similar (fuzzy match)</li>
+                <li>Guarde en exports/sports_news.json con timestamp</li>
+                <li>Envíe resumen por Telegram</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-code"></i> Archivo Principal</h2>
+            <p><code>scripts/sports_rss_fetcher.py</code></p>
+            <pre>#!/usr/bin/env python3
+"""Sports RSS Fetcher - Test 39"""
+import json
+import xml.etree.ElementTree as ET
+import re
+import os
+from datetime import datetime
+from urllib.request import urlopen, Request
+
+# RSS Sources
+RSS_SOURCES = {
+    "BBC Sport Football": "feeds.bbci.co.uk/sport/football/rss.xml",
+    "ESPN": "espn.com/espn/rss/news",
+    "Sky Sports": "skysports.com/rss/12040",
+    "ESPN FC": "espn.com/espn/rss/soccer",
+    "Yahoo Sports": "sports.yahoo.com/soccer/rss.xml"
+}
+
+# Funciones:
+# - fetch_rss() → descarga feeds
+# - parse_rss() → parsea XML
+# - scrape_tyc_sports() → browser automation
+# - deduplicate() → fuzzy match por título
+# - main() → orquesta todo</pre>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-chart-bar"></i> Resultado</h2>
+            <div class="success-badge">
+                <i class="fas fa-check-circle"></i> Ejecución Exitosa
+            </div>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="number">193</div>
+                    <div class="label">Noticias Únicas</div>
+                </div>
+                <div class="stat-item">
+                    <div class="number">6</div>
+                    <div class="label">Fuentes</div>
+                </div>
+                <div class="stat-item">
+                    <div class="number">82</div>
+                    <div class="label">BBC Sport</div>
+                </div>
+                <div class="stat-item">
+                    <div class="number">18</div>
+                    <div class="label">TyC Sports</div>
+                </div>
+            </div>
+            <p style="margin-top: 20px;"><strong>Timestamp:</strong> 2026-02-08T07:14:59</p>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-list-ol"></i> Por Fuente</h2>
+            <ul>
+                <li>BBC Sport Football: 82 noticias</li>
+                <li>ESPN: 39 noticias</li>
+                <li>Sky Sports: 20 noticias</li>
+                <li>ESPN FC: 39 noticias</li>
+                <li>Yahoo Sports: 50 noticias</li>
+                <li>TyC Sports: 18 noticias (scraping con browser)</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-check-double"></i> QA Check</h2>
+            <p>Verificaciones realizadas:</p>
+            <ul>
+                <li>✅ Script ejecuta sin errores</li>
+                <li>✅ JSON generado correctamente</li>
+                <li>✅ Deduplicación funcionando</li>
+                <li>✅ TyC Sports scraping con browser automation</li>
+                <li>✅ Resumen enviado por Telegram</li>
+            </ul>
+        </div>
+
+        <a href="/clawdbot/" class="back-link">
+            <i class="fas fa-arrow-left"></i> Volver
+        </a>
+    </div>
+</body>
+</html>
