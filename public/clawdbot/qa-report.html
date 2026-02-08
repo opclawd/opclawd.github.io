@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QA Report - OpenClaw</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --surface: #161b22;
+            --border: #30363d;
+            --text: #e6edf3;
+            --text-dim: #8b949e;
+            --pass: #2ea043;
+            --fail: #f85149;
+            --warn: #d29922;
+            --fixed: #58a6ff;
+            --info: #8b949e;
+            --accent: #ff6b35;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 2rem;
+        }
+        .container { max-width: 1100px; margin: 0 auto; }
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+        .subtitle { color: var(--text-dim); margin-bottom: 2rem; }
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .summary-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+        }
+        .summary-card .number {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        .summary-card .label { color: var(--text-dim); font-size: 0.85rem; }
+        .summary-card.pass .number { color: var(--pass); }
+        .summary-card.fail .number { color: var(--fail); }
+        .summary-card.warn .number { color: var(--warn); }
+        .summary-card.fixed .number { color: var(--fixed); }
+        .summary-card.total .number { color: var(--text); }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th {
+            background: #1c2128;
+            padding: 0.75rem 1rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        td {
+            padding: 0.6rem 1rem;
+            border-top: 1px solid var(--border);
+            vertical-align: top;
+        }
+        .badge {
+            display: inline-block;
+            padding: 0.15rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .badge.pass { background: rgba(46,160,67,0.2); color: var(--pass); }
+        .badge.fail { background: rgba(248,81,73,0.2); color: var(--fail); }
+        .badge.warn { background: rgba(210,153,34,0.2); color: var(--warn); }
+        .badge.fixed { background: rgba(88,166,255,0.2); color: var(--fixed); }
+        .detail { font-size: 0.85rem; padding: 0.15rem 0; }
+        .detail.pass { color: var(--pass); }
+        .detail.fail { color: var(--fail); }
+        .detail.warn { color: var(--warn); }
+        .detail.fixed { color: var(--fixed); }
+        .detail.info { color: var(--info); }
+        .result-row.fail { background: rgba(248,81,73,0.04); }
+        .footer {
+            margin-top: 2rem;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 0.8rem;
+        }
+        .filter-bar {
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+        .filter-btn {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 0.3rem 0.8rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        .filter-btn:hover { border-color: var(--accent); }
+        .filter-btn.active { border-color: var(--accent); background: rgba(255,107,53,0.15); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>OpenClaw QA Report</h1>
+        <p class="subtitle">Generated 2026-02-08 04:00:38 UTC | Duration: 2.8s | <span class="badge fail">27 FAILED</span></p>
+
+        <div class="summary">
+            <div class="summary-card total">
+                <div class="number">29</div>
+                <div class="label">Total Checks</div>
+            </div>
+            <div class="summary-card pass">
+                <div class="number">2</div>
+                <div class="label">Passed</div>
+            </div>
+            <div class="summary-card fail">
+                <div class="number">27</div>
+                <div class="label">Failed</div>
+            </div>
+            <div class="summary-card warn">
+                <div class="number">0</div>
+                <div class="label">Warnings</div>
+            </div>
+            <div class="summary-card fixed">
+                <div class="number">0</div>
+                <div class="label">Auto-Fixed</div>
+            </div>
+        </div>
+
+        <div class="filter-bar">
+            <button class="filter-btn active" onclick="filterRows('all')">All</button>
+            <button class="filter-btn" onclick="filterRows('fail')">Failures</button>
+            <button class="filter-btn" onclick="filterRows('warn')">Warnings</button>
+            <button class="filter-btn" onclick="filterRows('pass')">Passed</button>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Status</th>
+                    <th>Check</th>
+                    <th>Category</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+        <tr class="result-row pass">
+            <td class="status-cell"><span class="badge pass">PASS</span></td>
+            <td class="name-cell">Main index.html</td>
+            <td class="category-cell">structure</td>
+            <td class="details-cell"><div class="detail pass">&#10004; File exists (6597 bytes)</div>
+<div class="detail pass">&#10004; Has DOCTYPE declaration</div>
+<div class="detail pass">&#10004; Has &lt;html&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;head&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;body&gt; tag</div>
+<div class="detail pass">&#10004; HTTP 200 from http://clawdbot-web/clawdbot/</div>
+</td>
+        </tr>
+        <tr class="result-row pass">
+            <td class="status-cell"><span class="badge pass">PASS</span></td>
+            <td class="name-cell">index.json validation</td>
+            <td class="category-cell">data</td>
+            <td class="details-cell"><div class="detail pass">&#10004; Valid JSON array with 27 entries</div>
+<div class="detail pass">&#10004; Entry 'Test 27: TBD': test-27/index.html OK</div>
+<div class="detail pass">&#10004; Entry 'Test 26: TBD': test-26/index.html OK</div>
+<div class="detail pass">&#10004; Entry 'Test 25: TBD': test-25/index.html OK</div>
+<div class="detail pass">&#10004; Entry 'Test 24: TBD': test-24/index.html OK</div>
+<div class="detail pass">&#10004; Entry 'Test 23: Gmail Email Automation': test-23/index.html OK</div>
+<div class="detail pass">&#10004; Entry 'Test 22: GitHub Repo Automation': test-22/index.html OK</div>
+<div class="detail pass">&#10004; Entry 'Test 21: Configuración de Entorno': test-21/index.html OK</div>
+<div class="detail pass">&#10004; Entry 'Test 20: Web Scraping &amp; Chart.js': test-20/index.html OK</div>
+<div class="detail pass">&#10004; Entry 'Test 19: TBD': test-19/index.html OK</div>
+<div class="detail pass">&#10004; Entry 'Test 18: Mail.tm Inbox Monitor': test-18/index.html OK</div>
+<div class="detail pass">&#10004; Entry 'Test 17: TBD': test-17/index.html OK</div>
+<div class="detail pass">&#10004; Entry 'Test 16: TBD': test-16/index.html OK</div>
+<div class="detail pass">&#10004; Entry 'Test 15: TBD': test-15/index.html OK</div>
+<div class="detail pass">&#10004; Entry 'Test 14: TBD': test-14/index.html OK</div>
+<div class="detail pass">&#10004; Entry 'Test 13: CSV a SQLite Pipeline': test-13/index.html OK</div>
+<div class="detail pass">&#10004; Entry 'Test 12: Image Downloader Gallery': test-12/index.html OK</div>
+<div class="detail pass">&#10004; Entry 'Test 11: Site Watchdog': test-11/index.html OK</div>
+<div class="detail pass">&#10004; Entry 'Test 10: Analizador de Logs': test-10/index.html OK</div>
+<div class="detail pass">&#10004; Entry 'Test 9: Monitor de Precios Web': test-9/index.html OK</div>
+<div class="detail pass">&#10004; Entry 'Test 8: Docker Todo App': test-8/index.html OK</div>
+<div class="detail pass">&#10004; Entry 'Test 7: Monitor de Clima Multi-Ciudad': test-7/index.html OK</div>
+<div class="detail pass">&#10004; Entry 'Test 6: API REST de Tareas': test-6/index.html OK</div>
+<div class="detail pass">&#10004; Entry 'Test 5: TBD': test-5/index.html OK</div>
+<div class="detail pass">&#10004; Entry 'Test 4: API GraphQL SpaceX': test-4/index.html OK</div>
+<div class="detail pass">&#10004; Entry 'Test 3: Web Scraping de Hockey': test-3/index.html OK</div>
+<div class="detail pass">&#10004; Entry 'Test 2: API de Tipos de Cambio': test-2/index.html OK</div>
+<div class="detail pass">&#10004; Entry 'Test 1: TBD': test-1/index.html OK</div>
+</td>
+        </tr>
+        <tr class="result-row fail">
+            <td class="status-cell"><span class="badge fail">FAIL</span></td>
+            <td class="name-cell">Page: test-1</td>
+            <td class="category-cell">page</td>
+            <td class="details-cell"><div class="detail pass">&#10004; File exists (2359 bytes)</div>
+<div class="detail pass">&#10004; Has DOCTYPE declaration</div>
+<div class="detail pass">&#10004; Has &lt;html&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;head&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;body&gt; tag</div>
+<div class="detail pass">&#10004; HTTP 200 OK</div>
+<div class="detail fail">&#10008; Broken internal link: /clawdbot/ (resolved to public/clawdbot/clawdbot)</div>
+<div class="detail pass">&#10004; Asset OK (css): https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css</div>
+<div class="detail pass">&#10004; All 1 assets verified</div>
+</td>
+        </tr>
+        <tr class="result-row fail">
+            <td class="status-cell"><span class="badge fail">FAIL</span></td>
+            <td class="name-cell">Page: test-2</td>
+            <td class="category-cell">page</td>
+            <td class="details-cell"><div class="detail pass">&#10004; File exists (7378 bytes)</div>
+<div class="detail pass">&#10004; Has DOCTYPE declaration</div>
+<div class="detail pass">&#10004; Has &lt;html&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;head&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;body&gt; tag</div>
+<div class="detail pass">&#10004; HTTP 200 OK</div>
+<div class="detail fail">&#10008; Broken internal link: /clawdbot/ (resolved to public/clawdbot/clawdbot)</div>
+<div class="detail pass">&#10004; Asset OK (css): https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css</div>
+<div class="detail pass">&#10004; All 1 assets verified</div>
+</td>
+        </tr>
+        <tr class="result-row fail">
+            <td class="status-cell"><span class="badge fail">FAIL</span></td>
+            <td class="name-cell">Page: test-3</td>
+            <td class="category-cell">page</td>
+            <td class="details-cell"><div class="detail pass">&#10004; File exists (10719 bytes)</div>
+<div class="detail pass">&#10004; Has DOCTYPE declaration</div>
+<div class="detail pass">&#10004; Has &lt;html&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;head&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;body&gt; tag</div>
+<div class="detail pass">&#10004; HTTP 200 OK</div>
+<div class="detail fail">&#10008; Broken internal link: /clawdbot/ (resolved to public/clawdbot/clawdbot)</div>
+<div class="detail pass">&#10004; Asset OK (css): https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css</div>
+<div class="detail pass">&#10004; Asset OK (css): https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap</div>
+<div class="detail pass">&#10004; All 2 assets verified</div>
+</td>
+        </tr>
+        <tr class="result-row fail">
+            <td class="status-cell"><span class="badge fail">FAIL</span></td>
+            <td class="name-cell">Page: test-4</td>
+            <td class="category-cell">page</td>
+            <td class="details-cell"><div class="detail pass">&#10004; File exists (7996 bytes)</div>
+<div class="detail pass">&#10004; Has DOCTYPE declaration</div>
+<div class="detail pass">&#10004; Has &lt;html&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;head&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;body&gt; tag</div>
+<div class="detail pass">&#10004; HTTP 200 OK</div>
+<div class="detail fail">&#10008; Broken internal link: /clawdbot/ (resolved to public/clawdbot/clawdbot)</div>
+<div class="detail pass">&#10004; Asset OK (css): https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css</div>
+<div class="detail pass">&#10004; All 1 assets verified</div>
+</td>
+        </tr>
+        <tr class="result-row fail">
+            <td class="status-cell"><span class="badge fail">FAIL</span></td>
+            <td class="name-cell">Page: test-5</td>
+            <td class="category-cell">page</td>
+            <td class="details-cell"><div class="detail pass">&#10004; File exists (2359 bytes)</div>
+<div class="detail pass">&#10004; Has DOCTYPE declaration</div>
+<div class="detail pass">&#10004; Has &lt;html&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;head&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;body&gt; tag</div>
+<div class="detail pass">&#10004; HTTP 200 OK</div>
+<div class="detail fail">&#10008; Broken internal link: /clawdbot/ (resolved to public/clawdbot/clawdbot)</div>
+<div class="detail pass">&#10004; Asset OK (css): https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css</div>
+<div class="detail pass">&#10004; All 1 assets verified</div>
+</td>
+        </tr>
+        <tr class="result-row fail">
+            <td class="status-cell"><span class="badge fail">FAIL</span></td>
+            <td class="name-cell">Page: test-6</td>
+            <td class="category-cell">page</td>
+            <td class="details-cell"><div class="detail pass">&#10004; File exists (10530 bytes)</div>
+<div class="detail pass">&#10004; Has DOCTYPE declaration</div>
+<div class="detail pass">&#10004; Has &lt;html&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;head&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;body&gt; tag</div>
+<div class="detail pass">&#10004; HTTP 200 OK</div>
+<div class="detail fail">&#10008; Broken internal link: /clawdbot/ (resolved to public/clawdbot/clawdbot)</div>
+<div class="detail pass">&#10004; Asset OK (css): https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css</div>
+<div class="detail pass">&#10004; Asset OK (css): https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap</div>
+<div class="detail pass">&#10004; All 2 assets verified</div>
+</td>
+        </tr>
+        <tr class="result-row fail">
+            <td class="status-cell"><span class="badge fail">FAIL</span></td>
+            <td class="name-cell">Page: test-7</td>
+            <td class="category-cell">page</td>
+            <td class="details-cell"><div class="detail pass">&#10004; File exists (9932 bytes)</div>
+<div class="detail pass">&#10004; Has DOCTYPE declaration</div>
+<div class="detail pass">&#10004; Has &lt;html&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;head&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;body&gt; tag</div>
+<div class="detail pass">&#10004; HTTP 200 OK</div>
+<div class="detail fail">&#10008; Broken internal link: /clawdbot/ (resolved to public/clawdbot/clawdbot)</div>
+<div class="detail pass">&#10004; Asset OK (css): https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css</div>
+<div class="detail pass">&#10004; All 1 assets verified</div>
+</td>
+        </tr>
+        <tr class="result-row fail">
+            <td class="status-cell"><span class="badge fail">FAIL</span></td>
+            <td class="name-cell">Page: test-8</td>
+            <td class="category-cell">page</td>
+            <td class="details-cell"><div class="detail pass">&#10004; File exists (7373 bytes)</div>
+<div class="detail pass">&#10004; Has DOCTYPE declaration</div>
+<div class="detail pass">&#10004; Has &lt;html&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;head&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;body&gt; tag</div>
+<div class="detail pass">&#10004; HTTP 200 OK</div>
+<div class="detail fail">&#10008; Broken internal link: /clawdbot/ (resolved to public/clawdbot/clawdbot)</div>
+<div class="detail pass">&#10004; Asset OK (css): https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css</div>
+<div class="detail pass">&#10004; All 1 assets verified</div>
+</td>
+        </tr>
+        <tr class="result-row fail">
+            <td class="status-cell"><span class="badge fail">FAIL</span></td>
+            <td class="name-cell">Page: test-9</td>
+            <td class="category-cell">page</td>
+            <td class="details-cell"><div class="detail pass">&#10004; File exists (7221 bytes)</div>
+<div class="detail pass">&#10004; Has DOCTYPE declaration</div>
+<div class="detail pass">&#10004; Has &lt;html&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;head&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;body&gt; tag</div>
+<div class="detail pass">&#10004; HTTP 200 OK</div>
+<div class="detail fail">&#10008; Broken internal link: /clawdbot/ (resolved to public/clawdbot/clawdbot)</div>
+<div class="detail pass">&#10004; Asset OK (css): https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap</div>
+<div class="detail pass">&#10004; Asset OK (css): https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css</div>
+<div class="detail pass">&#10004; All 2 assets verified</div>
+</td>
+        </tr>
+        <tr class="result-row fail">
+            <td class="status-cell"><span class="badge fail">FAIL</span></td>
+            <td class="name-cell">Page: test-10</td>
+            <td class="category-cell">page</td>
+            <td class="details-cell"><div class="detail pass">&#10004; File exists (8935 bytes)</div>
+<div class="detail pass">&#10004; Has DOCTYPE declaration</div>
+<div class="detail pass">&#10004; Has &lt;html&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;head&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;body&gt; tag</div>
+<div class="detail pass">&#10004; HTTP 200 OK</div>
+<div class="detail fail">&#10008; Broken internal link: /clawdbot/ (resolved to public/clawdbot/clawdbot)</div>
+<div class="detail pass">&#10004; Asset OK (css): https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css</div>
+<div class="detail pass">&#10004; All 1 assets verified</div>
+</td>
+        </tr>
+        <tr class="result-row fail">
+            <td class="status-cell"><span class="badge fail">FAIL</span></td>
+            <td class="name-cell">Page: test-11</td>
+            <td class="category-cell">page</td>
+            <td class="details-cell"><div class="detail pass">&#10004; File exists (9294 bytes)</div>
+<div class="detail pass">&#10004; Has DOCTYPE declaration</div>
+<div class="detail pass">&#10004; Has &lt;html&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;head&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;body&gt; tag</div>
+<div class="detail pass">&#10004; HTTP 200 OK</div>
+<div class="detail fail">&#10008; Broken internal link: /clawdbot/ (resolved to public/clawdbot/clawdbot)</div>
+<div class="detail pass">&#10004; Asset OK (css): https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css</div>
+<div class="detail pass">&#10004; Asset OK (css): https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap</div>
+<div class="detail pass">&#10004; All 2 assets verified</div>
+</td>
+        </tr>
+        <tr class="result-row fail">
+            <td class="status-cell"><span class="badge fail">FAIL</span></td>
+            <td class="name-cell">Page: test-12</td>
+            <td class="category-cell">page</td>
+            <td class="details-cell"><div class="detail pass">&#10004; File exists (7675 bytes)</div>
+<div class="detail pass">&#10004; Has DOCTYPE declaration</div>
+<div class="detail pass">&#10004; Has &lt;html&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;head&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;body&gt; tag</div>
+<div class="detail pass">&#10004; HTTP 200 OK</div>
+<div class="detail fail">&#10008; Broken internal link: /clawdbot/ (resolved to public/clawdbot/clawdbot)</div>
+<div class="detail fail">&#10008; Broken internal link: ../../../downloads/images/gallery.html (resolved to public/clawdbot/projects/test-12/../../../downloads/images/gallery.html)</div>
+<div class="detail pass">&#10004; Asset OK (css): https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css</div>
+<div class="detail pass">&#10004; All 1 assets verified</div>
+</td>
+        </tr>
+        <tr class="result-row fail">
+            <td class="status-cell"><span class="badge fail">FAIL</span></td>
+            <td class="name-cell">Page: test-13</td>
+            <td class="category-cell">page</td>
+            <td class="details-cell"><div class="detail pass">&#10004; File exists (9735 bytes)</div>
+<div class="detail pass">&#10004; Has DOCTYPE declaration</div>
+<div class="detail pass">&#10004; Has &lt;html&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;head&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;body&gt; tag</div>
+<div class="detail pass">&#10004; HTTP 200 OK</div>
+<div class="detail fail">&#10008; Broken internal link: /clawdbot/ (resolved to public/clawdbot/clawdbot)</div>
+<div class="detail pass">&#10004; Asset OK (css): https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css</div>
+<div class="detail pass">&#10004; Asset OK (css): https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap</div>
+<div class="detail pass">&#10004; All 2 assets verified</div>
+</td>
+        </tr>
+        <tr class="result-row fail">
+            <td class="status-cell"><span class="badge fail">FAIL</span></td>
+            <td class="name-cell">Page: test-14</td>
+            <td class="category-cell">page</td>
+            <td class="details-cell"><div class="detail pass">&#10004; File exists (2361 bytes)</div>
+<div class="detail pass">&#10004; Has DOCTYPE declaration</div>
+<div class="detail pass">&#10004; Has &lt;html&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;head&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;body&gt; tag</div>
+<div class="detail pass">&#10004; HTTP 200 OK</div>
+<div class="detail fail">&#10008; Broken internal link: /clawdbot/ (resolved to public/clawdbot/clawdbot)</div>
+<div class="detail pass">&#10004; Asset OK (css): https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css</div>
+<div class="detail pass">&#10004; All 1 assets verified</div>
+</td>
+        </tr>
+        <tr class="result-row fail">
+            <td class="status-cell"><span class="badge fail">FAIL</span></td>
+            <td class="name-cell">Page: test-15</td>
+            <td class="category-cell">page</td>
+            <td class="details-cell"><div class="detail pass">&#10004; File exists (2361 bytes)</div>
+<div class="detail pass">&#10004; Has DOCTYPE declaration</div>
+<div class="detail pass">&#10004; Has &lt;html&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;head&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;body&gt; tag</div>
+<div class="detail pass">&#10004; HTTP 200 OK</div>
+<div class="detail fail">&#10008; Broken internal link: /clawdbot/ (resolved to public/clawdbot/clawdbot)</div>
+<div class="detail pass">&#10004; Asset OK (css): https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css</div>
+<div class="detail pass">&#10004; All 1 assets verified</div>
+</td>
+        </tr>
+        <tr class="result-row fail">
+            <td class="status-cell"><span class="badge fail">FAIL</span></td>
+            <td class="name-cell">Page: test-16</td>
+            <td class="category-cell">page</td>
+            <td class="details-cell"><div class="detail pass">&#10004; File exists (2361 bytes)</div>
+<div class="detail pass">&#10004; Has DOCTYPE declaration</div>
+<div class="detail pass">&#10004; Has &lt;html&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;head&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;body&gt; tag</div>
+<div class="detail pass">&#10004; HTTP 200 OK</div>
+<div class="detail fail">&#10008; Broken internal link: /clawdbot/ (resolved to public/clawdbot/clawdbot)</div>
+<div class="detail pass">&#10004; Asset OK (css): https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css</div>
+<div class="detail pass">&#10004; All 1 assets verified</div>
+</td>
+        </tr>
+        <tr class="result-row fail">
+            <td class="status-cell"><span class="badge fail">FAIL</span></td>
+            <td class="name-cell">Page: test-17</td>
+            <td class="category-cell">page</td>
+            <td class="details-cell"><div class="detail pass">&#10004; File exists (2361 bytes)</div>
+<div class="detail pass">&#10004; Has DOCTYPE declaration</div>
+<div class="detail pass">&#10004; Has &lt;html&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;head&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;body&gt; tag</div>
+<div class="detail pass">&#10004; HTTP 200 OK</div>
+<div class="detail fail">&#10008; Broken internal link: /clawdbot/ (resolved to public/clawdbot/clawdbot)</div>
+<div class="detail pass">&#10004; Asset OK (css): https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css</div>
+<div class="detail pass">&#10004; All 1 assets verified</div>
+</td>
+        </tr>
+        <tr class="result-row fail">
+            <td class="status-cell"><span class="badge fail">FAIL</span></td>
+            <td class="name-cell">Page: test-18</td>
+            <td class="category-cell">page</td>
+            <td class="details-cell"><div class="detail pass">&#10004; File exists (9970 bytes)</div>
+<div class="detail pass">&#10004; Has DOCTYPE declaration</div>
+<div class="detail pass">&#10004; Has &lt;html&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;head&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;body&gt; tag</div>
+<div class="detail pass">&#10004; HTTP 200 OK</div>
+<div class="detail fail">&#10008; Broken internal link: /clawdbot/ (resolved to public/clawdbot/clawdbot)</div>
+<div class="detail pass">&#10004; Asset OK (css): https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css</div>
+<div class="detail pass">&#10004; All 1 assets verified</div>
+</td>
+        </tr>
+        <tr class="result-row fail">
+            <td class="status-cell"><span class="badge fail">FAIL</span></td>
+            <td class="name-cell">Page: test-19</td>
+            <td class="category-cell">page</td>
+            <td class="details-cell"><div class="detail pass">&#10004; File exists (2361 bytes)</div>
+<div class="detail pass">&#10004; Has DOCTYPE declaration</div>
+<div class="detail pass">&#10004; Has &lt;html&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;head&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;body&gt; tag</div>
+<div class="detail pass">&#10004; HTTP 200 OK</div>
+<div class="detail fail">&#10008; Broken internal link: /clawdbot/ (resolved to public/clawdbot/clawdbot)</div>
+<div class="detail pass">&#10004; Asset OK (css): https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css</div>
+<div class="detail pass">&#10004; All 1 assets verified</div>
+</td>
+        </tr>
+        <tr class="result-row fail">
+            <td class="status-cell"><span class="badge fail">FAIL</span></td>
+            <td class="name-cell">Page: test-20</td>
+            <td class="category-cell">page</td>
+            <td class="details-cell"><div class="detail pass">&#10004; File exists (11629 bytes)</div>
+<div class="detail pass">&#10004; Has DOCTYPE declaration</div>
+<div class="detail pass">&#10004; Has &lt;html&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;head&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;body&gt; tag</div>
+<div class="detail pass">&#10004; HTTP 200 OK</div>
+<div class="detail fail">&#10008; Broken internal link: ../../viz/population_top10.html (resolved to public/clawdbot/projects/test-20/../../viz/population_top10.html)</div>
+<div class="detail fail">&#10008; Broken internal link: /clawdbot/ (resolved to public/clawdbot/clawdbot)</div>
+<div class="detail pass">&#10004; Asset OK (css): https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css</div>
+<div class="detail pass">&#10004; All 1 assets verified</div>
+</td>
+        </tr>
+        <tr class="result-row fail">
+            <td class="status-cell"><span class="badge fail">FAIL</span></td>
+            <td class="name-cell">Page: test-21</td>
+            <td class="category-cell">page</td>
+            <td class="details-cell"><div class="detail pass">&#10004; File exists (9565 bytes)</div>
+<div class="detail pass">&#10004; Has DOCTYPE declaration</div>
+<div class="detail pass">&#10004; Has &lt;html&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;head&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;body&gt; tag</div>
+<div class="detail pass">&#10004; HTTP 200 OK</div>
+<div class="detail fail">&#10008; Broken internal link: /clawdbot/IDENTITY.md (resolved to public/clawdbot/clawdbot/IDENTITY.md)</div>
+<div class="detail fail">&#10008; Broken internal link: /clawdbot/USER.md (resolved to public/clawdbot/clawdbot/USER.md)</div>
+<div class="detail fail">&#10008; Broken internal link: /clawdbot/TOOLS.md (resolved to public/clawdbot/clawdbot/TOOLS.md)</div>
+<div class="detail fail">&#10008; Broken internal link: /clawdbot/SKILLS_INVENTORY.md (resolved to public/clawdbot/clawdbot/SKILLS_INVENTORY.md)</div>
+<div class="detail fail">&#10008; Broken internal link: /clawdbot/ (resolved to public/clawdbot/clawdbot)</div>
+<div class="detail pass">&#10004; Asset OK (css): https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css</div>
+<div class="detail pass">&#10004; Asset OK (css): https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap</div>
+<div class="detail pass">&#10004; All 2 assets verified</div>
+</td>
+        </tr>
+        <tr class="result-row fail">
+            <td class="status-cell"><span class="badge fail">FAIL</span></td>
+            <td class="name-cell">Page: test-22</td>
+            <td class="category-cell">page</td>
+            <td class="details-cell"><div class="detail pass">&#10004; File exists (11588 bytes)</div>
+<div class="detail pass">&#10004; Has DOCTYPE declaration</div>
+<div class="detail pass">&#10004; Has &lt;html&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;head&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;body&gt; tag</div>
+<div class="detail pass">&#10004; HTTP 200 OK</div>
+<div class="detail fail">&#10008; Broken internal link: /clawdbot/apps/todo-app/ (resolved to public/clawdbot/clawdbot/apps/todo-app)</div>
+<div class="detail fail">&#10008; Broken internal link: /clawdbot/apps/api-tasks/ (resolved to public/clawdbot/clawdbot/apps/api-tasks)</div>
+<div class="detail fail">&#10008; Broken internal link: /clawdbot/ (resolved to public/clawdbot/clawdbot)</div>
+<div class="detail pass">&#10004; Asset OK (css): https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css</div>
+<div class="detail pass">&#10004; Asset OK (css): https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap</div>
+<div class="detail pass">&#10004; All 2 assets verified</div>
+</td>
+        </tr>
+        <tr class="result-row fail">
+            <td class="status-cell"><span class="badge fail">FAIL</span></td>
+            <td class="name-cell">Page: test-23</td>
+            <td class="category-cell">page</td>
+            <td class="details-cell"><div class="detail pass">&#10004; File exists (8358 bytes)</div>
+<div class="detail pass">&#10004; Has DOCTYPE declaration</div>
+<div class="detail pass">&#10004; Has &lt;html&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;head&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;body&gt; tag</div>
+<div class="detail pass">&#10004; HTTP 200 OK</div>
+<div class="detail fail">&#10008; Broken internal link: /clawdbot/ (resolved to public/clawdbot/clawdbot)</div>
+<div class="detail pass">&#10004; Asset OK (css): https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap</div>
+<div class="detail pass">&#10004; Asset OK (css): https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css</div>
+<div class="detail pass">&#10004; All 2 assets verified</div>
+</td>
+        </tr>
+        <tr class="result-row fail">
+            <td class="status-cell"><span class="badge fail">FAIL</span></td>
+            <td class="name-cell">Page: test-24</td>
+            <td class="category-cell">page</td>
+            <td class="details-cell"><div class="detail pass">&#10004; File exists (2361 bytes)</div>
+<div class="detail pass">&#10004; Has DOCTYPE declaration</div>
+<div class="detail pass">&#10004; Has &lt;html&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;head&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;body&gt; tag</div>
+<div class="detail pass">&#10004; HTTP 200 OK</div>
+<div class="detail fail">&#10008; Broken internal link: /clawdbot/ (resolved to public/clawdbot/clawdbot)</div>
+<div class="detail pass">&#10004; Asset OK (css): https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css</div>
+<div class="detail pass">&#10004; All 1 assets verified</div>
+</td>
+        </tr>
+        <tr class="result-row fail">
+            <td class="status-cell"><span class="badge fail">FAIL</span></td>
+            <td class="name-cell">Page: test-25</td>
+            <td class="category-cell">page</td>
+            <td class="details-cell"><div class="detail pass">&#10004; File exists (2361 bytes)</div>
+<div class="detail pass">&#10004; Has DOCTYPE declaration</div>
+<div class="detail pass">&#10004; Has &lt;html&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;head&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;body&gt; tag</div>
+<div class="detail pass">&#10004; HTTP 200 OK</div>
+<div class="detail fail">&#10008; Broken internal link: /clawdbot/ (resolved to public/clawdbot/clawdbot)</div>
+<div class="detail pass">&#10004; Asset OK (css): https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css</div>
+<div class="detail pass">&#10004; All 1 assets verified</div>
+</td>
+        </tr>
+        <tr class="result-row fail">
+            <td class="status-cell"><span class="badge fail">FAIL</span></td>
+            <td class="name-cell">Page: test-26</td>
+            <td class="category-cell">page</td>
+            <td class="details-cell"><div class="detail pass">&#10004; File exists (2361 bytes)</div>
+<div class="detail pass">&#10004; Has DOCTYPE declaration</div>
+<div class="detail pass">&#10004; Has &lt;html&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;head&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;body&gt; tag</div>
+<div class="detail pass">&#10004; HTTP 200 OK</div>
+<div class="detail fail">&#10008; Broken internal link: /clawdbot/ (resolved to public/clawdbot/clawdbot)</div>
+<div class="detail pass">&#10004; Asset OK (css): https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css</div>
+<div class="detail pass">&#10004; All 1 assets verified</div>
+</td>
+        </tr>
+        <tr class="result-row fail">
+            <td class="status-cell"><span class="badge fail">FAIL</span></td>
+            <td class="name-cell">Page: test-27</td>
+            <td class="category-cell">page</td>
+            <td class="details-cell"><div class="detail pass">&#10004; File exists (2361 bytes)</div>
+<div class="detail pass">&#10004; Has DOCTYPE declaration</div>
+<div class="detail pass">&#10004; Has &lt;html&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;head&gt; tag</div>
+<div class="detail pass">&#10004; Has &lt;body&gt; tag</div>
+<div class="detail pass">&#10004; HTTP 200 OK</div>
+<div class="detail fail">&#10008; Broken internal link: /clawdbot/ (resolved to public/clawdbot/clawdbot)</div>
+<div class="detail pass">&#10004; Asset OK (css): https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css</div>
+<div class="detail pass">&#10004; All 1 assets verified</div>
+</td>
+        </tr>
+            </tbody>
+        </table>
+
+        <div class="footer">
+            <p>OpenClaw QA Toolkit v1.0 | <a href="projects/" style="color: var(--accent);">View Projects</a></p>
+        </div>
+    </div>
+
+    <script>
+    function filterRows(status) {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        event.target.classList.add('active');
+        document.querySelectorAll('.result-row').forEach(row => {
+            if (status === 'all') {
+                row.style.display = '';
+            } else {
+                row.style.display = row.classList.contains(status) ? '' : 'none';
+            }
+        });
+    }
+    </script>
+</body>
+</html>

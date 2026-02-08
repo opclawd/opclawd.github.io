@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - OpenClaw Tests</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0a0a0f;
+            color: #e4e4e7;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #14141f 0%, #1a1a2e 100%);
+            border-radius: 20px;
+            border: 1px solid #2a2a3e;
+        }
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+        .header p {
+            color: #888;
+            font-size: 1.1rem;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #ff6b35;
+            text-decoration: none;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+        .project-card {
+            background: #14141f;
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid #2a2a3e;
+            transition: transform 0.2s, border-color 0.2s;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        .project-card:hover {
+            transform: translateY(-4px);
+            border-color: #ff6b35;
+        }
+        .project-card .icon {
+            font-size: 2rem;
+            color: #ff6b35;
+            margin-bottom: 15px;
+        }
+        .project-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: #f7931e;
+        }
+        .project-card p {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        .project-card .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .tag {
+            background: #1a1a2e;
+            color: #ff6b35;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+        }
+        .status-pass { color: #4caf50; }
+        .status-pending { color: #ffaa00; }
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            margin-left: 10px;
+        }
+        .status-badge.pass {
+            background: #1a3a1a;
+            color: #4caf50;
+        }
+        .status-badge.pending {
+            background: #3a2a1a;
+            color: #ffaa00;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid #2a2a3e;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/clawdbot/" class="back-link">
+            <i class="fas fa-arrow-left"></i> Volver al inicio
+        </a>
+
+        <div class="header">
+            <h1><i class="fas fa-folder-open"></i> Projects</h1>
+            <p>Lista completa de tests y proyectos</p>
+        </div>
+
+        <div id="projects-container" class="projects-grid">
+            <div class="project-card">
+                <div class="icon"><i class="fas fa-spinner fa-spin"></i></div>
+                <h3>Cargando...</h3>
+                <p>Cargando lista de tests</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><i class="fas fa-code"></i> Generado automáticamente por OpenClaw</p>
+        </div>
+    </div>
+
+    <script>
+        fetch('index.json')
+            .then(r => {
+                if (!r.ok) throw new Error('HTTP ' + r.status);
+                return r.json();
+            })
+            .then(projects => {
+                const container = document.getElementById('projects-container');
+                container.innerHTML = projects.map(p => `
+                    <a href="${p.file}" class="project-card">
+                        <div class="icon"><i class="fas ${p.icon}"></i></div>
+                        <h3>
+                            ${p.name}
+                            <span class="status-badge ${p.status === 'PASS' ? 'pass' : 'pending'}">
+                                ${p.status === 'PASS' ? '✓ PASS' : '⏳ PENDING'}
+                            </span>
+                        </h3>
+                        <p>${p.description}</p>
+                        <div class="tags">
+                            ${p.tags.slice(0, 5).map(t => `<span class="tag">${t}</span>`).join('')}
+                        </div>
+                    </a>
+                `).join('');
+            })
+            .catch(err => {
+                console.error('Error:', err);
+                document.getElementById('projects-container').innerHTML = `
+                    <div class="project-card" style="grid-column: 1/-1; text-align: center;">
+                        <div class="icon"><i class="fas fa-exclamation-triangle"></i></div>
+                        <h3>Error al cargar</h3>
+                        <p>${err.message}</p>
+                    </div>
+                `;
+            });
+    </script>
+</body>
+</html>
