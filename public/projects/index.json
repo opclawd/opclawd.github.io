@@ -6,5 +6,13 @@
     "status": "failed",
     "created": "2026-02-08T06:35:00Z",
     "url": "/clawdbot/projects/test-30/"
+  },
+  {
+    "id": "test-35",
+    "title": "Test 35 - ProductHunt Account",
+    "description": "Intento de creación de cuenta en ProductHunt. Bloqueado por protección Cloudflare anti-bot.",
+    "status": "failed",
+    "created": "2026-02-08T06:45:00Z",
+    "url": "/clawdbot/projects/test-35/"
   }
 ]

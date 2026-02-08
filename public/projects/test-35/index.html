@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test 35 - ProductHunt Account</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #0a0a0f;
+      color: #e0e0e0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    .container { max-width: 900px; margin: 0 auto; padding: 2rem; }
+    .header {
+      background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+      padding: 2rem;
+      border-radius: 16px;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    .header h1 { font-size: 2rem; margin-bottom: 0.5rem; color: #fff; }
+    .header p { color: rgba(255,255,255,0.9); }
+    .card {
+      background: #14141f;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid #2a2a3e;
+    }
+    .card h2 {
+      color: #ff6b35;
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+    }
+    .status-badge {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .status-failed { background: #3d1f1f; color: #ff4444; }
+    .step { 
+      padding: 0.75rem; 
+      margin: 0.5rem 0; 
+      background: #1a1a2e; 
+      border-radius: 8px;
+      border-left: 3px solid #ff6b35;
+    }
+    .step i { color: #ff6b35; margin-right: 0.5rem; }
+    pre {
+      background: #1a1a2e;
+      padding: 1rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.85rem;
+      color: #a0a0b0;
+    }
+    .error-box {
+      background: #3d1f1f;
+      border: 1px solid #ff4444;
+      border-radius: 8px;
+      padding: 1rem;
+      margin: 1rem 0;
+    }
+    .error-box h3 { color: #ff4444; margin-bottom: 0.5rem; }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #ff6b35;
+      text-decoration: none;
+      margin-top: 1rem;
+      padding: 0.75rem 1.5rem;
+      background: #1a1a2e;
+      border-radius: 8px;
+      transition: all 0.3s;
+    }
+    .back-link:hover { background: #2a2a3e; }
+    .details-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .detail-item { 
+      background: #1a1a2e; 
+      padding: 0.75rem; 
+      border-radius: 8px;
+    }
+    .detail-item strong { color: #ff6b35; }
+    @media (max-width: 600px) {
+      .details-grid { grid-template-columns: 1fr; }
+      .container { padding: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1><i class="fab fa-product-hunt"></i> Test 35 - ProductHunt</h1>
+      <p>Crear cuenta en ProductHunt.com</p>
+    </div>
+
+    <div class="card">
+      <h2><i class="fas fa-info-circle"></i> Estado</h2>
+      <span class="status-badge status-failed"><i class="fas fa-times-circle"></i> BLOQUEADO</span>
+      <p style="margin-top: 1rem;">
+        No se pudo completar el registro debido a medidas de seguridad anti-bot de ProductHunt.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2><i class="fas fa-tasks"></i> Pasos Ejecutados</h2>
+      <div class="step"><i class="fas fa-check"></i> Navegar a https://www.producthunt.com</div>
+      <div class="step"><i class="fas fa-check"></i> Intentar acceso a /signup</div>
+      <div class="step"><i class="fas fa-check"></i> Verificar métodos de registro disponibles</div>
+      <div class="step"><i class="fas fa-times"></i> Completar registro (bloqueado)</div>
+      <div class="step"><i class="fas fa-times"></i> Verificar email vía IMAP</div>
+    </div>
+
+    <div class="card">
+      <h2><i class="fas fa-exclamation-triangle"></i> Error Encontrado</h2>
+      <div class="error-box">
+        <h3>Cloudflare Challenge / Anti-Bot Protection</h3>
+        <p>ProductHunt implementa protección Cloudflare que requiere verificación humana antes de permitir el acceso. Esta protección bloquea:</p>
+        <ul style="margin: 0.5rem 0 0 1.5rem;">
+          <li>Navegación headless/automatizada</li>
+          <li>Acceso a páginas de registro sin pasar CAPTCHA/Turnstile</li>
+          <li>Verificación de navegador/entorno</li>
+        </ul>
+      </div>
+      <pre>Ray ID: 9ca93c449b3c8843
+Challenge: "Verify you are human by completing the action below"
+Protection: Cloudflare</pre>
+    </div>
+
+    <div class="card">
+      <h2><i class="fas fa-user"></i> Datos Preparados</h2>
+      <div class="details-grid">
+        <div class="detail-item"><strong>Nombre:</strong> Orlando Pedro Clawd</div>
+        <div class="detail-item"><strong>Email:</strong> opclawd@gmail.com</div>
+        <div class="detail-item"><strong>Username:</strong> opclawd</div>
+        <div class="detail-item"><strong>Password:</strong> <code>[generado]</code></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><i class="fas fa-lightbulb"></i> Alternativas</h2>
+      <p>Para crear cuenta en ProductHunt se recomienda:</p>
+      <ul style="margin: 0.5rem 0 0 1.5rem;">
+        <li>Usar navegador normal (no headless) con perfil real</li>
+        <li>Completar manualmente el challenge de Cloudflare</li>
+        <li>Usar OAuth (Twitter/Google) si está disponible</li>
+        <li>Considerar servicios de automatización con resolución de CAPTCHA</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2><i class="fas fa-file-code"></i> Archivos Generados</h2>
+      <pre>accounts/producthunt.json    # Credenciales (estado: failed)
+logs/test-35.log             # Log de ejecución
+public/projects/test-35/     # Este reporte HTML</pre>
+    </div>
+
+    <a href="/clawdbot/" class="back-link"><i class="fas fa-arrow-left"></i> Volver al Panel</a>
+  </div>
+</body>
+</html>

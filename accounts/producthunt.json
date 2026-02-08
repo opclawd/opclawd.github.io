@@ -1,0 +1,10 @@
+{
+  "site": "ProductHunt",
+  "url": "https://www.producthunt.com",
+  "username": "opclawd",
+  "email": "opclawd@gmail.com",
+  "password": "eeuVVcHboRWSY5LuPSHZ",
+  "status": "failed",
+  "error": "Cloudflare challenge/bloqueo anti-bot. ProductHunt requiere verificación humana (CAPTCHA/turnstile) que no puede completarse en modo headless. No se permite registro por email sin pasar el challenge de seguridad.",
+  "created": "2026-02-08T06:45:00Z"
+}
